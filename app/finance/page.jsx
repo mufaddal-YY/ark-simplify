@@ -4,7 +4,8 @@ import FinanceServices from "@/components/finance/finance-services";
 import FinanceCaseStudies from "@/components/finance/finance-case-studies";
 import FinancePartners from "@/components/finance/finance-partners";
 import FinanceSoftwareTools from "@/components/finance/finance-software-tools";
-import FinanceTestimonials from "@/components/finance/finance-testimonials";
+import Testimonials from "@/components/homepage/testimonials";
+import CTA_common from "@/components/common/CTA_common";
 
 export const metadata = {
   title: "Finance",
@@ -21,7 +22,8 @@ export default function FinancePage() {
       <FinanceCaseStudies />
       <FinancePartners />
       <FinanceSoftwareTools />
-      <FinanceTestimonials />
+      <Testimonials/>
+      <CTA_common/>
     </main>
   );
 }

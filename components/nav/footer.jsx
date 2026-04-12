@@ -13,7 +13,6 @@ const linkGroups = [
     links: [
       { label: "About", href: "/about-us" },
       { label: "Life at ARK", href: "/life-at-ark" },
-      { label: "Blogs", href: "/blogs" },
       { label: "Contact", href: "/contact-us" },
     ],
   },
@@ -112,9 +111,9 @@ export default function SiteFooter() {
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-[0.82fr_0.68fr_1.1fr]">
             {linkGroups.map((group) => (
               <div key={group.title} className="space-y-4">
-                <h2 className="text-sm font-semibold tracking-[0.16em] text-brand-secondary/48 uppercase">
+                <h3 className="text-sm font-semibold tracking-[0.16em] text-brand-secondary/48 uppercase">
                   {group.title}
-                </h2>
+                </h3>
                 <nav className="space-y-3" aria-label={`${group.title} links`}>
                   {group.links.map(({ label, href }) => (
                     <Link
@@ -131,9 +130,9 @@ export default function SiteFooter() {
             ))}
 
             <div className="space-y-3 sm:col-span-2 lg:col-span-1">
-              <h2 className="text-sm font-semibold tracking-[0.16em] text-brand-secondary/48 uppercase">
+              <h3 className="text-sm font-semibold tracking-[0.16em] text-brand-secondary/48 uppercase">
                 Contact
-              </h2>
+              </h3>
               <div className="space-y-2">
                 {contactItems.map(({ label, value, href, icon: Icon }) => (
                   <Link

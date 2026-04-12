@@ -1,4 +1,5 @@
 import ConstructionBanner from "@/components/construction/construction-banner";
+import ConstructionSubnav from "@/components/construction/construction-subnav";
 import EstimatingServices from "@/components/construction/estimating-services";
 import ConstructionOverview from "@/components/construction/construction-overview";
 import WorkflowFit from "@/components/construction/workflow-fit";
@@ -22,19 +23,43 @@ export default function ConstructionPage() {
   return (
     <main className="flex-1">
       <ConstructionBanner />
-      <ConstructionOverview />
-      <EstimatingServices />
-      <DetailingServices />
-      <ProjectManagementSupport />
-      <WhoWeWorkWith />
-      <WorkflowFit />
-      <CaseStudies />
-      <Vendors />
-      <PartnersClients />
-      <SoftwareTools />
-      <Testimonials/>
-      <CTA_common />
-      
+      <ConstructionSubnav />
+      <section id="overview" className="scroll-mt-36 md:scroll-mt-44">
+        <ConstructionOverview />
+      </section>
+      <section id="estimating" className="scroll-mt-36 md:scroll-mt-44">
+        <EstimatingServices />
+      </section>
+      <section id="detailing" className="scroll-mt-36 md:scroll-mt-44">
+        <DetailingServices />
+      </section>
+      <section id="project-support" className="scroll-mt-36 md:scroll-mt-44">
+        <ProjectManagementSupport />
+      </section>
+      <section id="who-we-work-with" className="scroll-mt-36 md:scroll-mt-44">
+        <WhoWeWorkWith />
+      </section>
+      <section id="workflow-fit" className="scroll-mt-36 md:scroll-mt-44">
+        <WorkflowFit />
+      </section>
+      <section id="case-studies" className="scroll-mt-36 md:scroll-mt-44">
+        <CaseStudies />
+      </section>
+      <section id="vendors" className="scroll-mt-36 md:scroll-mt-44">
+        <Vendors />
+      </section>
+      <section id="partners" className="scroll-mt-36 md:scroll-mt-44">
+        <PartnersClients />
+      </section>
+      <section id="software-tools" className="scroll-mt-36 md:scroll-mt-44">
+        <SoftwareTools />
+      </section>
+      <section id="testimonials" className="scroll-mt-36 md:scroll-mt-44">
+        <Testimonials />
+      </section>
+      <section id="cta" className="scroll-mt-36 md:scroll-mt-44">
+        <CTA_common />
+      </section>
     </main>
   );
 }

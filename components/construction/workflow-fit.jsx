@@ -7,7 +7,7 @@ export default function WorkflowFit() {
             <p className="text-sm font-semibold tracking-[0.16em] text-brand-primary uppercase">
               Workflow Fit
             </p>
-            <h2 className="max-w-xl text-3xl font-semibold leading-tight tracking-[-0.04em] text-brand-secondary sm:text-5xl">
+            <h2 className="max-w-xl text-4xl font-semibold leading-tight tracking-[-0.04em] text-brand-secondary lg:text-5xl">
               How Ark fits into your workflow
             </h2>
             <div className="h-px w-16 bg-brand-primary" />

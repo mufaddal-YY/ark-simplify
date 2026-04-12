@@ -86,6 +86,18 @@ export default function WhoWeWorkWith() {
     };
   }, [api, updateCurrent]);
 
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    const autoplay = window.setInterval(() => {
+      api.scrollNext();
+    }, 4200);
+
+    return () => window.clearInterval(autoplay);
+  }, [api]);
+
   return (
     <section className="relative overflow-hidden bg-[#151827] py-16 sm:py-20 lg:py-24">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(54,59,79,0.72),transparent_34%),linear-gradient(135deg,rgba(54,59,79,0.62),rgba(10,12,20,0.94)_58%)]" />
@@ -104,7 +116,7 @@ export default function WhoWeWorkWith() {
               <p className="text-sm font-semibold tracking-[0.16em] text-brand-primary uppercase">
                 Who We Work With
               </p>
-              <h2 className="text-3xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">
+              <h2 className="text-4xl font-semibold tracking-[-0.04em] text-white lg:text-5xl">
                 Who we work with
               </h2>
             </div>

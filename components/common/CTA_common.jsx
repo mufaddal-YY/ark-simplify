@@ -38,7 +38,7 @@ export default function CTA_common({
             </p>
 
             <div className="space-y-5">
-              <h2 className="max-w-3xl text-4xl leading-[1.06] font-semibold tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl">
+              <h2 className="max-w-3xl text-5xl leading-[1.06] font-semibold tracking-[-0.05em] text-white lg:text-6xl">
                 {title}
               </h2>
               <p className="max-w-2xl text-base leading-8 text-white/62 sm:text-lg">

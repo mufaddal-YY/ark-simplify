@@ -11,7 +11,7 @@ export default function ProjectManagementSupport() {
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:items-start lg:gap-16">
           <div className="space-y-5">
-            <h2 className="max-w-2xl text-3xl font-semibold leading-tight tracking-[-0.04em] text-brand-secondary sm:text-5xl">
+            <h2 className="max-w-2xl text-4xl font-semibold leading-tight tracking-[-0.04em] text-brand-secondary lg:text-5xl">
               Project management{" "}
               <span className="text-brand-primary">support</span>
             </h2>

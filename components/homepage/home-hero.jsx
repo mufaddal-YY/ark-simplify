@@ -128,7 +128,7 @@ export default function HomeHero() {
                       transition={{ duration: 0.32, ease: "easeOut" }}
                       className="space-y-4"
                     >
-                      <h2 className="text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl">
+                      <h2 className="text-4xl font-semibold tracking-[-0.03em] text-white lg:text-5xl">
                         {services[activeIndex].title}
                       </h2>
                       <p className="text-base leading-8 text-white/72 sm:text-lg">
@@ -202,7 +202,7 @@ export default function HomeHero() {
                 transition={{ duration: 0.32, ease: "easeOut" }}
                 className="space-y-4"
               >
-                <h2 className="text-2xl font-semibold tracking-[-0.03em] text-white">
+                <h2 className="text-4xl font-semibold tracking-[-0.03em] text-white lg:text-5xl">
                   {services[activeIndex].title}
                 </h2>
                 <p className="text-base leading-7 text-white/72">

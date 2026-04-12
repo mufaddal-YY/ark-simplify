@@ -20,7 +20,6 @@ const navigationItems = [
   { label: "ProEstimate", href: "/proestimate" },
   { label: "About Us", href: "/about-us" },
   { label: "Life at ARK", href: "/life-at-ark" },
-  { label: "Blogs", href: "/blogs" },
   { label: "Contact Us", href: "/contact-us" },
 ];
 

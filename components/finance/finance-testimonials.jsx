@@ -21,7 +21,7 @@ export default function FinanceTestimonials() {
           <p className="text-sm font-semibold tracking-[0.16em] text-brand-finance uppercase">
             What our clients say
           </p>
-          <h2 className="text-3xl font-semibold tracking-[-0.04em] text-brand-secondary sm:text-5xl">
+          <h2 className="text-4xl font-semibold tracking-[-0.04em] text-brand-secondary lg:text-5xl">
             What our clients say
           </h2>
           <p className="max-w-3xl text-base leading-8 text-brand-secondary/72 sm:text-lg">

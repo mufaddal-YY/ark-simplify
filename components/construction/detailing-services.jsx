@@ -14,7 +14,7 @@ export default function DetailingServices() {
             <p className="text-sm font-semibold tracking-[0.16em] text-brand-primary uppercase">
               Detailing Services
             </p>
-            <h2 className="max-w-xl text-3xl font-semibold leading-tight tracking-[-0.04em] text-white sm:text-5xl">
+            <h2 className="max-w-xl text-4xl font-semibold leading-tight tracking-[-0.04em] text-white lg:text-5xl">
               Detailing services
             </h2>
             <div className="h-px w-16 bg-brand-primary" />
@@ -53,7 +53,7 @@ export default function DetailingServices() {
                   </div>
                 </div>
 
-                <div className="hidden h-full w-px bg-brand-construction lg:block" />
+                <div className="hidden h-full w-px bg-white lg:block" />
 
                 <div className="space-y-5 self-center">
                   <div className="space-y-3">

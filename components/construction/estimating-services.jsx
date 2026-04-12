@@ -112,7 +112,7 @@ export default function EstimatingServices() {
       <div className="mx-auto max-w-7xl space-y-10">
         <div className="space-y-5 text-center">
           
-          <h2 className="text-3xl font-semibold leading-tight tracking-[-0.04em] text-brand-secondary sm:text-5xl">
+          <h2 className="text-4xl font-semibold leading-tight tracking-[-0.04em] text-brand-secondary lg:text-5xl">
             Estimating services
           </h2>
           <p className="mx-auto max-w-3xl text-base leading-8 text-brand-secondary/72 sm:text-lg">

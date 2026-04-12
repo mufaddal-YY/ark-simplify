@@ -59,9 +59,9 @@ export default function Clientele({ preview = false }) {
                   Clientele
                 </p>
                 <div className="h-px w-16 bg-brand-primary" />
-                <div className="space-y-2 text-5xl font-semibold leading-none tracking-[-0.07em] sm:text-6xl xl:text-7xl">
-                  <h2>OUR</h2>
-                  <h2 className="text-brand-primary">CLIENTELE</h2>
+                <div className="space-y-2 text-4xl font-semibold leading-none tracking-[-0.07em] sm:text-5xl">
+                  <p>OUR</p>
+                  <p className="text-brand-primary">CLIENTELE</p>
                 </div>
                 <p className="max-w-sm text-base leading-8 text-white/76 sm:text-lg">
                   Trusted by teams that value dependable execution, structured

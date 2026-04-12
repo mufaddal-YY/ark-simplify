@@ -51,7 +51,7 @@ export default function CaseStudies() {
       >
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-4">
-            <h2 className="text-3xl font-semibold tracking-[-0.04em] text-brand-secondary sm:text-5xl">
+            <h2 className="text-4xl font-semibold tracking-[-0.04em] text-brand-secondary lg:text-5xl">
               Case Studies
             </h2>
             <p className="max-w-3xl text-base leading-8 text-brand-secondary/72 sm:text-lg">

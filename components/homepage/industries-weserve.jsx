@@ -225,7 +225,7 @@ export default function IndustriesWeServe({ preview = false }) {
             <p className={`text-sm font-semibold text-brand-primary uppercase ${preview ? "tracking-[0.18em]" : "tracking-[0.16em]"}`}>
               Industries We Serve
             </p>
-            <h2 className={`font-semibold text-brand-secondary ${preview ? "text-4xl leading-[0.98] tracking-[-0.06em] sm:text-6xl" : "text-3xl leading-tight tracking-[-0.04em] sm:text-5xl"}`}>
+            <h2 className={`font-semibold text-brand-secondary ${preview ? "text-4xl leading-[0.98] tracking-[-0.06em] lg:text-5xl" : "text-4xl leading-tight tracking-[-0.04em] lg:text-5xl"}`}>
               Flexible support built around how different teams actually work.
             </h2>
             <p className={`max-w-2xl text-base leading-8 sm:text-lg ${preview ? "text-brand-secondary/68" : "text-brand-secondary/72"}`}>

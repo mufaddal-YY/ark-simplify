@@ -132,7 +132,7 @@ export default function StatsSection() {
             </div>
 
             <div className="space-y-5">
-              <h2 className="max-w-xl text-4xl leading-[1.02] font-semibold tracking-[-0.06em] text-white sm:text-5xl lg:text-6xl">
+              <h2 className="max-w-xl text-4xl leading-[1.02] font-semibold tracking-[-0.06em] text-white lg:text-5xl">
                 Consistent support, measured across real delivery.
               </h2>
               <p className="max-w-xl text-base leading-8 text-white/64 sm:text-lg">

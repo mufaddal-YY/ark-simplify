@@ -193,7 +193,7 @@ export default function Testimonials({ preview = false }) {
             </div>
             <h2
               className={`max-w-3xl font-semibold leading-[0.98] tracking-[-0.07em] text-brand-secondary ${
-                preview ? "text-5xl sm:text-6xl" : "text-4xl sm:text-6xl"
+                preview ? "text-4xl lg:text-5xl" : "text-4xl lg:text-5xl"
               }`}
             >
               Success Stories.
