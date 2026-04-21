@@ -44,7 +44,6 @@ const officeLocations = [
 const serviceOptions = [
   "Construction Support",
   "Finance Support",
-  "ProEstimate",
   "General Inquiry",
 ];
 

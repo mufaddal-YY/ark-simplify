@@ -3,6 +3,7 @@ import AboutIntro from "@/components/about/about-intro";
 import AboutWhoWeAre from "@/components/about/about-who-we-are";
 import AboutValues from "@/components/about/about-values";
 import AboutLeadership from "@/components/about/about-leadership";
+import AboutProjectManagementTeam from "@/components/about/about-project-management-team";
 
 export const metadata = {
   title: "About Us",
@@ -18,6 +19,7 @@ export default function AboutUsPage() {
       <AboutWhoWeAre />
       <AboutValues />
       <AboutLeadership />
+      <AboutProjectManagementTeam />
     </main>
   );
 }

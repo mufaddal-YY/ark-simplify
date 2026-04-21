@@ -17,11 +17,6 @@ const services = [
     description:
       "Structured financial operations support for organizations that need dependable scale.",
   },
-  {
-    title: "Simplifying ProEstimate",
-    description:
-      "Estimation workflows and support systems built to improve accuracy and consistency.",
-  },
 ];
 
 export default function HomeHero() {
