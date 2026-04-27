@@ -17,6 +17,7 @@ const audiences = [
   {
     title: "General Contractors",
     icon: LuBuilding2,
+    image: "/construction/general%20contractor.jpg",
     paragraphs: [
       "Ark helps GCs manage the complexity of bid evaluation and project coordination.",
       "By verifying quantities, leveling bids, and reviewing subcontractor proposals, we provide GCs with clear, structured comparisons that support confident decision-making during the tender stage.",
@@ -26,6 +27,7 @@ const audiences = [
   {
     title: "Subcontractors",
     icon: LuWrench,
+    image: "/construction/subconstractor.jpg",
     paragraphs: [
       "For subcontractors, Ark acts as an operational extension of the internal team.",
     ],
@@ -40,6 +42,7 @@ const audiences = [
   {
     title: "Manufacturers",
     icon: LuFactory,
+    image: "/construction/manufacturer.jpg",
     paragraphs: [
       "Manufacturers operate at the intersection of supply, procurement, and project timelines.",
       "Ark supports manufacturers with:",
@@ -150,7 +153,7 @@ export default function WhoWeWorkWith() {
                     <div className="grid min-h-[30rem] lg:grid-cols-[minmax(0,0.34fr)_minmax(0,0.66fr)]">
                       <div className="relative min-h-64 lg:min-h-full">
                         <Image
-                          src="/construction_industry.jpg"
+                          src={audience.image}
                           alt={audience.title}
                           fill
                           className="object-cover"

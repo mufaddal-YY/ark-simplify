@@ -5,9 +5,18 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-const clienteleLogos = Array.from({ length: 24 }, (_, index) => ({
+const clientLogoPaths = [
+  "/client/Screenshot 2026-04-27 at 3.36.32%E2%80%AFPM.png",
+  "/client/Screenshot 2026-04-27 at 3.36.44%E2%80%AFPM.png",
+  "/client/Screenshot 2026-04-27 at 3.36.57%E2%80%AFPM.png",
+  "/client/Screenshot 2026-04-27 at 3.37.08%E2%80%AFPM.png",
+  "/client/Screenshot 2026-04-27 at 3.37.16%E2%80%AFPM.png",
+];
+
+const clienteleLogos = clientLogoPaths.map((src, index) => ({
   id: index + 1,
-  name: `Client ${index + 1}`,
+  name: `Client logo ${index + 1}`,
+  src,
 }));
 
 const logosPerSlide = 9;
@@ -88,22 +97,24 @@ export default function Clientele({ preview = false }) {
                 Client Network
               </p>
 
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={handlePrevious}
-                  aria-label="Previous client logos"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-brand-secondary/12 text-brand-secondary transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-primary hover:text-brand-primary">
-                  <ArrowLeft className="h-4 w-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={handleNext}
-                  aria-label="Next client logos"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-brand-secondary/12 text-brand-secondary transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-primary hover:text-brand-primary">
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-              </div>
+              {logoSlides.length > 1 ? (
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={handlePrevious}
+                    aria-label="Previous client logos"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-brand-secondary/12 text-brand-secondary transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-primary hover:text-brand-primary">
+                    <ArrowLeft className="h-4 w-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleNext}
+                    aria-label="Next client logos"
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-brand-secondary/12 text-brand-secondary transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-primary hover:text-brand-primary">
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                </div>
+              ) : null}
             </div>
 
             <div className="relative flex-1 overflow-hidden">
@@ -118,23 +129,17 @@ export default function Clientele({ preview = false }) {
                   {logoSlides[activeSlide].map((logo, index) => (
                     <div
                       key={logo.id}
-                      className={`group items-center justify-center border-brand-secondary/10 px-6 py-8 ${
-                        index < 6 ? "flex" : "hidden sm:flex"
-                      } min-h-[8rem] sm:min-h-[9rem] lg:min-h-[10rem] ${
+                      className={`group flex min-h-[8rem] items-center justify-center border-brand-secondary/10 px-6 py-8 sm:min-h-[9rem] lg:min-h-[10rem] ${
                         index % 2 === 0 ? "border-r" : ""
-                      } ${
-                        index < logoSlides[activeSlide].length - 2
-                          ? "border-b"
-                          : ""
-                      } ${index % 3 !== 2 ? "sm:border-r" : "sm:border-r-0"} ${
-                        index < 6 ? "sm:border-b" : "sm:border-b-0"
-                      }`}>
+                      } ${index < logoSlides[activeSlide].length - 2 ? "border-b" : ""} ${
+                        index % 3 !== 2 ? "sm:border-r" : "sm:border-r-0"
+                      } ${index < 3 ? "sm:border-b" : "sm:border-b-0"}`}>
                       <Image
-                        src="/logo_icon.png"
+                        src={logo.src}
                         alt={logo.name}
-                        width={84}
-                        height={84}
-                        className="h-auto w-[3.75rem] object-contain opacity-72 transition-all duration-300 group-hover:scale-[1.04] group-hover:opacity-100 sm:w-[4.25rem] lg:w-[4.75rem]"
+                        width={180}
+                        height={96}
+                        className="h-auto max-h-16 w-auto object-contain opacity-80 transition-all duration-300 group-hover:scale-[1.04] group-hover:opacity-100 sm:max-h-20"
                       />
                     </div>
                   ))}
@@ -144,19 +149,21 @@ export default function Clientele({ preview = false }) {
 
             <div className="flex items-center justify-between border-t border-brand-secondary/10 px-5 py-4 sm:px-6 lg:px-10">
               <div className="flex items-center gap-2">
-                {logoSlides.map((_, index) => (
-                  <button
-                    key={`client-slide-${index + 1}`}
-                    type="button"
-                    aria-label={`Show client slide ${index + 1}`}
-                    onClick={() => setActiveSlide(index)}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${
-                      index === activeSlide
-                        ? "w-10 bg-brand-primary"
-                        : "w-4 bg-brand-secondary/14"
-                    }`}
-                  />
-                ))}
+                {logoSlides.length > 1
+                  ? logoSlides.map((_, index) => (
+                      <button
+                        key={`client-slide-${index + 1}`}
+                        type="button"
+                        aria-label={`Show client slide ${index + 1}`}
+                        onClick={() => setActiveSlide(index)}
+                        className={`h-1.5 rounded-full transition-all duration-300 ${
+                          index === activeSlide
+                            ? "w-10 bg-brand-primary"
+                            : "w-4 bg-brand-secondary/14"
+                        }`}
+                      />
+                    ))
+                  : null}
               </div>
 
               <p className="text-sm font-medium text-brand-secondary/48">

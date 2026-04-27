@@ -1,6 +1,11 @@
 import Image from "next/image";
 
-const partnerCards = Array.from({ length: 4 }, (_, index) => index + 1);
+const partnerCards = [
+  "/construction/partners/Screenshot 2026-04-27 at 4.11.33%E2%80%AFPM.png",
+  "/construction/partners/Screenshot 2026-04-27 at 4.11.39%E2%80%AFPM.png",
+  "/construction/partners/Screenshot 2026-04-27 at 4.11.46%E2%80%AFPM.png",
+  "/construction/partners/Screenshot 2026-04-27 at 4.11.51%E2%80%AFPM.png",
+];
 
 export default function PartnersClients() {
   return (
@@ -20,17 +25,17 @@ export default function PartnersClients() {
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {partnerCards.map((card) => (
+          {partnerCards.map((card, index) => (
             <article
               key={card}
               className="flex min-h-44 items-center justify-center rounded-lg border border-slate-200 bg-[linear-gradient(180deg,#ffffff,rgba(246,247,250,0.92))] p-6 shadow-[0_12px_30px_rgba(15,23,42,0.04)] sm:p-7"
             >
               <Image
-                src="/logo_main.png"
-                alt="ARK logo"
-                width={132}
-                height={32}
-                className="h-auto w-[8.25rem]"
+                src={card}
+                alt={`Construction partner ${index + 1}`}
+                width={180}
+                height={96}
+                className="h-auto max-h-20 w-auto object-contain"
               />
             </article>
           ))}

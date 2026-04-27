@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import {
   BookOpenText,
   Boxes,
@@ -9,30 +11,34 @@ const financeServices = [
   {
     title: "Bookkeeping",
     icon: BookOpenText,
+    image: "/finance/bookkeeping.jpg",
     description:
       "Maintaining accurate, up-to-date financial records that teams can rely on for reporting and decision-making.",
   },
   {
     title: "Procurement Solutions",
     icon: ClipboardList,
+    image: "/finance/procurement.jpg",
     description:
       "Supporting purchasing workflows with better control, documentation, and visibility across vendors and spend.",
   },
   {
     title: "Inventory Management Solutions",
     icon: Boxes,
+    image: "/finance/inventory.jpg",
     description:
       "Helping businesses track, manage, and reconcile inventory with clarity across systems and reporting.",
   },
   {
     title: "Invoicing",
     icon: ReceiptText,
+    image: "/finance/invoicing.jpg",
     description:
       "Managing invoicing workflows to ensure accuracy, timeliness, and alignment with financial records.",
   },
 ];
 
-function FinanceServiceCard({ title, description, icon: Icon }) {
+function FinanceServiceCard({ title, description, icon: Icon, image }) {
   return (
     <article className="mx-auto w-full max-w-5xl rounded-lg bg-white p-5 shadow-[0_28px_90px_rgba(0,0,0,0.18)] sm:p-6 lg:p-7">
       <div className="grid gap-6 lg:grid-cols-[minmax(0,0.94fr)_minmax(0,1.06fr)] lg:items-stretch lg:gap-8">
@@ -55,14 +61,12 @@ function FinanceServiceCard({ title, description, icon: Icon }) {
           </p>
         </div>
 
-        <div className="overflow-hidden rounded-lg border border-brand-secondary/10 bg-[#0b0f1a]">
-          <video
-            src="/demo_video.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            controls
+        <div className="relative overflow-hidden rounded-lg border border-brand-secondary/10 bg-[#0b0f1a]">
+          <Image
+            src={image}
+            alt={title}
+            width={1200}
+            height={675}
             className="aspect-video h-full w-full object-cover lg:min-h-[20rem]"
           />
         </div>

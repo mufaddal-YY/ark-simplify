@@ -1,5 +1,42 @@
 import Image from "next/image";
 
+const divisionImageMap = {
+  1: "/proestimate/division1.png",
+  2: "/proestimate/division2.png",
+  3: "/proestimate/division3.png",
+  4: "/proestimate/division4.png",
+  5: "/proestimate/division5.png",
+  6: "/proestimate/division6.png",
+  7: "/proestimate/division7.png",
+  8: "/proestimate/division8.png",
+  9: "/proestimate/division9.png",
+  10: "/proestimate/division10.png",
+  11: "/proestimate/division11.png",
+  12: "/proestimate/division12.png",
+  13: "/proestimate/division13.png",
+  14: "/proestimate/division14.png",
+  21: "/proestimate/division21.png",
+  22: "/proestimate/division22.png",
+  23: "/proestimate/division23.png",
+  25: "/proestimate/division25.png",
+  26: "/proestimate/division26.png",
+  27: "/proestimate/division27.png",
+  28: "/proestimate/division28.png",
+  31: "/proestimate/division31.png",
+  32: "/proestimate/division32.png",
+  33: "/proestimate/division33.png",
+  34: "/proestimate/division34.png",
+  35: "/proestimate/division35.png",
+  40: "/proestimate/division40.png",
+  41: "/proestimate/division41.png",
+  42: "/proestimate/division42.png",
+  43: "/proestimate/division43.png",
+  44: "/proestimate/division44.png",
+  45: "/proestimate/division45.png",
+  46: "/proestimate/division46.png",
+  48: "/proestimate/division48.png",
+};
+
 const divisions = [
   {
     title: "Division 1 - Site Work",
@@ -341,6 +378,11 @@ export default function ProEstimateDivisions() {
         <div className="space-y-5 lg:space-y-6">
           {divisions.map((division, index) => {
             const imageFirst = index % 2 === 0;
+            const divisionNumber = Number(
+              division.title.match(/Division\s+(\d+)/)?.[1],
+            );
+            const divisionImage =
+              divisionImageMap[divisionNumber] ?? "/construction_industry.jpg";
 
             return (
               <article
@@ -352,7 +394,7 @@ export default function ProEstimateDivisions() {
                     className={`relative order-1 min-h-72 ${imageFirst ? "lg:order-1" : "lg:order-2"}`}
                   >
                     <Image
-                      src="/construction_industry.jpg"
+                      src={divisionImage}
                       alt={division.title}
                       fill
                       className="object-cover"

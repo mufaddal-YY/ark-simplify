@@ -1,6 +1,12 @@
 import Image from "next/image";
 
-const partners = Array.from({ length: 4 }, (_, index) => index + 1);
+const partners = [
+  "/client/Screenshot 2026-04-27 at 3.36.32%E2%80%AFPM.png",
+  "/client/Screenshot 2026-04-27 at 3.36.44%E2%80%AFPM.png",
+  "/client/Screenshot 2026-04-27 at 3.36.57%E2%80%AFPM.png",
+  "/client/Screenshot 2026-04-27 at 3.37.08%E2%80%AFPM.png",
+  "/client/Screenshot 2026-04-27 at 3.37.16%E2%80%AFPM.png",
+];
 
 export default function FinancePartners() {
   return (
@@ -18,18 +24,18 @@ export default function FinancePartners() {
           </p>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {partners.map((item) => (
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+          {partners.map((partner, index) => (
             <div
-              key={item}
+              key={partner}
               className="flex min-h-40 items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-6 shadow-[0_12px_30px_rgba(15,23,42,0.04)]"
             >
               <Image
-                src="/logo_main.png"
-                alt="ARK logo"
-                width={132}
-                height={32}
-                className="h-auto w-[8.25rem]"
+                src={partner}
+                alt={`Finance partner ${index + 1}`}
+                width={180}
+                height={96}
+                className="h-auto max-h-20 w-auto object-contain"
               />
             </div>
           ))}

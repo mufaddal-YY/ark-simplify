@@ -11,13 +11,26 @@ import {
 } from "@/components/ui/carousel";
 
 const softwareTools = [
-  "Bluebeam",
-  "AutoCAD",
-  "PlanSwift",
-  "Procore",
-  "Revit",
-  "Navisworks",
-  "Microsoft Project",
+  {
+    name: "Construction software 1",
+    image: "/construction/software/Screenshot 2026-04-27 at 4.12.26%E2%80%AFPM.png",
+  },
+  {
+    name: "Construction software 2",
+    image: "/construction/software/Screenshot 2026-04-27 at 4.12.37%E2%80%AFPM.png",
+  },
+  {
+    name: "Construction software 3",
+    image: "/construction/software/Screenshot 2026-04-27 at 4.12.46%E2%80%AFPM.png",
+  },
+  {
+    name: "Construction software 4",
+    image: "/construction/software/Screenshot 2026-04-27 at 4.12.52%E2%80%AFPM.png",
+  },
+  {
+    name: "Construction software 5",
+    image: "/construction/software/Screenshot 2026-04-27 at 4.12.57%E2%80%AFPM.png",
+  },
 ];
 
 export default function SoftwareTools() {
@@ -53,16 +66,16 @@ export default function SoftwareTools() {
         <CarouselContent className="-ml-4">
           {softwareTools.map((tool) => (
             <CarouselItem
-              key={tool}
+              key={tool.image}
               className="pl-4 basis-1/2 sm:basis-1/3 lg:basis-1/5"
             >
               <div className="flex min-h-28 items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-6 text-center shadow-[0_12px_30px_rgba(15,23,42,0.04)]">
                 <Image
-                  src="/logo_main.png"
-                  alt={`${tool} placeholder logo`}
-                  width={132}
-                  height={32}
-                  className="h-auto w-[8.25rem]"
+                  src={tool.image}
+                  alt={tool.name}
+                  width={180}
+                  height={96}
+                  className="h-auto max-h-20 w-auto object-contain"
                 />
               </div>
             </CarouselItem>

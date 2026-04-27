@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const supportPoints = [
   "Project scheduling and milestone tracking",
   "Delivery and logistics coordination",
@@ -59,13 +61,11 @@ export default function ProjectManagementSupport() {
           </div>
 
           <div className="overflow-hidden rounded-lg border border-brand-secondary/10 bg-[#0b0f1a]">
-            <video
-              src="/demo_video.mp4"
-              autoPlay
-              muted
-              loop
-              playsInline
-              controls
+            <Image
+              src="/construction/project-management.jpg"
+              alt="Construction project management support"
+              width={1200}
+              height={900}
               className="aspect-video w-full object-cover lg:min-h-[32rem]"
             />
           </div>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { FiArrowRight } from "react-icons/fi";
 
 import {
@@ -13,6 +14,7 @@ const estimatingTabs = [
     value: "subcontractors",
     trigger: "Subcontractors",
     title: "Estimating for Subcontractors",
+    image: "/construction/subconstractor.jpg",
     points: [
       "Detailed quantity take-offs",
       "Full cost estimation and bid preparation",
@@ -29,6 +31,7 @@ const estimatingTabs = [
     value: "general-contractors",
     trigger: "General Contractors",
     title: "Estimating for General Contractors",
+    image: "/construction/general%20contractor.jpg",
     points: [
       "Cross-trade quantity verification",
       "Review of subcontractor proposals",
@@ -44,6 +47,7 @@ const estimatingTabs = [
     value: "manufacturers",
     trigger: "Manufacturers",
     title: "Estimating for Manufacturers",
+    image: "/construction/manufacturer.jpg",
     points: [
       "Quantity estimation where required",
       "Purchase order review and verification",
@@ -64,13 +68,11 @@ function EstimatingPanelContent({ tab, compact = false }) {
     >
       <div className={`flex ${compact ? "" : "xl:order-2"}`}>
         <div className="min-h-[13rem] w-full overflow-hidden rounded-lg border border-white/10 bg-[#0b0f1a] xl:h-full xl:min-h-[24rem]">
-          <video
-            src="/demo_video.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            controls
+          <Image
+            src={tab.image}
+            alt={tab.title}
+            width={1200}
+            height={900}
             className="h-full w-full object-cover"
           />
         </div>

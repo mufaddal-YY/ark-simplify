@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const detailingPoints = [
   "Verification of estimating outputs after award",
   "Constructability checks before fabrication or installation",
@@ -85,13 +87,11 @@ export default function DetailingServices() {
             </div>
 
             <div className="overflow-hidden rounded-lg border border-brand-construction bg-[#0b0f1a] shadow-[0_22px_60px_rgba(54,59,79,0.08)]">
-              <video
-                src="/demo_video.mp4"
-                autoPlay
-                muted
-                loop
-                playsInline
-                controls
+              <Image
+                src="/construction/detailing.jpg"
+                alt="Construction detailing services"
+                width={1200}
+                height={900}
                 className="aspect-video w-full object-cover lg:min-h-[28rem]"
               />
             </div>
