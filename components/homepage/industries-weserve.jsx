@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -31,41 +31,13 @@ const industries = [
     href: "/finance",
     image: "/finance_industry.jpg",
     blurb:
-      "We support businesses with core financial and operational functions including bookkeeping, procurement support, inventory management, and invoicing. While we work closely with construction-related businesses, our finance services also support teams in other industries that need dependable financial processes as they grow.",
+      "We support businesses with core financial and operational functions including inventory management, purchase order processing, bookkeeping, and AP/AR. While we work closely with construction-related businesses, our finance services also support teams in other industries that need dependable financial processes as they grow.",
     highlights: [
-      "Bookkeeping",
-      "Procurement Support",
       "Inventory Management",
-      "Invoicing",
+      "Purchase Order Processing",
+      "Bookkeeping",
+      "AP/AR",
     ],
-  },
-];
-
-const stats = [
-  {
-    value: 100,
-    prefix: "$",
-    suffix: "M",
-    label: "Estimated Project Cost",
-    microLabel: "Across supported project scopes",
-  },
-  {
-    value: 3000,
-    suffix: "+",
-    label: "Projects Completed",
-    microLabel: "Delivered across active client engagements",
-  },
-  {
-    value: 12000,
-    suffix: "+",
-    label: "Man Hours Saved",
-    microLabel: "Recovered through dependable support workflows",
-  },
-  {
-    value: 1000,
-    suffix: "+",
-    label: "Total Clients Served",
-    microLabel: "Supported through scalable back-office delivery",
   },
 ];
 
@@ -84,105 +56,16 @@ const accentStyles = {
   },
 };
 
-function CountUpStat({
-  value,
-  prefix = "",
-  suffix = "",
-  label,
-  microLabel,
-  delay = 0,
-}) {
-  const ref = useRef(null);
-  const [displayValue, setDisplayValue] = useState(0);
-  const [hasStarted, setHasStarted] = useState(false);
-
-  useEffect(() => {
-    const node = ref.current;
-
-    if (!node || hasStarted) {
-      return undefined;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setHasStarted(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.35 },
-    );
-
-    observer.observe(node);
-
-    return () => observer.disconnect();
-  }, [hasStarted]);
-
-  useEffect(() => {
-    if (!hasStarted) {
-      return undefined;
-    }
-
-    let animationFrame;
-    let timeoutId;
-    const duration = 1400;
-
-    const startAnimation = () => {
-      const startTime = performance.now();
-
-      const updateValue = (currentTime) => {
-        const progress = Math.min((currentTime - startTime) / duration, 1);
-        const easedProgress = 1 - (1 - progress) * (1 - progress);
-        setDisplayValue(Math.round(value * easedProgress));
-
-        if (progress < 1) {
-          animationFrame = window.requestAnimationFrame(updateValue);
-        }
-      };
-
-      animationFrame = window.requestAnimationFrame(updateValue);
-    };
-
-    timeoutId = window.setTimeout(startAnimation, delay);
-
-    return () => {
-      window.clearTimeout(timeoutId);
-      window.cancelAnimationFrame(animationFrame);
-    };
-  }, [delay, hasStarted, value]);
-
-  const formattedValue = displayValue.toLocaleString("en-US");
-
-  return (
-    <div
-      ref={ref}
-      className="group relative overflow-hidden rounded-lg bg-white p-6 shadow-[0_24px_60px_rgba(120,38,0,0.12)] transition-transform duration-300 hover:-translate-y-1 sm:p-7"
-    >
-      <div className="flex items-start gap-4">
-        <div className="mt-1 h-14 w-px shrink-0 bg-brand-primary" />
-        <div className="space-y-4">
-        <p className="text-4xl font-semibold tracking-[-0.06em] text-brand-secondary sm:text-5xl">
-          {prefix}
-          {formattedValue}
-          {suffix}
-        </p>
-        <div className="space-y-2">
-          <p className="max-w-[16rem] text-sm font-medium leading-6 text-brand-secondary/72 sm:text-base">
-          {label}
-        </p>
-          <div className="h-px w-14 bg-brand-secondary/32" />
-          <p className="max-w-[17rem] text-xs font-medium uppercase tracking-[0.12em] text-brand-secondary/42">
-            {microLabel}
-          </p>
-        </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function IndustriesWeServe({ preview = false }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const expandedIndicators = industries.flatMap((industry, industryIndex) =>
+    Array.from({ length: 4 }, (_, index) => ({
+      key: `${industry.name}-${index + 1}`,
+      industryIndex,
+    })),
+  );
 
   const handlePrevious = () => {
     setActiveIndex(
@@ -195,12 +78,16 @@ export default function IndustriesWeServe({ preview = false }) {
   };
 
   useEffect(() => {
+    if (isPaused) {
+      return undefined;
+    }
+
     const autoplay = window.setInterval(() => {
       setActiveIndex((current) => (current + 1) % industries.length);
-    }, 5200);
+    }, 7200);
 
     return () => window.clearInterval(autoplay);
-  }, []);
+  }, [isPaused]);
 
   const activeIndustry = industries[activeIndex];
   const accent = accentStyles[activeIndustry.accent];
@@ -255,7 +142,11 @@ export default function IndustriesWeServe({ preview = false }) {
           </div>
         </div>
 
-        <div className={`relative overflow-hidden border bg-white ${accent.cardBorder} ${preview ? "shadow-[0_32px_90px_rgba(54,59,79,0.12)]" : "rounded-lg shadow-[0_34px_100px_rgba(54,59,79,0.14)]"}`}>
+        <div
+          className={`relative overflow-hidden border bg-white ${accent.cardBorder} ${preview ? "shadow-[0_32px_90px_rgba(54,59,79,0.12)]" : "rounded-lg shadow-[0_34px_100px_rgba(54,59,79,0.14)]"}`}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
           <div className={`absolute inset-x-0 top-0 z-20 h-px ${accent.rail}`} />
           <div className={`relative grid min-h-[32rem] ${preview ? "lg:grid-cols-[minmax(0,0.58fr)_minmax(0,0.42fr)]" : "lg:grid-cols-[minmax(0,0.62fr)_minmax(0,0.38fr)]"}`}>
             <div className="order-2 flex flex-col justify-between p-6 sm:p-8 lg:order-1 lg:p-12">
@@ -314,25 +205,45 @@ export default function IndustriesWeServe({ preview = false }) {
               </AnimatePresence>
 
               <div className="space-y-5 pt-10">
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   {industries.map((industry, index) => (
                     <button
                       key={industry.name}
                       type="button"
                       aria-label={`View ${industry.name}`}
                       onClick={() => setActiveIndex(index)}
-                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                      className={`inline-flex min-h-10 items-center rounded-full border px-4 py-2 text-sm font-semibold transition-all duration-300 ${
                         index === activeIndex
-                          ? `w-14 ${accent.rail}`
-                          : "w-5 bg-brand-secondary/12"
+                          ? `${accent.badge}`
+                          : "border-brand-secondary/10 bg-transparent text-brand-secondary/54 hover:border-brand-secondary/20 hover:text-brand-secondary"
                       }`}
-                    />
+                    >
+                      {industry.name}
+                    </button>
                   ))}
                 </div>
-                <p className="text-sm font-medium text-brand-secondary/52">
-                  {String(activeIndex + 1).padStart(2, "0")} /{" "}
-                  {String(industries.length).padStart(2, "0")}
-                </p>
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-1.5">
+                    {expandedIndicators.map((indicator, index) => {
+                      const isActive = indicator.industryIndex === activeIndex;
+
+                      return (
+                        <span
+                          key={indicator.key}
+                          className={`h-1.5 rounded-full transition-all duration-300 ${
+                            isActive
+                              ? `${accent.rail} ${index % 4 === 0 ? "w-8" : "w-3 opacity-80"}`
+                              : "w-2 bg-brand-secondary/12"
+                          }`}
+                        />
+                      );
+                    })}
+                  </div>
+                  <p className="text-sm font-medium text-brand-secondary/52">
+                    {String(activeIndex + 1).padStart(2, "0")} /{" "}
+                    {String(industries.length).padStart(2, "0")}
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -361,42 +272,6 @@ export default function IndustriesWeServe({ preview = false }) {
         </div>
 
       </div>
-
-      {/* <div className={`relative left-1/2 mt-8 w-screen -translate-x-1/2 overflow-hidden bg-brand-primary px-4 py-8 text-white sm:mt-10 sm:px-6 sm:py-10 lg:mt-12 lg:px-8 lg:py-12 ${preview ? "border-y border-brand-secondary/10" : ""}`}>
-        <div className="absolute inset-0">
-          <Image
-            src="/construction_stats.jpg"
-            alt=""
-            fill
-            className="object-cover"
-          />
-        </div>
-        <div className="absolute inset-0 bg-brand-primary/72 mix-blend-multiply" />
-        <div className="absolute inset-0 bg-primary mix-blend-multiply" />
-        <div className="absolute inset-0 bg-primary/10" />
-        <div className="absolute inset-0 bg-primary/14 mix-blend-multiply" />
-        <div className="absolute inset-0 bg-primary/8" />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(20,24,36,0.1),transparent_34%,rgba(20,24,36,0.12))]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_58%,transparent_24%,rgba(33,16,8,0.14)_100%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.22),transparent_24%),radial-gradient(circle_at_86%_18%,rgba(255,255,255,0.1),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.08),transparent_20%)]" />
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/32 to-transparent" />
-
-        <div className="relative mx-auto max-w-7xl">
-          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {stats.map((stat, index) => (
-              <CountUpStat
-                key={stat.label}
-                value={stat.value}
-                prefix={stat.prefix}
-                suffix={stat.suffix}
-                label={stat.label}
-                microLabel={stat.microLabel}
-                delay={index * 120}
-              />
-            ))}
-          </div>
-        </div>
-      </div> */}
     </section>
   );
 }

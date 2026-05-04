@@ -4,29 +4,40 @@ import { useEffect, useRef, useState } from "react";
 
 const stats = [
   {
-    value: 100,
-    prefix: "$",
-    suffix: "M",
-    label: "Estimated Project Cost",
-    microLabel: "Across supported project scopes",
+    value: 5825,
+    label: "No. of Projects",
+    microLabel: "Delivered across supported engagements",
   },
   {
-    value: 3000,
-    suffix: "+",
-    label: "Projects Completed",
-    microLabel: "Delivered across active client engagements",
+    value: 66810,
+    label: "Total Units",
+    microLabel: "Measured across tracked project scopes",
   },
   {
-    value: 12000,
-    suffix: "+",
-    label: "Man Hours Saved",
-    microLabel: "Recovered through dependable support workflows",
+    value: 2115,
+    label: "Storefront Count",
+    microLabel: "Supported storefront packages and rollouts",
   },
   {
-    value: 1000,
-    suffix: "+",
-    label: "Total Clients Served",
-    microLabel: "Supported through scalable back-office delivery",
+    value: 70495,
+    label: "Hardware",
+    microLabel: "Tracked hardware items across active work",
+  },
+  {
+    value: 1573820,
+    label: "Door",
+    microLabel: "Door-related quantified deliverables processed",
+  },
+  {
+    value: 45330,
+    suffix: " hrs",
+    label: "Overall Time",
+    microLabel: "Total hours represented in supported delivery",
+  },
+  {
+    value: 295739662,
+    label: "Bid Amount",
+    microLabel: "Combined bid value across tracked scopes",
   },
 ];
 
@@ -117,51 +128,51 @@ function CounterStat({
 
 export default function StatsSection() {
   return (
-    <section className="relative overflow-hidden bg-[#151827] px-4 py-18 sm:px-6 sm:py-24 lg:px-8">
+    <section className="relative overflow-hidden bg-[#151827] px-4 py-18 text-white sm:px-6 sm:py-24 lg:px-8">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(54,59,79,0.72),transparent_34%),radial-gradient(circle_at_76%_18%,rgba(255,73,0,0.025),transparent_28%),linear-gradient(135deg,rgba(54,59,79,0.62),rgba(10,12,20,0.94)_58%)]" />
       <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/22 to-transparent" />
 
-      <div className="relative mx-auto max-w-7xl">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.46fr)_minmax(0,0.54fr)] lg:items-center">
-          <div className="space-y-7">
-            <div className="space-y-3">
-              <p className="inline-flex rounded-lg border border-white/12 bg-white/6 px-4 py-2 text-xs font-semibold tracking-[0.18em] text-white/64 uppercase">
-                Delivery Results
-              </p>
-              <div className="h-px w-12 bg-brand-primary/70" />
-            </div>
+      <div className="relative mx-auto max-w-7xl space-y-7">
+        <div className="space-y-3">
+          <p className="text-sm font-semibold tracking-[0.18em] text-white/72 uppercase">
+            Overall Stats
+          </p>
+          <h2 className="max-w-4xl text-4xl font-semibold leading-[1.02] tracking-[-0.06em] text-white sm:text-5xl lg:text-[3.5rem]">
+            Quantified delivery at scale across projects, units, hours, and bid value.
+          </h2>
+          <p className="max-w-3xl text-base leading-7 text-white/76 sm:text-lg">
+            A broader snapshot of the work volume Ark Simplify has supported,
+            designed to highlight the depth and operational range behind our
+            delivery model.
+          </p>
+        </div>
 
-            <div className="space-y-5">
-              <h2 className="max-w-xl text-4xl leading-[1.02] font-semibold tracking-[-0.06em] text-white lg:text-5xl">
-                Consistent support, measured across real delivery.
-              </h2>
-              <p className="max-w-xl text-base leading-8 text-white/64 sm:text-lg">
-                The same operating discipline behind our construction,
-                finance, and project support work, shown through the numbers
-                teams rely on.
-              </p>
-            </div>
-          </div>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {stats.slice(0, 4).map((stat, index) => (
+            <CounterStat
+              key={stat.label}
+              value={stat.value}
+              prefix={stat.prefix}
+              suffix={stat.suffix}
+              label={stat.label}
+              microLabel={stat.microLabel}
+              delay={index * 120}
+            />
+          ))}
+        </div>
 
-          <div className="rounded-lg border border-brand-secondary/72 bg-[#0d101c]/76 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] sm:p-6 lg:p-8">
-            <p className="mb-6 text-xs font-semibold tracking-[0.22em] text-white/58 uppercase">
-              Key Results
-            </p>
-
-            <div className="grid gap-4 sm:grid-cols-2">
-              {stats.map((stat, index) => (
-                <CounterStat
-                  key={stat.label}
-                  value={stat.value}
-                  prefix={stat.prefix}
-                  suffix={stat.suffix}
-                  label={stat.label}
-                  microLabel={stat.microLabel}
-                  delay={index * 120}
-                />
-              ))}
-            </div>
-          </div>
+        <div className="grid gap-4 md:grid-cols-3">
+          {stats.slice(4).map((stat, index) => (
+            <CounterStat
+              key={stat.label}
+              value={stat.value}
+              prefix={stat.prefix}
+              suffix={stat.suffix}
+              label={stat.label}
+              microLabel={stat.microLabel}
+              delay={(index + 4) * 120}
+            />
+          ))}
         </div>
       </div>
     </section>

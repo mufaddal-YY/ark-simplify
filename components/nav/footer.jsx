@@ -27,13 +27,13 @@ const linkGroups = [
 
 const contactItems = [
   {
-    label: "US Contact",
+    label: "ARK Finance (USA)",
     value: "+1 (312) 380-0712",
     href: "tel:+13123800712",
     icon: FiPhone,
   },
   {
-    label: "India Contact",
+    label: "ARK Construction (India)",
     value: "+91 8668473798",
     href: "tel:+918668473798",
     icon: FiPhone,

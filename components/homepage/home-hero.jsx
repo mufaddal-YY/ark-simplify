@@ -27,19 +27,19 @@ export default function HomeHero() {
     setActiveIndex(
       (current) => (current - 1 + services.length) % services.length,
     );
-    setRotation((current) => current + 60);
+    setRotation((current) => current - 60);
   };
 
   const handleNext = () => {
     setActiveIndex((current) => (current + 1) % services.length);
-    setRotation((current) => current - 60);
+    setRotation((current) => current + 60);
   };
 
   useEffect(() => {
     const autoplay = window.setInterval(() => {
       setActiveIndex((current) => (current + 1) % services.length);
-      setRotation((current) => current - 60);
-    }, 4200);
+      setRotation((current) => current + 60);
+    }, 6200);
 
     return () => window.clearInterval(autoplay);
   }, []);

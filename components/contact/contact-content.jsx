@@ -207,6 +207,24 @@ export default function ContactContent() {
 
                   <div className="space-y-2">
                     <label
+                      htmlFor="contact-company"
+                      className="text-sm font-semibold text-brand-secondary"
+                    >
+                      Company
+                    </label>
+                    <input
+                      id="contact-company"
+                      name="company"
+                      type="text"
+                      placeholder="Your company name"
+                      className="h-12 w-full rounded-lg border border-brand-secondary/12 bg-white px-4 text-sm font-medium text-brand-secondary outline-none transition-colors focus:border-brand-primary"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <label
                       htmlFor="contact-email"
                       className="text-sm font-semibold text-brand-secondary"
                     >
@@ -217,6 +235,22 @@ export default function ContactContent() {
                       name="email"
                       type="email"
                       placeholder="you@company.com"
+                      className="h-12 w-full rounded-lg border border-brand-secondary/12 bg-white px-4 text-sm font-medium text-brand-secondary outline-none transition-colors focus:border-brand-primary"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="contact-designation"
+                      className="text-sm font-semibold text-brand-secondary"
+                    >
+                      Designation
+                    </label>
+                    <input
+                      id="contact-designation"
+                      name="designation"
+                      type="text"
+                      placeholder="Your designation"
                       className="h-12 w-full rounded-lg border border-brand-secondary/12 bg-white px-4 text-sm font-medium text-brand-secondary outline-none transition-colors focus:border-brand-primary"
                     />
                   </div>

@@ -1,16 +1,14 @@
 import FinanceBanner from "@/components/finance/finance-banner";
 import FinanceOverview from "@/components/finance/finance-overview";
 import FinanceServices from "@/components/finance/finance-services";
-import FinanceCaseStudies from "@/components/finance/finance-case-studies";
 import FinancePartners from "@/components/finance/finance-partners";
 import FinanceSoftwareTools from "@/components/finance/finance-software-tools";
-import Testimonials from "@/components/homepage/testimonials";
 import CTA_common from "@/components/common/CTA_common";
 
 export const metadata = {
   title: "Finance",
   description:
-    "Finance and operational support across bookkeeping, procurement, inventory, and invoicing workflows for growing organizations.",
+    "Finance and operational support across inventory management, purchase order processing, bookkeeping, and AP/AR workflows for growing organizations.",
 };
 
 export default function FinancePage() {
@@ -19,10 +17,8 @@ export default function FinancePage() {
       <FinanceBanner />
       <FinanceOverview />
       <FinanceServices />
-      <FinanceCaseStudies />
       <FinancePartners />
       <FinanceSoftwareTools />
-      <Testimonials/>
       <CTA_common/>
     </main>
   );

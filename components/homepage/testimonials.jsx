@@ -13,103 +13,43 @@ import {
 const testimonials = [
   {
     id: 1,
-    rating: "4.9",
+    rating: "5.0",
     quote:
-      "Ark Simplify felt like a true delivery partner. Their team brought structure to our workflow and helped us move faster without losing control.",
-    name: "Daniel Brooks",
-    role: "Operations Director",
-    initials: "DB",
-    accent: "bg-brand-primary text-white",
+      "We got feedback after a sales visit that the estimating team was highly responsive and accurate, and that level of professionalism reflected well on the rest of the company too.",
+    name: "Mitch Lazar",
+    role: "CEO and SPM",
+    initials: "ML",
+    accent: "bg-brand-construction text-white",
   },
   {
     id: 2,
     rating: "5.0",
     quote:
-      "Communication was clear, timelines were dependable, and the handoff quality stayed consistent from start to finish.",
-    name: "Priya Menon",
-    role: "Head of Finance",
-    initials: "PM",
-    accent: "bg-brand-finance text-white",
+      "Thank you for completing the pricing updates and providing the detailed summary. Highlighting the sections where items were unavailable made the handoff especially useful.",
+    name: "Danny Ward-Tremblay",
+    role: "Client Feedback",
+    initials: "DW",
+    accent: "bg-brand-primary text-white",
   },
   {
     id: 3,
-    rating: "4.9",
+    rating: "5.0",
     quote:
-      "What stood out most was how quickly they understood our process and started delivering work that fit our team immediately.",
-    name: "Marcus Hale",
-    role: "Project Executive",
-    initials: "MH",
-    accent: "bg-brand-construction text-white",
+      "I appreciate you completing this well ahead of schedule. The update, documentation, and summary of unavailable items made the review process much smoother.",
+    name: "Danny Ward-Tremblay",
+    role: "Client Feedback",
+    initials: "DW",
+    accent: "bg-brand-finance text-white",
   },
   {
     id: 4,
-    rating: "4.8",
-    quote:
-      "They brought reliability to areas we had struggled to standardize internally. It saved us time and reduced day-to-day friction.",
-    name: "Elena Carter",
-    role: "Founder & Managing Partner",
-    initials: "EC",
-    accent: "bg-brand-secondary text-white",
-  },
-  {
-    id: 5,
     rating: "5.0",
     quote:
-      "Their support model helped our internal team stay focused on decisions while execution kept moving without delays.",
-    name: "Jason Turner",
-    role: "Construction Lead",
-    initials: "JT",
-    accent: "bg-brand-construction text-white",
-  },
-  {
-    id: 6,
-    rating: "4.9",
-    quote:
-      "From procurement coordination to invoicing discipline, they brought a level of consistency we had been missing.",
-    name: "Nadia Shah",
-    role: "Finance Controller",
-    initials: "NS",
-    accent: "bg-brand-finance text-white",
-  },
-  {
-    id: 7,
-    rating: "4.8",
-    quote:
-      "The team adapted quickly to our reporting structure and delivered work that felt aligned from the first week onward.",
-    name: "Cole Bennett",
-    role: "Program Manager",
-    initials: "CB",
-    accent: "bg-brand-primary text-white",
-  },
-  {
-    id: 8,
-    rating: "4.9",
-    quote:
-      "Dependable, responsive, and detail-oriented. They reduced friction across multiple moving parts of the business.",
-    name: "Aisha Morgan",
-    role: "Managing Director",
-    initials: "AM",
+      "I want to thank and appreciate the team for doing great work and a lot of it. You have been a big part of our continued growth and created real opportunity for the people around you.",
+    name: "Mitch",
+    role: "Client Appreciation",
+    initials: "MI",
     accent: "bg-brand-secondary text-white",
-  },
-  {
-    id: 9,
-    rating: "4.9",
-    quote:
-      "We got a delivery rhythm that finally matched the pace of the business. That reliability changed how our team planned work.",
-    name: "Tyler Grant",
-    role: "General Manager",
-    initials: "TG",
-    accent: "bg-brand-primary text-white",
-  },
-  {
-    id: 10,
-    rating: "5.0",
-    quote:
-      "They made complex support functions feel organized, predictable, and far easier to manage at scale.",
-    name: "Leena Kapoor",
-    role: "Strategy Lead",
-    initials: "LK",
-    accent: "bg-brand-finance text-white",
   },
 ];
 
@@ -199,9 +139,8 @@ export default function Testimonials({ preview = false }) {
               Success Stories.
             </h2>
             <p className="max-w-2xl text-base leading-8 text-brand-secondary/70 sm:text-lg">
-              Feedback from teams who rely on Ark Simplify for dependable
-              operational execution, delivery support, and scalable back-office
-              systems.
+              Appreciation and feedback drawn from client emails after project
+              delivery, pricing updates, and estimating support engagements.
             </p>
           </div>
 

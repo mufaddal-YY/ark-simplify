@@ -6,11 +6,17 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 const clientLogoPaths = [
-  "/client/Screenshot 2026-04-27 at 3.36.32%E2%80%AFPM.png",
-  "/client/Screenshot 2026-04-27 at 3.36.44%E2%80%AFPM.png",
-  "/client/Screenshot 2026-04-27 at 3.36.57%E2%80%AFPM.png",
-  "/client/Screenshot 2026-04-27 at 3.37.08%E2%80%AFPM.png",
-  "/client/Screenshot 2026-04-27 at 3.37.16%E2%80%AFPM.png",
+  "/client/AG LOGO.png",
+  "/client/BH logo.webp",
+  "/client/CG-Logo-550.png",
+  "/client/Company Logo tech build.avif",
+  "/client/Newport-logo.webp",
+  "/client/Rapid doors logo.webp",
+  "/client/UFD_logo.jpg",
+  "/client/builders of metro atlanta.avif",
+  "/client/doorways logo.webp",
+  "/client/hynes-50-years-logo-1.webp",
+  "/client/logo smart shield.png",
 ];
 
 const clienteleLogos = clientLogoPaths.map((src, index) => ({
@@ -49,7 +55,7 @@ export default function Clientele({ preview = false }) {
   useEffect(() => {
     const autoplay = window.setInterval(() => {
       setActiveSlide((current) => (current + 1) % logoSlides.length);
-    }, 4200);
+    }, 6200);
 
     return () => window.clearInterval(autoplay);
   }, []);
@@ -134,13 +140,15 @@ export default function Clientele({ preview = false }) {
                       } ${index < logoSlides[activeSlide].length - 2 ? "border-b" : ""} ${
                         index % 3 !== 2 ? "sm:border-r" : "sm:border-r-0"
                       } ${index < 3 ? "sm:border-b" : "sm:border-b-0"}`}>
-                      <Image
-                        src={logo.src}
-                        alt={logo.name}
-                        width={180}
-                        height={96}
-                        className="h-auto max-h-16 w-auto object-contain opacity-80 transition-all duration-300 group-hover:scale-[1.04] group-hover:opacity-100 sm:max-h-20"
-                      />
+                      <div className="flex min-h-[5.5rem] w-full max-w-[13rem] items-center justify-center rounded-lg bg-white px-4 py-3 transition-all duration-300">
+                        <Image
+                          src={logo.src}
+                          alt={logo.name}
+                          width={180}
+                          height={96}
+                          className="h-auto max-h-16 w-auto object-contain opacity-80 transition-all duration-300 group-hover:scale-[1.04] group-hover:opacity-100 sm:max-h-20"
+                        />
+                      </div>
                     </div>
                   ))}
                 </motion.div>

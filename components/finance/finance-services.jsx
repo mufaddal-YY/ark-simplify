@@ -9,6 +9,20 @@ import {
 
 const financeServices = [
   {
+    title: "Inventory Management",
+    icon: Boxes,
+    image: "/finance/inventory.jpg",
+    description:
+      "Helping businesses track, manage, and reconcile inventory with clarity across systems and reporting.",
+  },
+  {
+    title: "Purchase Order Processing",
+    icon: ClipboardList,
+    image: "/finance/procurement.jpg",
+    description:
+      "Supporting purchasing workflows with better control, documentation, and visibility across vendors and spend.",
+  },
+  {
     title: "Bookkeeping",
     icon: BookOpenText,
     image: "/finance/bookkeeping.jpg",
@@ -16,25 +30,11 @@ const financeServices = [
       "Maintaining accurate, up-to-date financial records that teams can rely on for reporting and decision-making.",
   },
   {
-    title: "Procurement Solutions",
-    icon: ClipboardList,
-    image: "/finance/procurement.jpg",
-    description:
-      "Supporting purchasing workflows with better control, documentation, and visibility across vendors and spend.",
-  },
-  {
-    title: "Inventory Management Solutions",
-    icon: Boxes,
-    image: "/finance/inventory.jpg",
-    description:
-      "Helping businesses track, manage, and reconcile inventory with clarity across systems and reporting.",
-  },
-  {
-    title: "Invoicing",
+    title: "AP/AR",
     icon: ReceiptText,
     image: "/finance/invoicing.jpg",
     description:
-      "Managing invoicing workflows to ensure accuracy, timeliness, and alignment with financial records.",
+      "Managing accounts payable and receivable workflows to maintain accuracy, timeliness, and alignment with financial records.",
   },
 ];
 

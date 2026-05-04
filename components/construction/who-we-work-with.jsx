@@ -96,7 +96,7 @@ export default function WhoWeWorkWith() {
 
     const autoplay = window.setInterval(() => {
       api.scrollNext();
-    }, 4200);
+    }, 6200);
 
     return () => window.clearInterval(autoplay);
   }, [api]);
