@@ -2,24 +2,19 @@ import Image from "next/image";
 
 const galleryImages = [
   {
-    src: "/life1.png",
-    alt: "Team moment at ARK Simplify",
+    src: "/WhatsApp Image 2026-04-29 at 8.09.27 PM.jpeg",
+    alt: "ARK Simplify team gathering outdoors",
     className: "lg:col-span-2 lg:row-span-2",
   },
   {
-    src: "/life2.png",
-    alt: "Collaboration at ARK Simplify",
+    src: "/WhatsApp Image 2026-04-29 at 8.09.28 PM.jpeg",
+    alt: "ARK Simplify team members during a group outing",
     className: "",
   },
   {
     src: "/life3.png",
     alt: "Work culture at ARK Simplify",
     className: "",
-  },
-  {
-    src: "/life_video.png",
-    alt: "Life at ARK Simplify",
-    className: "lg:col-span-2",
   },
 ];
 

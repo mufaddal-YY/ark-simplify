@@ -10,7 +10,22 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-const tools = Array.from({ length: 7 }, (_, index) => index + 1);
+const tools = [
+  {
+    name: "Zoho Books",
+    src: "/ZohoBooks.png",
+    width: 132,
+    height: 40,
+    className: "h-auto w-[8.25rem]",
+  },
+  {
+    name: "Odoo",
+    src: "/odoo.png",
+    width: 132,
+    height: 40,
+    className: "h-auto w-[8.25rem]",
+  },
+];
 
 export default function FinanceSoftwareTools() {
   return (
@@ -39,14 +54,14 @@ export default function FinanceSoftwareTools() {
 
         <CarouselContent className="-ml-4">
           {tools.map((tool) => (
-            <CarouselItem key={tool} className="pl-4 basis-1/2 sm:basis-1/3 lg:basis-1/5">
+            <CarouselItem key={tool.name} className="pl-4 basis-1/2 sm:basis-1/3 lg:basis-1/5">
               <div className="flex min-h-28 items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-6 shadow-[0_12px_30px_rgba(15,23,42,0.04)]">
                 <Image
-                  src="/logo_main.png"
-                  alt="ARK logo"
-                  width={132}
-                  height={32}
-                  className="h-auto w-[8.25rem]"
+                  src={tool.src}
+                  alt={tool.name}
+                  width={tool.width}
+                  height={tool.height}
+                  className={tool.className}
                 />
               </div>
             </CarouselItem>
