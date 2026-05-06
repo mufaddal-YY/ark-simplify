@@ -13,6 +13,7 @@ export default function Home() {
       <HomeHero />
       <IndustriesWeServe preview={ENABLE_PREMIUM_CONSTRUCTION_PREVIEW} />
       <StatsSection />
+      
       <Clientele preview={ENABLE_PREMIUM_CONSTRUCTION_PREVIEW} />
       <Testimonials preview={ENABLE_PREMIUM_CONSTRUCTION_PREVIEW} />
       <CTA_common />
