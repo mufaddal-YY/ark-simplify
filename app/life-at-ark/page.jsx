@@ -3,6 +3,7 @@ import LifeIntro from "@/components/life-at-ark/life-intro";
 import LifeGallery from "@/components/life-at-ark/life-gallery";
 import LifeWorkstyle from "@/components/life-at-ark/life-workstyle";
 import LifeCareers from "@/components/life-at-ark/life-careers";
+import LifeBenefits from "@/components/life-at-ark/life-benefits";
 
 export const metadata = {
   title: "Life at ARK",
@@ -18,6 +19,7 @@ export default function LifeAtArkPage() {
       <LifeGallery />
       <LifeWorkstyle />
       <LifeCareers />
+      <LifeBenefits />
     </main>
   );
 }

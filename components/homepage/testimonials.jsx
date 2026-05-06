@@ -10,7 +10,40 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-const testimonials = [
+const homeTestimonials = [
+  {
+    id: 1,
+    rating: "5.0",
+    quote:
+      "We have been working with Rohit and ARK for over 18 months. Rohit and his team are professional, responsive, hardworking and affordable. They are an integral part of our team and our growth. Without the ARK we would NOT have been able to keep growing at our current pace.",
+    name: "Mitchel Lazar",
+    role: "CEO at Rapid Door & Trim Corp.",
+    initials: "ML",
+    accent: "bg-brand-construction text-white",
+  },
+  {
+    id: 2,
+    rating: "5.0",
+    quote:
+      "I have been working with the ARK team for 2+ years now and would recommend them for takeoff services. We have had our challenges but Rohit is always willing listen and work on a resolution to the challenges.",
+    name: "Ken Diener, DHT",
+    role: "Sales Manager for Doorwayz Unlimited",
+    initials: "KD",
+    accent: "bg-brand-primary text-white",
+  },
+  {
+    id: 3,
+    rating: "5.0",
+    quote:
+      "My team enjoyed working with Ark Simplify and they played a very important role in the success of our projects and the growth of our estimating department. I have no doubt they will be a great asset to any team.",
+    name: "Tim Hunt",
+    role: "President at Performance Door and Hardware",
+    initials: "TH",
+    accent: "bg-brand-finance text-white",
+  },
+];
+
+const constructionTestimonials = [
   {
     id: 1,
     rating: "5.0",
@@ -99,7 +132,10 @@ function TestimonialCard({ item, className = "", featured = false, preview = fal
   );
 }
 
-export default function Testimonials({ preview = false }) {
+export default function Testimonials({ preview = false, variant = "home" }) {
+  const testimonials =
+    variant === "construction" ? constructionTestimonials : homeTestimonials;
+
   return (
     <section
       className={`relative overflow-hidden px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28 ${

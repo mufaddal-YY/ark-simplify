@@ -300,4 +300,33 @@
   .btn-brand-outline:hover {
     background-color: color-mix(in srgb, var(--brand-secondary) 8%, white);
   }
+
+  .offer-attention-jump {
+    animation: offer-attention-jump 6s ease-in-out infinite;
+  }
+
+}
+
+@keyframes offer-attention-jump {
+  0%,
+  78%,
+  100% {
+    transform: translateY(0);
+  }
+
+  82% {
+    transform: translateY(-0.42rem);
+  }
+
+  86% {
+    transform: translateY(0);
+  }
+
+  90% {
+    transform: translateY(-0.24rem);
+  }
+
+  94% {
+    transform: translateY(0);
+  }
 }

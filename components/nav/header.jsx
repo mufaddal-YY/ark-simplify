@@ -70,7 +70,7 @@ export default function SiteHeader() {
 
           <div
             className={`relative flex items-center justify-between gap-4 px-4 transition-all duration-300 sm:px-6 ${
-              isScrolled ? "py-1" : "py-3"
+              isScrolled ? "py-1" : "py-2"
             }`}>
             <Link href="/" className="flex shrink-0 items-center">
               <Image

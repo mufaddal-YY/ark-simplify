@@ -16,14 +16,28 @@ const tools = [
     src: "/ZohoBooks.png",
     width: 132,
     height: 40,
-    className: "h-auto w-[8.25rem]",
+    className: "max-h-16 w-auto max-w-[11rem] object-contain",
   },
   {
     name: "Odoo",
     src: "/odoo.png",
     width: 132,
     height: 40,
-    className: "h-auto w-[8.25rem]",
+    className: "max-h-16 w-auto max-w-[11rem] object-contain",
+  },
+  {
+    name: "Xero",
+    src: "/xero.png",
+    width: 160,
+    height: 72,
+    className: "max-h-38 w-auto max-w-[14rem] object-contain",
+  },
+  {
+    name: "QuickBooks",
+    src: "/QuickBooks-Logo.png",
+    width: 132,
+    height: 40,
+    className: "max-h-16 w-auto max-w-[11rem] object-contain",
   },
 ];
 
@@ -55,7 +69,7 @@ export default function FinanceSoftwareTools() {
         <CarouselContent className="-ml-4">
           {tools.map((tool) => (
             <CarouselItem key={tool.name} className="pl-4 basis-1/2 sm:basis-1/3 lg:basis-1/5">
-              <div className="flex min-h-28 items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-6 shadow-[0_12px_30px_rgba(15,23,42,0.04)]">
+              <div className="flex aspect-[5/3] min-h-32 items-center justify-center rounded-lg border border-slate-200 bg-white px-2 py-2 shadow-[0_12px_30px_rgba(15,23,42,0.04)] sm:min-h-32">
                 <Image
                   src={tool.src}
                   alt={tool.name}

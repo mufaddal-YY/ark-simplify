@@ -11,7 +11,6 @@ const sections = [
   { id: "who-we-work-with", label: "Who We Work With" },
   { id: "workflow-fit", label: "Workflow Fit" },
   { id: "case-studies", label: "Case Studies" },
-  { id: "vendors", label: "Vendors" },
   { id: "partners", label: "Partners" },
   { id: "software-tools", label: "Software & Tools" },
   { id: "testimonials", label: "Testimonials" },

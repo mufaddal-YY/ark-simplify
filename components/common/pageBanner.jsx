@@ -6,6 +6,7 @@ export default function PageBanner({
   title = "Ark Simplify Construction",
   titleAccent = "Construction",
   titleAccentClass = "text-brand-construction",
+  description,
   compact = false,
 }) {
   const titleParts = titleAccent ? title.split(titleAccent) : [title];
@@ -53,6 +54,12 @@ export default function PageBanner({
               ) : null}
               {titleParts.slice(1).join(titleAccent)}
             </h1>
+
+            {description ? (
+              <p className="max-w-2xl text-base leading-8 text-white/72 sm:text-lg">
+                {description}
+              </p>
+            ) : null}
           </div>
         </div>
       </div>

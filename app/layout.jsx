@@ -1,6 +1,7 @@
 import "./globals.css";
 import SiteHeader from "@/components/nav/header";
 import SiteFooter from "@/components/nav/footer";
+import SiteOfferFloat from "@/components/common/site-offer-float";
 
 export const metadata = {
   title: {
@@ -54,6 +55,7 @@ export default function RootLayout({ children }) {
         <SiteHeader />
         {children}
         <SiteFooter />
+        <SiteOfferFloat />
       </body>
     </html>
   );

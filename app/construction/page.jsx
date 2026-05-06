@@ -7,7 +7,6 @@ import DetailingServices from "@/components/construction/detailing-services";
 import ProjectManagementSupport from "@/components/construction/project-management-support";
 import WhoWeWorkWith from "@/components/construction/who-we-work-with";
 import CaseStudies from "@/components/construction/case-studies";
-import Vendors from "@/components/construction/vendors";
 import PartnersClients from "@/components/construction/partners-clients";
 import SoftwareTools from "@/components/construction/software-tools";
 import Testimonials from "@/components/homepage/testimonials";
@@ -45,9 +44,6 @@ export default function ConstructionPage() {
       <section id="case-studies" className="scroll-mt-36 md:scroll-mt-44">
         <CaseStudies />
       </section>
-      <section id="vendors" className="scroll-mt-36 md:scroll-mt-44">
-        <Vendors />
-      </section>
       <section id="partners" className="scroll-mt-36 md:scroll-mt-44">
         <PartnersClients />
       </section>
@@ -55,7 +51,7 @@ export default function ConstructionPage() {
         <SoftwareTools />
       </section>
       <section id="testimonials" className="scroll-mt-36 md:scroll-mt-44">
-        <Testimonials />
+        <Testimonials variant="construction" />
       </section>
       <section id="cta" className="scroll-mt-36 md:scroll-mt-44">
         <CTA_common />

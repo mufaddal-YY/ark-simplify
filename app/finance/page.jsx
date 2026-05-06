@@ -19,7 +19,7 @@ export default function FinancePage() {
       <FinanceServices />
       <FinancePartners />
       <FinanceSoftwareTools />
-      <CTA_common/>
+      <CTA_common />
     </main>
   );
 }

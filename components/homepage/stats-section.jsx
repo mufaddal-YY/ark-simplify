@@ -14,28 +14,15 @@ const stats = [
     microLabel: "Measured across tracked project scopes",
   },
   {
-    value: 2115,
-    label: "Storefront Count",
-    microLabel: "Supported storefront packages and rollouts",
-  },
-  {
-    value: 70495,
-    label: "Hardware",
-    microLabel: "Tracked hardware items across active work",
-  },
-  {
-    value: 1573820,
-    label: "Door",
-    microLabel: "Door-related quantified deliverables processed",
-  },
-  {
     value: 45330,
     suffix: " hrs",
-    label: "Overall Time",
-    microLabel: "Total hours represented in supported delivery",
+    label: "Manhours Saved",
+    microLabel: "Total saved hours represented in supported delivery",
   },
   {
-    value: 295739662,
+    value: 300,
+    prefix: "$",
+    suffix: "m",
     label: "Bid Amount",
     microLabel: "Combined bid value across tracked scopes",
   },
@@ -148,7 +135,7 @@ export default function StatsSection() {
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {stats.slice(0, 4).map((stat, index) => (
+          {stats.map((stat, index) => (
             <CounterStat
               key={stat.label}
               value={stat.value}
@@ -157,20 +144,6 @@ export default function StatsSection() {
               label={stat.label}
               microLabel={stat.microLabel}
               delay={index * 120}
-            />
-          ))}
-        </div>
-
-        <div className="grid gap-4 md:grid-cols-3">
-          {stats.slice(4).map((stat, index) => (
-            <CounterStat
-              key={stat.label}
-              value={stat.value}
-              prefix={stat.prefix}
-              suffix={stat.suffix}
-              label={stat.label}
-              microLabel={stat.microLabel}
-              delay={(index + 4) * 120}
             />
           ))}
         </div>
