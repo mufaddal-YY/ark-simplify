@@ -4,6 +4,7 @@ import Clientele from "@/components/homepage/clientele";
 import IndustriesWeServe from "@/components/homepage/industries-weserve";
 import StatsSection from "@/components/homepage/stats-section";
 import Testimonials from "@/components/homepage/testimonials";
+import LinkedinArticles from "@/components/homepage/linkedin-articles";
 
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
       
       <Clientele  />
       <Testimonials  />
+      <LinkedinArticles />
       <CTA_common />
     </main>
   );
