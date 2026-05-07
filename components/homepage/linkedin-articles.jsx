@@ -14,53 +14,55 @@ import {
 const linkedinCompanyPostsUrl =
   "https://www.linkedin.com/company/arksquareconstructionservices/posts/?feedView=all";
 
+const withCollapsedEmbed = (src) => `${src}?collapsed=1`;
+
 const linkedinPosts = [
   {
     id: 1,
     src: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7457009008499949568",
-    height: 965,
+    height: 620,
     label: "Latest post",
   },
   {
     id: 2,
     src: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7455193898248732672",
-    height: 965,
+    height: 620,
     label: "Recent post",
   },
   {
     id: 3,
     src: "https://www.linkedin.com/embed/feed/update/urn:li:share:7454437733948764160",
-    height: 1173,
+    height: 620,
     label: "Recent post",
   },
   {
     id: 4,
     src: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7452625448187924480",
-    height: 881,
+    height: 580,
     label: "Recent post",
   },
   {
     id: 5,
     src: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7451900508811988992",
-    height: 965,
+    height: 620,
     label: "Recent post",
   },
   {
     id: 6,
     src: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7450184230220775424",
-    height: 881,
+    height: 580,
     label: "Recent post",
   },
   {
     id: 7,
     src: "https://www.linkedin.com/embed/feed/update/urn:li:share:7450877157502787584",
-    height: 1005,
+    height: 620,
     label: "Recent post",
   },
   {
     id: 8,
     src: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7447597702583967744",
-    height: 1007,
+    height: 620,
     label: "Recent post",
   },
 ];
@@ -79,9 +81,9 @@ function LinkedInEmbed({ post }) {
         </div>
       </div>
 
-      <div className="relative h-[34rem] bg-brand-surface sm:h-[38rem]">
+      <div className="relative h-[28rem] bg-brand-surface sm:h-[32rem]">
         <iframe
-          src={post.src}
+          src={withCollapsedEmbed(post.src)}
           title={`${post.label} from LinkedIn ${post.id}`}
           width="504"
           height={post.height}
