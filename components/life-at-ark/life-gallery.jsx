@@ -2,13 +2,13 @@ import Image from "next/image";
 
 const galleryImages = [
   {
-    src: "/WhatsApp Image 2026-04-29 at 8.09.27 PM.jpeg",
-    alt: "ARK Simplify team gathering outdoors",
+    src: "/WhatsApp Image 2026-04-29 at 8.09.28 PM.jpeg",
+    alt: "ARK Simplify team members during a group outing",
     className: "lg:col-span-2 lg:row-span-2",
   },
   {
-    src: "/WhatsApp Image 2026-04-29 at 8.09.28 PM.jpeg",
-    alt: "ARK Simplify team members during a group outing",
+    src: "/WhatsApp Image 2026-04-29 at 8.09.27 PM.jpeg",
+    alt: "ARK Simplify team gathering outdoors",
     className: "",
   },
   {
@@ -35,8 +35,7 @@ export default function LifeGallery() {
           {galleryImages.map((image) => (
             <div
               key={image.src}
-              className={`overflow-hidden rounded-lg border border-brand-secondary/10 bg-white shadow-[0_18px_44px_rgba(15,23,42,0.05)] ${image.className}`}
-            >
+              className={`overflow-hidden rounded-lg border border-brand-secondary/10 bg-white shadow-[0_18px_44px_rgba(15,23,42,0.05)] ${image.className}`}>
               <Image
                 src={image.src}
                 alt={image.alt}

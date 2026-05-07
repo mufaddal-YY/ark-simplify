@@ -5,17 +5,16 @@ import IndustriesWeServe from "@/components/homepage/industries-weserve";
 import StatsSection from "@/components/homepage/stats-section";
 import Testimonials from "@/components/homepage/testimonials";
 
-const ENABLE_PREMIUM_CONSTRUCTION_PREVIEW = true;
 
 export default function Home() {
   return (
     <main className="flex-1">
       <HomeHero />
-      <IndustriesWeServe preview={ENABLE_PREMIUM_CONSTRUCTION_PREVIEW} />
+      <IndustriesWeServe  />
       <StatsSection />
       
-      <Clientele preview={ENABLE_PREMIUM_CONSTRUCTION_PREVIEW} />
-      <Testimonials preview={ENABLE_PREMIUM_CONSTRUCTION_PREVIEW} />
+      <Clientele  />
+      <Testimonials  />
       <CTA_common />
     </main>
   );

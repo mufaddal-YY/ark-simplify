@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   FiArrowUpRight,
+  FiDownload,
   FiMapPin,
   FiPhone,
 } from "react-icons/fi";
@@ -70,6 +71,19 @@ const socialLinks = [
   },
 ];
 
+const certificates = [
+  {
+    label: "ISO 9001 Certificate",
+    href: "/12238%20%20%20%209K%20%20%20%20%20ARKSIMPLIFIQ%20PRIVATE%20LIMITED.pdf",
+    filename: "ARK-Simplify-ISO-9001-Certificate.pdf",
+  },
+  {
+    label: "ISO 27001 Certificate",
+    href: "/12239%20%20%20%2027K%20%20%20%20%20ARKSIMPLIFIQ%20PRIVATE%20LIMITED.pdf",
+    filename: "ARK-Simplify-ISO-27001-Certificate.pdf",
+  },
+];
+
 export default function SiteFooter() {
   return (
     <footer className="border-t border-brand-secondary/10 bg-white px-4 pt-16 pb-8 text-brand-secondary sm:px-6 lg:px-8">
@@ -104,6 +118,26 @@ export default function SiteFooter() {
                   <Icon className="h-4 w-4" />
                 </Link>
               ))}
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="text-sm font-semibold tracking-[0.16em] text-brand-secondary/48 uppercase">
+                ISO Certificates
+              </h3>
+              <div className="flex flex-wrap gap-2.5">
+                {certificates.map(({ label, href, filename }) => (
+                  <Link
+                    key={label}
+                    href={href}
+                    download={filename}
+                    target="_blank"
+                    className="inline-flex items-center gap-2 rounded-lg border border-brand-secondary/10 bg-brand-surface px-3 py-2 text-xs font-semibold text-brand-secondary transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-primary/24 hover:bg-white hover:text-brand-primary"
+                  >
+                    <FiDownload className="h-3.5 w-3.5" />
+                    {label}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
 

@@ -1,4 +1,6 @@
+import Link from "next/link";
 import {
+  ArrowDownRight,
   Award,
   Building2,
   HeartPulse,
@@ -87,7 +89,7 @@ export default function LifeBenefits() {
           </h2>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {benefits.map((benefit) => {
             const Icon = benefit.icon;
 
@@ -111,6 +113,31 @@ export default function LifeBenefits() {
               </article>
             );
           })}
+
+          <article className="rounded-lg bg-[#151827] p-6 text-white shadow-[0_18px_46px_rgba(15,23,42,0.16)] sm:p-7 xl:col-span-2">
+            <div className="flex h-full flex-col justify-between gap-8">
+              <div className="space-y-4">
+                <p className="text-sm font-semibold tracking-[0.16em] text-brand-primary uppercase">
+                  Join ARK
+                </p>
+                <h3 className="text-3xl font-semibold text-white">
+                  Build your next role with us.
+                </h3>
+                <p className="max-w-xl text-base leading-8 text-white/72">
+                  Explore our current openings and apply for a role where
+                  thoughtful work, ownership, and growth are part of the day.
+                </p>
+              </div>
+
+              <Link
+                href="#open-jobs"
+                className="inline-flex min-h-11 w-fit items-center gap-2 rounded-lg bg-brand-primary px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-primary/90"
+              >
+                View open jobs
+                <ArrowDownRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </article>
         </div>
       </div>
     </section>

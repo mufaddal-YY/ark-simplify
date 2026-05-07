@@ -3,28 +3,25 @@ import { ArrowUpRight } from "lucide-react";
 
 const openRoles = [
   {
-    title: "Construction Project Coordinator",
-    meta: "Full-time · Nagpur / Hybrid",
-    description:
-      "Support delivery teams with coordination, documentation, and day-to-day execution tracking across active projects.",
-  },
-  {
-    title: "Finance Operations Associate",
+    title: "Civil Engineer Fresher",
     meta: "Full-time · Nagpur",
     description:
-      "Work across bookkeeping, invoicing, and process support for clients who need structured, dependable finance execution.",
+      "Support construction teams with site coordination, quantity checks, documentation, and day-to-day project execution.",
   },
   {
-    title: "Business Development Executive",
-    meta: "Full-time · Nagpur / On-site",
+    title: "HR Interns",
+    meta: "Internship · Nagpur",
     description:
-      "Help build new client relationships, support growth conversations, and keep pipeline activity organized and actionable.",
+      "Assist with hiring coordination, candidate communication, employee records, and everyday people operations.",
   },
 ];
 
 export default function LifeCareers() {
   return (
-    <section className="bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+    <section
+      id="open-jobs"
+      className="scroll-mt-24 bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24"
+    >
       <div className="mx-auto max-w-7xl">
         <div className="rounded-lg border border-brand-secondary/10 bg-brand-surface p-6 shadow-[0_22px_60px_rgba(54,59,79,0.06)] sm:p-8 lg:p-10">
           <div className="grid gap-8 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:items-start lg:gap-14">
@@ -41,8 +38,8 @@ export default function LifeCareers() {
                 where structure and adaptability both matter.
               </p>
               <p className="border-t border-brand-secondary/10 pt-5 text-base leading-8 text-brand-secondary/72 sm:text-lg">
-                This section is designed to work like a live job board, so open
-                roles can be updated here as the team grows.
+                We are currently hiring for two openings. Open roles can be
+                updated here as the team grows.
               </p>
             </div>
 
@@ -71,7 +68,7 @@ export default function LifeCareers() {
                       href="/contact-us"
                       className="btn-brand-primary inline-flex min-h-11 items-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold"
                     >
-                      Apply for this position
+                      Apply
                       <ArrowUpRight className="h-4 w-4" />
                     </Link>
                   </div>
