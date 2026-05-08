@@ -47,7 +47,7 @@ const officeLocations = [
 const serviceOptions = [
   "Construction Support",
   "Finance Support",
-  "General Inquiry",
+  "General Enquiry",
 ];
 
 const socialLinks = [
@@ -83,7 +83,7 @@ export default function ContactContent() {
               </h2>
               <p className="max-w-xl text-base leading-8 text-brand-secondary/72 sm:text-lg">
                 Tell us what support you&apos;re looking for and we&apos;ll route
-                your inquiry to the right team across construction, finance, or
+                your enquiry to the right team across construction, finance, or
                 ProEstimate services.
               </p>
             </div>
@@ -176,7 +176,7 @@ export default function ContactContent() {
             <div className="rounded-lg border border-white/80 bg-white p-5 sm:p-6 lg:p-7">
               <div className="space-y-4">
                 <p className="text-sm font-semibold tracking-[0.16em] text-brand-primary uppercase">
-                  Send an Inquiry
+                  Send an Enquiry
                 </p>
                 <h3 className="text-3xl font-semibold tracking-[-0.04em] text-brand-secondary">
                   Tell us what you need
@@ -305,7 +305,7 @@ export default function ContactContent() {
                   type="submit"
                   className="btn-brand-primary inline-flex min-h-12 items-center justify-center rounded-lg px-6 py-3 text-base font-semibold"
                 >
-                  Submit Inquiry
+                  Submit Enquiry
                 </button>
               </form>
             </div>
