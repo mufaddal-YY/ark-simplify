@@ -33,8 +33,10 @@ const contactItems = [
   {
     label: "ARK Construction (India)",
     value: "+91 8668473798",
-    href: "tel:+918668473798",
+    href: "https://wa.me/918668473798",
     icon: FiPhone,
+    target: "_blank",
+    rel: "noreferrer",
   },
   {
     label: "Head Office",
@@ -160,10 +162,12 @@ export default function SiteFooter() {
                 Contact
               </h3>
               <div className="space-y-2">
-                {contactItems.map(({ label, value, href, icon: Icon }) => (
+                {contactItems.map(({ label, value, href, icon: Icon, target, rel }) => (
                   <Link
                     key={label}
                     href={href}
+                    target={target}
+                    rel={rel}
                     className="flex gap-2.5 rounded-lg border border-brand-secondary/10 bg-brand-surface px-3 py-2 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-primary/24 hover:bg-white"
                   >
                     <span className="mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white text-brand-primary shadow-sm">

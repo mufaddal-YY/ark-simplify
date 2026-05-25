@@ -18,8 +18,10 @@ const contactMethods = [
   {
     label: "India Contact",
     value: "+91 8668473798",
-    href: "tel:+918668473798",
+    href: "https://wa.me/918668473798",
     icon: FiPhone,
+    target: "_blank",
+    rel: "noreferrer",
   },
   {
     label: "Email",
@@ -94,10 +96,12 @@ export default function ContactContent() {
                   Direct Contact
                 </p>
                 <div className="space-y-3">
-                  {contactMethods.map(({ label, value, href, icon: Icon }) => (
+                  {contactMethods.map(({ label, value, href, icon: Icon, target, rel }) => (
                     <Link
                       key={label}
                       href={href}
+                      target={target}
+                      rel={rel}
                       className="flex items-start gap-4 rounded-lg border border-white/10 bg-white/6 px-4 py-4 transition-all duration-300 hover:border-white/18 hover:bg-white/9"
                     >
                       <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-white/12 bg-white/8 text-white">
