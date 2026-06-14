@@ -1,4 +1,5 @@
 import "./globals.css";
+import { GoogleTagManager } from "@next/third-parties/google";
 import SiteHeader from "@/components/nav/header";
 import SiteFooter from "@/components/nav/footer";
 import SiteOfferFloat from "@/components/common/site-offer-float";
@@ -51,7 +52,16 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full antialiased">
+      <GoogleTagManager gtmId="GTM-WDD6LGCG" />
       <body className="min-h-full flex flex-col">
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-WDD6LGCG"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
         <SiteHeader />
         {children}
         <SiteFooter />

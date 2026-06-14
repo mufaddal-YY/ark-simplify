@@ -1,10 +1,15 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import {
   FiArrowUpRight,
+  FiCheckCircle,
   FiClock,
   FiMail,
   FiMapPin,
   FiPhone,
+  FiX,
 } from "react-icons/fi";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 
@@ -71,6 +76,14 @@ const socialLinks = [
 ];
 
 export default function ContactContent() {
+  const [isSuccessOpen, setIsSuccessOpen] = useState(false);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    event.currentTarget.reset();
+    setIsSuccessOpen(true);
+  }
+
   return (
     <section className="bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
       <div className="mx-auto max-w-7xl">
@@ -191,7 +204,7 @@ export default function ContactContent() {
                 </p>
               </div>
 
-              <form className="mt-8 space-y-5">
+              <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div className="space-y-2">
                     <label
@@ -316,6 +329,59 @@ export default function ContactContent() {
           </div>
         </div>
       </div>
+
+      {isSuccessOpen ? (
+        <div
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-brand-secondary/60 px-4 py-6 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="enquiry-success-title"
+        >
+          <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-[0_30px_100px_rgba(8,12,20,0.28)] sm:p-7">
+            <div className="flex items-start justify-between gap-4">
+              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-brand-primary/10 text-brand-primary">
+                <FiCheckCircle className="h-6 w-6" />
+              </span>
+              <button
+                type="button"
+                aria-label="Close thank you message"
+                onClick={() => setIsSuccessOpen(false)}
+                className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-brand-secondary/12 text-brand-secondary/62 transition-colors hover:border-brand-primary hover:text-brand-primary"
+              >
+                <FiX className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="mt-5 space-y-3">
+              <h3
+                id="enquiry-success-title"
+                className="text-2xl font-semibold tracking-[-0.03em] text-brand-secondary"
+              >
+                Thank you for your enquiry.
+              </h3>
+              <p className="text-base leading-7 text-brand-secondary/72">
+                Your form has been submitted successfully. Our team will get in
+                touch with you soon.
+              </p>
+              <Link
+                href="/contact-us"
+                className="inline-flex break-all text-sm font-semibold text-brand-primary underline-offset-4 hover:underline"
+                onClick={() => setIsSuccessOpen(false)}
+              >
+                https://www.arksimplify.com/contact-us
+              </Link>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setIsSuccessOpen(false)}
+              className="btn-brand-primary mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold"
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 }
