@@ -80,6 +80,11 @@ export default function ContactContent() {
 
   function handleSubmit(event) {
     event.preventDefault();
+    if (!event.currentTarget.checkValidity()) {
+      event.currentTarget.reportValidity();
+      return;
+    }
+
     event.currentTarget.reset();
     window.history.pushState(null, "", "/contact-us/#thankyou");
     setIsSuccessOpen(true);
@@ -223,6 +228,7 @@ export default function ContactContent() {
                       id="contact-name"
                       name="name"
                       type="text"
+                      required
                       placeholder="Your full name"
                       className="h-12 w-full rounded-lg border border-brand-secondary/12 bg-white px-4 text-sm font-medium text-brand-secondary outline-none transition-colors focus:border-brand-primary"
                     />
@@ -239,6 +245,7 @@ export default function ContactContent() {
                       id="contact-company"
                       name="company"
                       type="text"
+                      required
                       placeholder="Your company name"
                       className="h-12 w-full rounded-lg border border-brand-secondary/12 bg-white px-4 text-sm font-medium text-brand-secondary outline-none transition-colors focus:border-brand-primary"
                     />
@@ -257,6 +264,7 @@ export default function ContactContent() {
                       id="contact-email"
                       name="email"
                       type="email"
+                      required
                       placeholder="you@company.com"
                       className="h-12 w-full rounded-lg border border-brand-secondary/12 bg-white px-4 text-sm font-medium text-brand-secondary outline-none transition-colors focus:border-brand-primary"
                     />
@@ -273,6 +281,7 @@ export default function ContactContent() {
                       id="contact-designation"
                       name="designation"
                       type="text"
+                      required
                       placeholder="Your designation"
                       className="h-12 w-full rounded-lg border border-brand-secondary/12 bg-white px-4 text-sm font-medium text-brand-secondary outline-none transition-colors focus:border-brand-primary"
                     />
@@ -291,6 +300,7 @@ export default function ContactContent() {
                       id="contact-service"
                       name="service"
                       defaultValue=""
+                      required
                       className="h-12 w-full appearance-none rounded-lg border border-brand-secondary/12 bg-white px-4 pr-12 text-sm font-medium text-brand-secondary outline-none transition-colors focus:border-brand-primary"
                     >
                       <option value="" disabled>
@@ -319,6 +329,7 @@ export default function ContactContent() {
                     id="contact-message"
                     name="message"
                     rows={7}
+                    required
                     placeholder="Tell us a little about your requirement."
                     className="w-full rounded-lg border border-brand-secondary/12 bg-white px-4 py-3 text-sm font-medium leading-7 text-brand-secondary outline-none transition-colors focus:border-brand-primary"
                   />
