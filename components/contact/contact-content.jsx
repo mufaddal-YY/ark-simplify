@@ -81,7 +81,13 @@ export default function ContactContent() {
   function handleSubmit(event) {
     event.preventDefault();
     event.currentTarget.reset();
+    window.history.pushState(null, "", "/contact-us/#thankyou");
     setIsSuccessOpen(true);
+  }
+
+  function closeSuccessPopup() {
+    window.history.pushState(null, "", "/contact-us");
+    setIsSuccessOpen(false);
   }
 
   return (
@@ -345,7 +351,7 @@ export default function ContactContent() {
               <button
                 type="button"
                 aria-label="Close thank you message"
-                onClick={() => setIsSuccessOpen(false)}
+                onClick={closeSuccessPopup}
                 className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-brand-secondary/12 text-brand-secondary/62 transition-colors hover:border-brand-primary hover:text-brand-primary"
               >
                 <FiX className="h-5 w-5" />
@@ -363,18 +369,11 @@ export default function ContactContent() {
                 Your form has been submitted successfully. Our team will get in
                 touch with you soon.
               </p>
-              <Link
-                href="/contact-us"
-                className="inline-flex break-all text-sm font-semibold text-brand-primary underline-offset-4 hover:underline"
-                onClick={() => setIsSuccessOpen(false)}
-              >
-                https://www.arksimplify.com/contact-us
-              </Link>
             </div>
 
             <button
               type="button"
-              onClick={() => setIsSuccessOpen(false)}
+              onClick={closeSuccessPopup}
               className="btn-brand-primary mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold"
             >
               Continue
