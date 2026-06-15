@@ -22,6 +22,9 @@ export const metadata = {
   ],
   applicationName: "ARK Simplify",
   category: "business",
+  verification: {
+    google: "NOGngijBnI1yiu5tnyiCdl7FFNA0dK9qMDIAlZFGpAk",
+  },
   icons: {
     icon: "/logo_icon.png",
     shortcut: "/logo_icon.png",
