@@ -6,20 +6,38 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-const services = [
-  {
-    title: "Simplifying Construction",
-    description:
-      "Execution support, coordination systems, and delivery ownership for project-led teams.",
+const defaultHeroBanner = {
+  badge: "Support Built Around You",
+  titleStart: "Simplifying",
+  highlightedTitle: "complex work",
+  titleEnd: "for growing organizations.",
+  description:
+    "Ark Simplify supports construction, manufacturing, and process-driven businesses with dependable operational, delivery, and financial execution.",
+  primaryCta: {
+    label: "Start a Project",
+    href: "/contact-us",
   },
-  {
-    title: "Simplifying Finance",
-    description:
-      "Structured financial operations support for organizations that need dependable scale.",
+  secondaryCta: {
+    label: "Learn More",
+    href: "/about-us",
   },
-];
+  slides: [
+    {
+      title: "Simplifying Construction",
+      description:
+        "Execution support, coordination systems, and delivery ownership for project-led teams.",
+    },
+    {
+      title: "Simplifying Finance",
+      description:
+        "Structured financial operations support for organizations that need dependable scale.",
+    },
+  ],
+};
 
-export default function HomeHero() {
+export default function HomeHero({ data }) {
+  const hero = data ?? defaultHeroBanner;
+  const services = hero.slides?.length ? hero.slides : defaultHeroBanner.slides;
   const [activeIndex, setActiveIndex] = useState(0);
   const [rotation, setRotation] = useState(0);
 
@@ -42,7 +60,7 @@ export default function HomeHero() {
     }, 6200);
 
     return () => window.clearInterval(autoplay);
-  }, []);
+  }, [services.length]);
 
   return (
     <section className="relative overflow-hidden bg-[#151827] px-4 pt-36 pb-16 sm:-mt-28 sm:px-6 sm:pt-56 sm:pb-20 lg:px-8 lg:pt-34 lg:pb-14">
@@ -55,35 +73,35 @@ export default function HomeHero() {
               <div className="space-y-7">
                 <div className="space-y-4">
                   <p className="inline-flex rounded-lg border border-white/18 bg-transparent px-4 py-2 text-xs font-semibold tracking-[0.16em] text-white uppercase">
-                    Support Built Around You
+                    {hero.badge}
                   </p>
                 </div>
 
                 <h1 className="max-w-3xl text-4xl leading-[1.2] font-semibold tracking-[-0.05em] text-white sm:text-6xl lg:text-6xl">
-                  Simplifying{" "}
-                  <span className="text-brand-primary">complex work</span> for
-                  growing organizations.
+                  {hero.titleStart}{" "}
+                  <span className="text-brand-primary">
+                    {hero.highlightedTitle}
+                  </span>{" "}
+                  {hero.titleEnd}
                 </h1>
 
                 <p className="max-w-xl text-base leading-7 text-white/72 sm:text-lg">
-                  Ark Simplify supports construction, manufacturing, and
-                  process-driven businesses with dependable operational,
-                  delivery, and financial execution.
+                  {hero.description}
                 </p>
               </div>
 
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                 <Link
-                  href="/contact-us"
+                  href={hero.primaryCta?.href ?? defaultHeroBanner.primaryCta.href}
                   className="btn-brand-primary inline-flex min-h-13 items-center justify-center rounded-lg px-7 py-3 text-base font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_0px_14px_rgba(255,73,0,0.28)]"
                 >
-                  Start a Project
+                  {hero.primaryCta?.label ?? defaultHeroBanner.primaryCta.label}
                 </Link>
                 <Link
-                  href="/about-us"
+                  href={hero.secondaryCta?.href ?? defaultHeroBanner.secondaryCta.href}
                   className="inline-flex min-h-12 items-center justify-center rounded-lg px-2 py-3 text-base font-semibold text-white/82 transition-colors duration-300 hover:text-brand-primary"
                 >
-                  Learn More
+                  {hero.secondaryCta?.label ?? defaultHeroBanner.secondaryCta.label}
                 </Link>
               </div>
 

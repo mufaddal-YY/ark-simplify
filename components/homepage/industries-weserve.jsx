@@ -6,40 +6,59 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-const industries = [
-  {
-    name: "Construction",
+const defaultIndustriesSection = {
+  eyebrow: "Industries We Serve",
+  title: "Flexible support built around how different teams actually work.",
+  description:
+    "We tailor our delivery model to the operational realities of each industry, so the support feels embedded, dependable, and ready to scale with the team.",
+  industries: [
+    {
+      name: "Construction",
+      logo: "/const_logo.png",
+      logoAlt: "Construction logo",
+      accent: "construction",
+      href: "/construction",
+      image: "/construction_industry.jpg",
+      imageAlt: "Construction industry",
+      blurb:
+        "We support construction and manufacturing teams with preconstruction, detailing, and project management services. Our scope and deliverables are defined based on whether we are working with general contractors, subcontractors, or manufacturers, ensuring the work fits how each role operates.",
+      highlights: [
+        "Preconstruction",
+        "Detailing",
+        "Project Management",
+        "Role-specific delivery",
+      ],
+    },
+    {
+      name: "Finance",
+      logo: "/logo_finance.png",
+      logoAlt: "Finance logo",
+      accent: "finance",
+      href: "/finance",
+      image: "/finance_industry.jpg",
+      imageAlt: "Finance industry",
+      blurb:
+        "We support businesses with core financial and operational functions including inventory management, purchase order processing, bookkeeping, and AP/AR. While we work closely with construction-related businesses, our finance services also support teams in other industries that need dependable financial processes as they grow.",
+      highlights: [
+        "Inventory Management",
+        "Purchase Order Processing",
+        "Bookkeeping",
+        "AP/AR",
+      ],
+    },
+  ],
+};
+
+const industryAssetFallbacks = {
+  Construction: {
     logo: "/const_logo.png",
-    logoAlt: "Construction logo",
-    accent: "construction",
-    href: "/construction",
     image: "/construction_industry.jpg",
-    blurb:
-      "We support construction and manufacturing teams with preconstruction, detailing, and project management services. Our scope and deliverables are defined based on whether we are working with general contractors, subcontractors, or manufacturers, ensuring the work fits how each role operates.",
-    highlights: [
-      "Preconstruction",
-      "Detailing",
-      "Project Management",
-      "Role-specific delivery",
-    ],
   },
-  {
-    name: "Finance",
+  Finance: {
     logo: "/logo_finance.png",
-    logoAlt: "Finance logo",
-    accent: "finance",
-    href: "/finance",
     image: "/finance_industry.jpg",
-    blurb:
-      "We support businesses with core financial and operational functions including inventory management, purchase order processing, bookkeeping, and AP/AR. While we work closely with construction-related businesses, our finance services also support teams in other industries that need dependable financial processes as they grow.",
-    highlights: [
-      "Inventory Management",
-      "Purchase Order Processing",
-      "Bookkeeping",
-      "AP/AR",
-    ],
   },
-];
+};
 
 const accentStyles = {
   construction: {
@@ -56,7 +75,25 @@ const accentStyles = {
   },
 };
 
-export default function IndustriesWeServe({ preview = false }) {
+export default function IndustriesWeServe({ data, preview = false }) {
+  const section = data ?? defaultIndustriesSection;
+  const industries = (
+    section.industries?.length
+      ? section.industries
+      : defaultIndustriesSection.industries
+  ).map((industry) => ({
+    ...industry,
+    logo:
+      industry.logoUrl ??
+      industry.logo ??
+      industryAssetFallbacks[industry.name]?.logo ??
+      defaultIndustriesSection.industries[0].logo,
+    image:
+      industry.imageUrl ??
+      industry.image ??
+      industryAssetFallbacks[industry.name]?.image ??
+      defaultIndustriesSection.industries[0].image,
+  }));
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -87,7 +124,7 @@ export default function IndustriesWeServe({ preview = false }) {
     }, 7200);
 
     return () => window.clearInterval(autoplay);
-  }, [isPaused]);
+  }, [industries.length, isPaused]);
 
   const activeIndustry = industries[activeIndex];
   const accent = accentStyles[activeIndustry.accent];
@@ -110,15 +147,13 @@ export default function IndustriesWeServe({ preview = false }) {
             }`}
           >
             <p className={`text-sm font-semibold text-brand-primary uppercase ${preview ? "tracking-[0.18em]" : "tracking-[0.16em]"}`}>
-              Industries We Serve
+              {section.eyebrow ?? defaultIndustriesSection.eyebrow}
             </p>
             <h2 className={`font-semibold text-brand-secondary ${preview ? "text-4xl leading-[0.98] tracking-[-0.06em] lg:text-5xl" : "text-4xl leading-tight tracking-[-0.04em] lg:text-5xl"}`}>
-              Flexible support built around how different teams actually work.
+              {section.title ?? defaultIndustriesSection.title}
             </h2>
             <p className={`max-w-2xl text-base leading-8 sm:text-lg ${preview ? "text-brand-secondary/68" : "text-brand-secondary/72"}`}>
-              We tailor our delivery model to the operational realities of each
-              industry, so the support feels embedded, dependable, and ready to
-              scale with the team.
+              {section.description ?? defaultIndustriesSection.description}
             </p>
           </div>
 
@@ -259,7 +294,7 @@ export default function IndustriesWeServe({ preview = false }) {
                 >
                   <Image
                     src={activeIndustry.image}
-                    alt={`${activeIndustry.name} industry`}
+                    alt={activeIndustry.imageAlt ?? `${activeIndustry.name} industry`}
                     fill
                     className="object-cover"
                   />

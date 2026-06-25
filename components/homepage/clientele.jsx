@@ -5,25 +5,34 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-const clientLogoPaths = [
-  "/client/AG LOGO.png",
-  "/client/BH logo.webp",
-  "/client/CG-Logo-550.png",
-  "/client/Company Logo tech build.avif",
-  "/client/Newport-logo.webp",
-  "/client/Rapid doors logo.webp",
-  "/client/UFD_logo.jpg",
-  "/client/builders of metro atlanta.avif",
-  "/client/doorways logo.webp",
-  "/client/hynes-50-years-logo-1.webp",
-  "/client/logo smart shield.png",
-];
-
-const clienteleLogos = clientLogoPaths.map((src, index) => ({
-  id: index + 1,
-  name: `Client logo ${index + 1}`,
-  src,
-}));
+const defaultClienteleSection = {
+  eyebrow: "Clientele",
+  titleStart: "OUR",
+  highlightedTitle: "CLIENTELE",
+  description:
+    "Trusted by teams that value dependable execution, structured delivery, and long-term operational support.",
+  supportingText:
+    "Partnering with growth-focused teams across construction, operations, finance, and delivery support.",
+  networkLabel: "Client Network",
+  logos: [
+    "/client/AG LOGO.png",
+    "/client/BH logo.webp",
+    "/client/CG-Logo-550.png",
+    "/client/Company Logo tech build.avif",
+    "/client/Newport-logo.webp",
+    "/client/Rapid doors logo.webp",
+    "/client/UFD_logo.jpg",
+    "/client/builders of metro atlanta.avif",
+    "/client/doorways logo.webp",
+    "/client/hynes-50-years-logo-1.webp",
+    "/client/logo smart shield.png",
+  ].map((src, index) => ({
+    _key: `default-logo-${index + 1}`,
+    name: `Client logo ${index + 1}`,
+    alt: `Client logo ${index + 1}`,
+    logoUrl: src,
+  })),
+};
 
 const logosPerSlide = 9;
 
@@ -37,10 +46,29 @@ function chunkLogos(logos, size) {
   return chunks;
 }
 
-const logoSlides = chunkLogos(clienteleLogos, logosPerSlide);
-
-export default function Clientele({ preview = false }) {
+export default function Clientele({ data, preview = false }) {
+  const section = data ?? defaultClienteleSection;
+  const validLogos = (
+    section.logos?.length ? section.logos : defaultClienteleSection.logos
+  )
+    .filter((logo) => logo.logoUrl)
+    .map((logo, index) => ({
+      id: logo._key ?? logo.name ?? index,
+      name: logo.name ?? logo.alt ?? `Client logo ${index + 1}`,
+      alt: logo.alt ?? logo.name ?? `Client logo ${index + 1}`,
+      src: logo.logoUrl,
+    }));
+  const logos = validLogos.length
+    ? validLogos
+    : defaultClienteleSection.logos.map((logo, index) => ({
+        id: logo._key ?? index,
+        name: logo.name,
+        alt: logo.alt,
+        src: logo.logoUrl,
+      }));
+  const logoSlides = chunkLogos(logos, logosPerSlide);
   const [activeSlide, setActiveSlide] = useState(0);
+  const visibleSlide = Math.min(activeSlide, logoSlides.length - 1);
 
   const handlePrevious = () => {
     setActiveSlide(
@@ -53,12 +81,16 @@ export default function Clientele({ preview = false }) {
   };
 
   useEffect(() => {
+    if (logoSlides.length <= 1) {
+      return undefined;
+    }
+
     const autoplay = window.setInterval(() => {
       setActiveSlide((current) => (current + 1) % logoSlides.length);
     }, 6200);
 
     return () => window.clearInterval(autoplay);
-  }, []);
+  }, [logoSlides.length]);
 
   return (
     <section className={preview ? "bg-[#f7f5ef]" : "bg-white"}>
@@ -71,16 +103,18 @@ export default function Clientele({ preview = false }) {
             <div className="relative z-10 space-y-10">
               <div className="space-y-5">
                 <p className="text-sm font-semibold tracking-[0.18em] text-white/68 uppercase">
-                  Clientele
+                  {section.eyebrow ?? defaultClienteleSection.eyebrow}
                 </p>
                 <div className="h-px w-16 bg-brand-primary" />
                 <div className="space-y-2 text-4xl font-semibold leading-none tracking-[-0.07em] sm:text-5xl">
-                  <p>OUR</p>
-                  <p className="text-brand-primary">CLIENTELE</p>
+                  <p>{section.titleStart ?? defaultClienteleSection.titleStart}</p>
+                  <p className="text-brand-primary">
+                    {section.highlightedTitle ??
+                      defaultClienteleSection.highlightedTitle}
+                  </p>
                 </div>
                 <p className="max-w-sm text-base leading-8 text-white/76 sm:text-lg">
-                  Trusted by teams that value dependable execution, structured
-                  delivery, and long-term operational support.
+                  {section.description ?? defaultClienteleSection.description}
                 </p>
               </div>
 
@@ -90,8 +124,7 @@ export default function Clientele({ preview = false }) {
             <div className="relative z-10 space-y-5 pt-8">
               <div className="h-px w-full max-w-[16rem] bg-white/18" />
               <p className="max-w-xs text-sm leading-7 text-white/72 sm:text-base">
-                Partnering with growth-focused teams across construction,
-                operations, finance, and delivery support.
+                {section.supportingText ?? defaultClienteleSection.supportingText}
               </p>
             </div>
           </div>
@@ -100,7 +133,7 @@ export default function Clientele({ preview = false }) {
           <div className="flex min-h-full flex-col bg-white">
             <div className="flex items-center justify-between border-b border-brand-secondary/10 px-5 py-4 sm:px-6 lg:px-10">
               <p className="text-sm font-semibold tracking-[0.14em] text-brand-secondary/56 uppercase">
-                Client Network
+                {section.networkLabel ?? defaultClienteleSection.networkLabel}
               </p>
 
               {logoSlides.length > 1 ? (
@@ -132,7 +165,7 @@ export default function Clientele({ preview = false }) {
                   exit={{ opacity: 0, x: -28 }}
                   transition={{ duration: 0.32, ease: "easeOut" }}
                   className="grid grid-cols-2 bg-white sm:grid-cols-3">
-                  {logoSlides[activeSlide].map((logo, index) => (
+                  {logoSlides[visibleSlide]?.map((logo, index) => (
                     <div
                       key={logo.id}
                       className={`group flex min-h-[8rem] items-center justify-center border-brand-secondary/10 px-6 py-8 sm:min-h-[9rem] lg:min-h-[10rem] ${
@@ -143,7 +176,7 @@ export default function Clientele({ preview = false }) {
                       <div className="flex min-h-[5.5rem] w-full max-w-[13rem] items-center justify-center rounded-lg bg-white px-4 py-3 transition-all duration-300">
                         <Image
                           src={logo.src}
-                          alt={logo.name}
+                          alt={logo.alt}
                           width={180}
                           height={96}
                           className="h-auto max-h-16 w-auto object-contain opacity-80 transition-all duration-300 group-hover:scale-[1.04] group-hover:opacity-100 sm:max-h-20"
@@ -168,14 +201,14 @@ export default function Clientele({ preview = false }) {
                           index === activeSlide
                             ? "w-10 bg-brand-primary"
                             : "w-4 bg-brand-secondary/14"
-                        }`}
+                          }`}
                       />
                     ))
                   : null}
               </div>
 
               <p className="text-sm font-medium text-brand-secondary/48">
-                {String(activeSlide + 1).padStart(2, "0")} /{" "}
+                {String(visibleSlide + 1).padStart(2, "0")} /{" "}
                 {String(logoSlides.length).padStart(2, "0")}
               </p>
             </div>

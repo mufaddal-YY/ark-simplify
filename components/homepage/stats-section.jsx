@@ -2,31 +2,38 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const stats = [
-  {
-    value: 5825,
-    label: "No. of Projects",
-    microLabel: "Delivered across supported engagements",
-  },
-  {
-    value: 66810,
-    label: "Total Units",
-    microLabel: "Measured across tracked project scopes",
-  },
-  {
-    value: 45330,
-    suffix: " hrs",
-    label: "Manhours Saved",
-    microLabel: "Total saved hours represented in supported delivery",
-  },
-  {
-    value: 300,
-    prefix: "$",
-    suffix: "m",
-    label: "Bid Amount",
-    microLabel: "Combined bid value across tracked scopes",
-  },
-];
+const defaultStatsSection = {
+  eyebrow: "Delivery Results",
+  title: "Consistent support, measured across real delivery.",
+  description:
+    "The same operating discipline behind our construction, finance, and project support work, shown through the numbers teams rely on.",
+  resultsLabel: "Key Results",
+  stats: [
+    {
+      value: 5825,
+      label: "No. of Projects",
+      microLabel: "Delivered across supported engagements",
+    },
+    {
+      value: 66810,
+      label: "Total Units",
+      microLabel: "Measured across tracked project scopes",
+    },
+    {
+      value: 45330,
+      suffix: " hrs",
+      label: "Manhours Saved",
+      microLabel: "Total saved hours represented in supported delivery",
+    },
+    {
+      value: 300,
+      prefix: "$",
+      suffix: "m",
+      label: "Bid Amount",
+      microLabel: "Combined bid value across tracked scopes",
+    },
+  ],
+};
 
 function CounterStat({
   value,
@@ -112,7 +119,10 @@ function CounterStat({
   );
 }
 
-export default function StatsSection() {
+export default function StatsSection({ data }) {
+  const section = data ?? defaultStatsSection;
+  const stats = section.stats?.length ? section.stats : defaultStatsSection.stats;
+
   return (
     <section className="relative overflow-hidden bg-[#151827] px-4 py-18 text-white sm:px-6 sm:py-24 lg:px-8">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(54,59,79,0.72),transparent_34%),radial-gradient(circle_at_76%_18%,rgba(255,73,0,0.025),transparent_28%),linear-gradient(135deg,rgba(54,59,79,0.62),rgba(10,12,20,0.94)_58%)]" />
@@ -122,25 +132,24 @@ export default function StatsSection() {
         <div className="space-y-7">
           <div className="space-y-3">
             <p className="inline-flex rounded-lg border border-white/12 bg-white/6 px-4 py-2 text-xs font-semibold tracking-[0.18em] text-white/64 uppercase">
-              Delivery Results
+              {section.eyebrow ?? defaultStatsSection.eyebrow}
             </p>
             <div className="h-px w-12 bg-brand-primary/70" />
           </div>
 
           <div className="space-y-5">
             <h2 className="max-w-xl text-4xl leading-[1.02] font-semibold tracking-[-0.06em] text-white lg:text-5xl">
-              Consistent support, measured across real delivery.
+              {section.title ?? defaultStatsSection.title}
             </h2>
             <p className="max-w-xl text-base leading-8 text-white/64 sm:text-lg">
-              The same operating discipline behind our construction, finance,
-              and project support work, shown through the numbers teams rely on.
+              {section.description ?? defaultStatsSection.description}
             </p>
           </div>
         </div>
 
         <div className="rounded-lg border border-brand-secondary/72 bg-[#0d101c]/76 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] sm:p-6 lg:p-8">
           <p className="mb-6 text-xs font-semibold tracking-[0.22em] text-white/58 uppercase">
-            Key Results
+            {section.resultsLabel ?? defaultStatsSection.resultsLabel}
           </p>
 
           <div className="grid gap-4 sm:grid-cols-2">
