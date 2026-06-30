@@ -7,35 +7,54 @@ const supportPoints = [
   "Progress reporting and communication",
 ];
 
-export default function ProjectManagementSupport() {
+const defaultProjectSupport = {
+  titleStart: "Project management",
+  highlightedTitle: "support",
+  tagline:
+    "Operational support that keeps execution structured, visible, and moving.",
+  description:
+    "Ark provides operational project management support across manufacturers, general contractors, & subcontractors. This service focuses on maintaining structure and visibility across the execution phase of a project.",
+  supportLabel: "Core support areas include",
+  supportPoints,
+  onboardingLabel: "Onboarding approach",
+  onboardingText:
+    "Each engagement begins with a short onboarding phase to align tools, workflows, and reporting expectations with the client’s team. This allows Ark’s project managers to integrate quickly and support project execution without disrupting existing processes.",
+  imageUrl: "/construction/project-management.jpg",
+  imageAlt: "Construction project management support",
+};
+
+export default function ProjectManagementSupport({ data }) {
+  const section = data ?? defaultProjectSupport;
+  const points = section.supportPoints?.length
+    ? section.supportPoints
+    : defaultProjectSupport.supportPoints;
+
   return (
     <section className="bg-brand-surface px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:items-start lg:gap-16">
           <div className="space-y-5">
             <h2 className="max-w-2xl text-4xl font-semibold leading-tight tracking-[-0.04em] text-brand-secondary lg:text-5xl">
-              Project management{" "}
-              <span className="text-brand-primary">support</span>
+              {section.titleStart ?? defaultProjectSupport.titleStart}{" "}
+              <span className="text-brand-primary">
+                {section.highlightedTitle ?? defaultProjectSupport.highlightedTitle}
+              </span>
             </h2>
             <div className="h-px w-16 bg-brand-primary" />
             <p className="max-w-3xl text-xl font-semibold leading-snug tracking-[-0.03em] text-brand-secondary sm:text-xl">
-              Operational support that keeps execution structured, visible, and
-              moving.
+              {section.tagline ?? defaultProjectSupport.tagline}
             </p>
             <p className="max-w-3xl text-base leading-7 text-brand-secondary/72 sm:text-lg">
-              Ark provides operational project management support across
-              manufacturers, general contractors, & subcontractors. This
-              service focuses on maintaining structure and visibility across
-              the execution phase of a project.
+              {section.description ?? defaultProjectSupport.description}
             </p>
 
             <div className="space-y-3 border-t border-brand-secondary/10 pt-5">
               <p className="text-md font-semibold text-brand-secondary uppercase">
-                Core support areas include
+                {section.supportLabel ?? defaultProjectSupport.supportLabel}
               </p>
 
               <ul className="grid gap-x-8 gap-y-3 sm:grid-cols-2">
-                {supportPoints.map((point) => (
+                {points.map((point) => (
                   <li
                     key={point}
                     className="grid grid-cols-[0.5rem_minmax(0,1fr)] gap-3 text-base leading-6 text-brand-secondary/78"
@@ -49,21 +68,18 @@ export default function ProjectManagementSupport() {
 
             <div className="space-y-3 border-t border-brand-secondary/10 pt-5">
               <p className="text-md font-semibold text-brand-secondary uppercase">
-                Onboarding approach
+                {section.onboardingLabel ?? defaultProjectSupport.onboardingLabel}
               </p>
               <p className="max-w-3xl text-base leading-7 text-brand-secondary/72 sm:text-lg">
-              Each engagement begins with a short onboarding phase to align
-              tools, workflows, and reporting expectations with the client’s
-              team. This allows Ark’s project managers to integrate quickly and
-              support project execution without disrupting existing processes.
+                {section.onboardingText ?? defaultProjectSupport.onboardingText}
               </p>
             </div>
           </div>
 
           <div className="overflow-hidden rounded-lg border border-brand-secondary/10 bg-[#0b0f1a]">
             <Image
-              src="/construction/project-management.jpg"
-              alt="Construction project management support"
+              src={section.imageUrl ?? defaultProjectSupport.imageUrl}
+              alt={section.imageAlt ?? defaultProjectSupport.imageAlt}
               width={1200}
               height={900}
               className="aspect-video w-full object-cover lg:min-h-[32rem]"

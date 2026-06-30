@@ -4,21 +4,24 @@ import FinanceServices from "@/components/finance/finance-services";
 import FinancePartners from "@/components/finance/finance-partners";
 import FinanceSoftwareTools from "@/components/finance/finance-software-tools";
 import CTA_common from "@/components/common/CTA_common";
+import { generateSeoMetadata, getFinancePage } from "@/sanity/fetch";
 
-export const metadata = {
-  title: "Finance",
-  description:
-    "Finance and operational support across inventory management, purchase order processing, bookkeeping, and AP/AR workflows for growing organizations.",
-};
+export const revalidate = 60;
 
-export default function FinancePage() {
+export function generateMetadata() {
+  return generateSeoMetadata("finance", { path: "/finance", revalidate });
+}
+
+export default async function FinancePage() {
+  const financePage = await getFinancePage({ revalidate });
+
   return (
     <main className="flex-1">
-      <FinanceBanner />
-      <FinanceOverview />
-      <FinanceServices />
-      <FinancePartners />
-      <FinanceSoftwareTools />
+      <FinanceBanner data={financePage?.banner} />
+      <FinanceOverview data={financePage?.overview} />
+      <FinanceServices data={financePage?.services} />
+      <FinancePartners data={financePage?.partners} />
+      <FinanceSoftwareTools data={financePage?.softwareTools} />
       <CTA_common />
     </main>
   );

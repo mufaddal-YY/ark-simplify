@@ -362,27 +362,57 @@ const divisions = [
   },
 ];
 
-export default function ProEstimateDivisions() {
+const defaultDivisionsSection = {
+  eyebrow: "Ark Simplify Construction",
+  title:
+    "Professional ProEstimates designed to eliminate guesswork, control costs, and give your project a competitive edge",
+  divisionEyebrow: "ProEstimate",
+  divisions,
+};
+
+function getDivisionNumber(division) {
+  return Number(
+    division.number ?? division.title?.match(/Division\s+(\d+)/)?.[1],
+  );
+}
+
+function normalizeDivision(division) {
+  const divisionNumber = getDivisionNumber(division);
+
+  return {
+    ...division,
+    number: divisionNumber,
+    imageUrl:
+      division.imageUrl ??
+      division.image ??
+      divisionImageMap[divisionNumber] ??
+      "/construction_industry.jpg",
+    imageAlt: division.imageAlt ?? division.title,
+  };
+}
+
+export default function ProEstimateDivisions({ data }) {
+  const section = data ?? defaultDivisionsSection;
+  const normalizedDivisions = (section.divisions?.length
+    ? section.divisions
+    : defaultDivisionsSection.divisions
+  ).map(normalizeDivision);
+
   return (
     <section className="bg-brand-surface px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
       <div className="mx-auto max-w-7xl space-y-5">
         <div className="space-y-4 pb-4 text-center">
           <p className="text-sm font-semibold tracking-[0.16em] text-brand-primary uppercase">
-            Ark Simplify Construction
+            {section.eyebrow ?? defaultDivisionsSection.eyebrow}
           </p>
           <h2 className="text-4xl font-semibold tracking-[-0.04em] text-brand-secondary lg:text-5xl">
-            Professional ProEstimates designed to eliminate guesswork, control costs, and give your project a competitive edge
+            {section.title ?? defaultDivisionsSection.title}
           </h2>
         </div>
 
         <div className="space-y-5 lg:space-y-6">
-          {divisions.map((division, index) => {
+          {normalizedDivisions.map((division, index) => {
             const imageFirst = index % 2 === 0;
-            const divisionNumber = Number(
-              division.title.match(/Division\s+(\d+)/)?.[1],
-            );
-            const divisionImage =
-              divisionImageMap[divisionNumber] ?? "/construction_industry.jpg";
 
             return (
               <article
@@ -394,8 +424,8 @@ export default function ProEstimateDivisions() {
                     className={`relative order-1 min-h-72 ${imageFirst ? "lg:order-1" : "lg:order-2"}`}
                   >
                     <Image
-                      src={divisionImage}
-                      alt={division.title}
+                      src={division.imageUrl}
+                      alt={division.imageAlt}
                       fill
                       className="object-cover"
                     />
@@ -406,7 +436,8 @@ export default function ProEstimateDivisions() {
                   >
                     <div className="space-y-3">
                       <p className="text-sm font-semibold tracking-[0.16em] text-brand-primary uppercase">
-                        ProEstimate
+                        {section.divisionEyebrow ??
+                          defaultDivisionsSection.divisionEyebrow}
                       </p>
                       <h3 className="text-3xl font-semibold leading-tight tracking-[-0.04em] text-brand-secondary sm:text-4xl">
                         {division.title}

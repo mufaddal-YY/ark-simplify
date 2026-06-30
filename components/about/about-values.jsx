@@ -66,6 +66,27 @@ const coreValues = [
   },
 ];
 
+const iconMap = {
+  compass: Compass,
+  rocket: Rocket,
+  target: Target,
+  "badge-check": BadgeCheck,
+  layers: Layers3,
+  blocks: Blocks,
+  handshake: HeartHandshake,
+  smile: Smile,
+};
+
+function normalizeCard(card, fallbackIcon = Compass) {
+  return {
+    ...card,
+    icon:
+      typeof card.icon === "string"
+        ? iconMap[card.icon] ?? fallbackIcon
+        : card.icon ?? fallbackIcon,
+  };
+}
+
 function ValueIconCard({ icon: Icon, label, title, description }) {
   return (
     <article className="rounded-lg border border-white/10 bg-white/6 p-6 backdrop-blur-md sm:p-7">
@@ -92,14 +113,25 @@ function ValueIconCard({ icon: Icon, label, title, description }) {
   );
 }
 
-export default function AboutValues() {
+export default function AboutValues({ data }) {
+  const values = data ?? {};
+  const principles = (values.principles?.length
+    ? values.principles
+    : principleCards
+  ).map((card) => normalizeCard(card));
+  const coreValuesTitle = values.coreValuesTitle ?? "Core values";
+  const normalizedCoreValues = (values.coreValues?.length
+    ? values.coreValues
+    : coreValues
+  ).map((card) => normalizeCard(card, BadgeCheck));
+
   return (
     <section className="relative overflow-hidden bg-[#151827] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(54,59,79,0.72),transparent_34%),linear-gradient(135deg,rgba(54,59,79,0.62),rgba(10,12,20,0.94)_58%)]" />
 
       <div className="relative mx-auto max-w-7xl space-y-6 lg:space-y-8">
         <div className="grid gap-5 lg:grid-cols-3">
-          {principleCards.map((card) => (
+          {principles.map((card) => (
             <ValueIconCard key={card.title} {...card} />
           ))}
         </div>
@@ -109,13 +141,13 @@ export default function AboutValues() {
             <div className="space-y-3">
               
               <h3 className="text-2xl font-semibold tracking-[-0.03em] text-white sm:text-3xl">
-                Core values
+                {coreValuesTitle}
               </h3>
               <div className="h-px w-16 bg-brand-primary" />
             </div>
 
             <div className="grid gap-5 xl:grid-cols-5">
-            {coreValues.map((value) => (
+            {normalizedCoreValues.map((value) => (
               <div key={value.title} className="space-y-4">
                 <div className="inline-flex h-12 w-12 items-center justify-center rounded-lg border border-white/12 bg-white/6">
                   <value.icon

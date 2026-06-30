@@ -10,38 +10,44 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-const homeTestimonials = [
-  {
-    id: 1,
-    rating: "5.0",
-    quote:
-      "We have been working with Rohit and ARK for over 18 months. Rohit and his team are professional, responsive, hardworking and affordable. They are an integral part of our team and our growth. Without the ARK we would NOT have been able to keep growing at our current pace.",
-    name: "Mitchel Lazar",
-    role: "CEO at Rapid Door & Trim Corp.",
-    initials: "ML",
-    accent: "bg-brand-construction text-white",
-  },
-  {
-    id: 2,
-    rating: "5.0",
-    quote:
-      "I have been working with the ARK team for 2+ years now and would recommend them for takeoff services. We have had our challenges but Rohit is always willing listen and work on a resolution to the challenges.",
-    name: "Ken Diener, DHT",
-    role: "Sales Manager for Doorwayz Unlimited",
-    initials: "KD",
-    accent: "bg-brand-primary text-white",
-  },
-  {
-    id: 3,
-    rating: "5.0",
-    quote:
-      "My team enjoyed working with Ark Simplify and they played a very important role in the success of our projects and the growth of our estimating department. I have no doubt they will be a great asset to any team.",
-    name: "Tim Hunt",
-    role: "President at Performance Door and Hardware",
-    initials: "TH",
-    accent: "bg-brand-finance text-white",
-  },
-];
+const defaultTestimonialsSection = {
+  eyebrow: "Testimonials",
+  title: "Success Stories.",
+  description:
+    "Appreciation and feedback drawn from client emails after project delivery, pricing updates, and estimating support engagements.",
+  items: [
+    {
+      _key: "mitchel-lazar",
+      rating: 5,
+      quote:
+        "We have been working with Rohit and ARK for over 18 months. Rohit and his team are professional, responsive, hardworking and affordable. They are an integral part of our team and our growth. Without the ARK we would NOT have been able to keep growing at our current pace.",
+      name: "Mitchel Lazar",
+      role: "CEO at Rapid Door & Trim Corp.",
+      initials: "ML",
+      accent: "construction",
+    },
+    {
+      _key: "ken-diener",
+      rating: 5,
+      quote:
+        "I have been working with the ARK team for 2+ years now and would recommend them for takeoff services. We have had our challenges but Rohit is always willing listen and work on a resolution to the challenges.",
+      name: "Ken Diener, DHT",
+      role: "Sales Manager for Doorwayz Unlimited",
+      initials: "KD",
+      accent: "primary",
+    },
+    {
+      _key: "tim-hunt",
+      rating: 5,
+      quote:
+        "My team enjoyed working with Ark Simplify and they played a very important role in the success of our projects and the growth of our estimating department. I have no doubt they will be a great asset to any team.",
+      name: "Tim Hunt",
+      role: "President at Performance Door and Hardware",
+      initials: "TH",
+      accent: "finance",
+    },
+  ],
+};
 
 const constructionTestimonials = [
   {
@@ -85,6 +91,13 @@ const constructionTestimonials = [
     accent: "bg-brand-secondary text-white",
   },
 ];
+
+const accentClasses = {
+  construction: "bg-brand-construction text-white",
+  primary: "bg-brand-primary text-white",
+  finance: "bg-brand-finance text-white",
+  secondary: "bg-brand-secondary text-white",
+};
 
 function TestimonialCard({ item, className = "", featured = false, preview = false }) {
   return (
@@ -132,9 +145,25 @@ function TestimonialCard({ item, className = "", featured = false, preview = fal
   );
 }
 
-export default function Testimonials({ preview = false, variant = "home" }) {
-  const testimonials =
-    variant === "construction" ? constructionTestimonials : homeTestimonials;
+export default function Testimonials({ data, preview = false, variant = "home" }) {
+  const section =
+    variant === "construction" || !data ? defaultTestimonialsSection : data;
+  const sourceItems =
+    variant === "construction"
+      ? constructionTestimonials
+      : section.items?.length
+        ? section.items
+        : defaultTestimonialsSection.items;
+  const testimonials = sourceItems.map((item, index) => ({
+    ...item,
+    id: item._key ?? item.id ?? `${item.name}-${index}`,
+    rating:
+      typeof item.rating === "number" ? item.rating.toFixed(1) : item.rating,
+    accent:
+      accentClasses[item.accent] ??
+      item.accent ??
+      accentClasses.primary,
+  }));
 
   return (
     <section
@@ -163,7 +192,7 @@ export default function Testimonials({ preview = false, variant = "home" }) {
                   preview ? "" : "rounded-full"
                 }`}
               >
-                Testimonials
+                {section.eyebrow ?? defaultTestimonialsSection.eyebrow}
               </span>
               <div className="h-px w-14 bg-brand-primary" />
             </div>
@@ -172,11 +201,10 @@ export default function Testimonials({ preview = false, variant = "home" }) {
                 preview ? "text-4xl lg:text-5xl" : "text-4xl lg:text-5xl"
               }`}
             >
-              Success Stories.
+              {section.title ?? defaultTestimonialsSection.title}
             </h2>
             <p className="max-w-2xl text-base leading-8 text-brand-secondary/70 sm:text-lg">
-              Appreciation and feedback drawn from client emails after project
-              delivery, pricing updates, and estimating support engagements.
+              {section.description ?? defaultTestimonialsSection.description}
             </p>
           </div>
 

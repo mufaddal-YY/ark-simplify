@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export const homepage = defineType({
   name: 'homepage',
@@ -27,6 +27,59 @@ export const homepage = defineType({
       name: 'clienteleSection',
       title: 'Clientele section',
       type: 'clienteleSection',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'ctaSection',
+      title: 'CTA section',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'eyebrow',
+          title: 'Eyebrow',
+          type: 'string',
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: 'title',
+          title: 'Title',
+          type: 'string',
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: 'description',
+          title: 'Description',
+          type: 'text',
+          rows: 4,
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: 'ctaLabel',
+          title: 'CTA label',
+          type: 'string',
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: 'ctaHref',
+          title: 'CTA href',
+          type: 'string',
+          validation: (Rule) =>
+            Rule.required().custom((href) => {
+              if (!href || href.startsWith('/') || /^https?:\/\//.test(href)) {
+                return true
+              }
+
+              return 'Enter a site path beginning with / or a full http(s) URL.'
+            }),
+        }),
+        defineField({
+          name: 'items',
+          title: 'Checklist items',
+          type: 'array',
+          of: [defineArrayMember({type: 'string'})],
+          validation: (Rule) => Rule.required().min(1),
+        }),
+      ],
       validation: (Rule) => Rule.required(),
     }),
   ],
@@ -147,6 +200,19 @@ export const homepage = defineType({
         'Partnering with growth-focused teams across construction, operations, finance, and delivery support.',
       networkLabel: 'Client Network',
       logos: [],
+    },
+    ctaSection: {
+      eyebrow: 'Let’s Talk',
+      title: 'Let’s simplify the work behind your operations.',
+      description:
+        'Connect with our team to discuss your requirements, understand where support is needed, and explore how Ark Simplify can work alongside your business.',
+      ctaLabel: 'Get in Touch',
+      ctaHref: '/contact-us',
+      items: [
+        'Speak with our team',
+        'Discuss your current workflow',
+        'Identify the right support model',
+      ],
     },
   },
   preview: {

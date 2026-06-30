@@ -3,59 +3,34 @@ import Script from "next/script";
 import SiteHeader from "@/components/nav/header";
 import SiteFooter from "@/components/nav/footer";
 import SiteOfferFloat from "@/components/common/site-offer-float";
+import HeadCode from "@/components/common/head-code";
+import { generateSeoMetadata } from "@/sanity/fetch";
 
-export const metadata = {
-  title: {
-    default: "ARK Simplify",
-    template: "%s | ARK Simplify",
-  },
-  description:
-    "ARK Simplify delivers construction, finance, and estimation support with streamlined workflows, practical execution, and dependable delivery.",
-  keywords: [
-    "ARK Simplify",
-    "construction",
-    "finance",
-    "estimation",
-    "proestimate",
-    "business support",
-    "outsourcing",
-  ],
-  applicationName: "ARK Simplify",
-  category: "business",
-  verification: {
-    google: "NOGngijBnI1yiu5tnyiCdl7FFNA0dK9qMDIAlZFGpAk",
-  },
-  icons: {
-    icon: "/logo_icon.png",
-    shortcut: "/logo_icon.png",
-    apple: "/logo_icon.png",
-  },
-  openGraph: {
-    title: "ARK Simplify",
-    description:
-      "Construction, finance, and estimation support designed to simplify execution and improve delivery outcomes.",
-    siteName: "ARK Simplify",
-    type: "website",
-    images: [
-      {
-        url: "/logo_main.png",
-        alt: "ARK Simplify",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "ARK Simplify",
-    description:
-      "Construction, finance, and estimation support designed to simplify execution and improve delivery outcomes.",
-    images: ["/logo_main.png"],
-  },
-};
+export async function generateMetadata() {
+  const metadata = await generateSeoMetadata("root", { path: "/" });
+
+  return {
+    ...metadata,
+    title: {
+      default: metadata.title,
+      template: "%s | ARK Simplify",
+    },
+    verification: {
+      google: "NOGngijBnI1yiu5tnyiCdl7FFNA0dK9qMDIAlZFGpAk",
+    },
+    icons: {
+      icon: "/logo_icon.png",
+      shortcut: "/logo_icon.png",
+      apple: "/logo_icon.png",
+    },
+  };
+}
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full antialiased">
       <head>
+        <HeadCode />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-N002XRZS92"
           strategy="afterInteractive"

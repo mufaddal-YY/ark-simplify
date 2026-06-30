@@ -27,7 +27,36 @@ const workStyleCards = [
   },
 ];
 
-export default function LifeWorkstyle() {
+const iconMap = {
+  book: BookOpenText,
+  "badge-check": BadgeCheck,
+  users: Users,
+  handshake: Handshake,
+};
+
+const defaultWorkstyle = {
+  eyebrow: "How We Work",
+  title: "What it feels like to work here.",
+  cards: workStyleCards,
+};
+
+function normalizeCard(card, index) {
+  return {
+    ...card,
+    icon:
+      typeof card.icon === "string"
+        ? iconMap[card.icon] ?? BookOpenText
+        : card.icon ?? workStyleCards[index]?.icon ?? BookOpenText,
+  };
+}
+
+export default function LifeWorkstyle({ data }) {
+  const section = data ?? defaultWorkstyle;
+  const cards = (section.cards?.length
+    ? section.cards
+    : defaultWorkstyle.cards
+  ).map(normalizeCard);
+
   return (
     <section className="relative overflow-hidden bg-[#151827] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(54,59,79,0.72),transparent_34%),linear-gradient(135deg,rgba(54,59,79,0.62),rgba(10,12,20,0.94)_58%)]" />
@@ -35,15 +64,15 @@ export default function LifeWorkstyle() {
       <div className="relative mx-auto max-w-7xl space-y-8 lg:space-y-10">
         <div className="space-y-4">
           <p className="text-sm font-semibold tracking-[0.16em] text-brand-primary uppercase">
-            How We Work
+            {section.eyebrow ?? defaultWorkstyle.eyebrow}
           </p>
           <h2 className="text-4xl font-semibold tracking-[-0.04em] text-white lg:text-5xl">
-            What it feels like to work here.
+            {section.title ?? defaultWorkstyle.title}
           </h2>
         </div>
 
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {workStyleCards.map((card) => {
+          {cards.map((card) => {
             const Icon = card.icon;
 
             return (

@@ -1,10 +1,17 @@
 import PageBanner from "@/components/common/pageBanner";
 
-export default function AboutBanner() {
+const defaultBanner = {
+  eyebrow: "About Us",
+  title: "About Us",
+};
+
+export default function AboutBanner({ data }) {
+  const banner = data ?? defaultBanner;
+
   return (
     <PageBanner
-      eyebrow="About Us"
-      title="About Us"
+      eyebrow={banner.eyebrow ?? defaultBanner.eyebrow}
+      title={banner.title ?? defaultBanner.title}
       titleAccent=""
       titleAccentClass=""
       compact

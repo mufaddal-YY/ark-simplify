@@ -1,6 +1,5 @@
 "use client";
 
-import { Newspaper } from "lucide-react";
 import { FaLinkedinIn } from "react-icons/fa6";
 
 import {
@@ -11,63 +10,42 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-const linkedinCompanyPostsUrl =
-  "https://www.linkedin.com/company/arksquareconstructionservices/posts/?feedView=all";
-
 const withCollapsedEmbed = (src) => `${src}?collapsed=1`;
 
-const linkedinPosts = [
-  {
-    id: 1,
-    src: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7457009008499949568",
-    height: 620,
-    label: "Latest post",
-  },
-  {
-    id: 2,
-    src: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7455193898248732672",
-    height: 620,
-    label: "Recent post",
-  },
-  {
-    id: 3,
-    src: "https://www.linkedin.com/embed/feed/update/urn:li:share:7454437733948764160",
-    height: 620,
-    label: "Recent post",
-  },
-  {
-    id: 4,
-    src: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7452625448187924480",
-    height: 580,
-    label: "Recent post",
-  },
-  {
-    id: 5,
-    src: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7451900508811988992",
-    height: 620,
-    label: "Recent post",
-  },
-  {
-    id: 6,
-    src: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7450184230220775424",
-    height: 580,
-    label: "Recent post",
-  },
-  {
-    id: 7,
-    src: "https://www.linkedin.com/embed/feed/update/urn:li:share:7450877157502787584",
-    height: 620,
-    label: "Recent post",
-  },
-  {
-    id: 8,
-    src: "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7447597702583967744",
-    height: 620,
-    label: "Recent post",
-  },
-];
+const defaultLinkedinSection = {
+  eyebrow: "LinkedIn Articles",
+  title: "Latest thinking from ARK Simplify.",
+  description:
+    "Perspectives from our team on operational support, delivery systems, and the habits that help growing businesses work with more clarity.",
+  postsLabel: "Recent LinkedIn Posts",
+  companyPostsUrl:
+    "https://www.linkedin.com/company/arksquareconstructionservices/posts/?feedView=all",
+  articles: [
+    {
+      _key: "7457009008499949568",
+      embedUrl:
+        "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7457009008499949568",
+      height: 620,
+      label: "Latest post",
+    },
+    {
+      _key: "7455193898248732672",
+      embedUrl:
+        "https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7455193898248732672",
+      height: 620,
+      label: "Recent post",
+    },
+    {
+      _key: "7454437733948764160",
+      embedUrl:
+        "https://www.linkedin.com/embed/feed/update/urn:li:share:7454437733948764160",
+      height: 620,
+      label: "Recent post",
+    },
+  ],
+};
 
-function LinkedInEmbed({ post }) {
+function LinkedInEmbed({ companyPostsUrl, post }) {
   return (
     <div className="group relative overflow-hidden rounded-lg border border-brand-secondary/10 bg-white shadow-[0_18px_48px_rgba(54,59,79,0.07)] transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-primary/24">
       <div className="flex items-center justify-between border-b border-brand-secondary/10 px-4 py-3 sm:px-5">
@@ -84,6 +62,7 @@ function LinkedInEmbed({ post }) {
       <div className="relative h-[28rem] bg-brand-surface sm:h-[32rem]">
         <iframe
           src={withCollapsedEmbed(post.src)}
+          loading="lazy"
           title={`${post.label} from LinkedIn ${post.id}`}
           width="504"
           height={post.height}
@@ -93,7 +72,7 @@ function LinkedInEmbed({ post }) {
       </div>
 
       <a
-        href={linkedinCompanyPostsUrl}
+        href={companyPostsUrl}
         aria-label="Open ARK Simplify LinkedIn posts"
         target="_blank"
         rel="noreferrer"
@@ -103,7 +82,19 @@ function LinkedInEmbed({ post }) {
   );
 }
 
-export default function LinkedinArticles() {
+export default function LinkedinArticles({ data }) {
+  const section = data ?? defaultLinkedinSection;
+  const linkedinPosts = (
+    section.articles?.length ? section.articles : defaultLinkedinSection.articles
+  ).map((post, index) => ({
+    id: post._key ?? index,
+    src: post.embedUrl,
+    height: post.height ?? 620,
+    label: post.label ?? "Recent post",
+  }));
+  const companyPostsUrl =
+    section.companyPostsUrl ?? defaultLinkedinSection.companyPostsUrl;
+
   return (
     <section className="relative overflow-hidden border-t border-brand-secondary/10 bg-white px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-secondary/18 to-transparent" />
@@ -114,18 +105,16 @@ export default function LinkedinArticles() {
             <div className="space-y-3">
               <span className="inline-flex items-center gap-2 rounded-full border border-brand-secondary/12 bg-brand-surface px-4 py-2 text-xs font-semibold tracking-[0.16em] text-brand-secondary uppercase">
                 <FaLinkedinIn className="h-4 w-4 text-brand-primary" />
-                LinkedIn Articles
+                {section.eyebrow ?? defaultLinkedinSection.eyebrow}
               </span>
               <div className="h-px w-14 bg-brand-primary" />
             </div>
 
             <h2 className="max-w-3xl text-4xl leading-[0.98] font-semibold tracking-[-0.07em] text-brand-secondary lg:text-5xl">
-              Latest thinking from ARK Simplify.
+              {section.title ?? defaultLinkedinSection.title}
             </h2>
             <p className="max-w-2xl text-base leading-8 text-brand-secondary/70 sm:text-lg">
-              Perspectives from our team on operational support, delivery
-              systems, and the habits that help growing businesses work with
-              more clarity.
+              {section.description ?? defaultLinkedinSection.description}
             </p>
           </div>
         </div>
@@ -138,7 +127,7 @@ export default function LinkedinArticles() {
           className="space-y-6">
           <div className="flex items-center justify-between gap-4">
             <p className="text-sm font-semibold tracking-[0.16em] text-brand-secondary/56 uppercase">
-              Recent LinkedIn Posts
+              {section.postsLabel ?? defaultLinkedinSection.postsLabel}
             </p>
             <div className="flex items-center gap-2">
               <CarouselPrevious aria-label="Previous LinkedIn posts" />
@@ -149,7 +138,7 @@ export default function LinkedinArticles() {
           <CarouselContent>
             {linkedinPosts.map((post) => (
               <CarouselItem key={post.id} className="md:basis-1/2 xl:basis-1/3">
-                <LinkedInEmbed post={post} />
+                <LinkedInEmbed companyPostsUrl={companyPostsUrl} post={post} />
               </CarouselItem>
             ))}
           </CarouselContent>

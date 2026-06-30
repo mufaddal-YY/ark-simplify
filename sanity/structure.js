@@ -8,6 +8,20 @@ export const structure = (S) =>
         .id('homepage')
         .child(S.document().schemaType('homepage').documentId('homepage')),
       S.listItem()
+        .title('SEO settings')
+        .id('seoSettings')
+        .child(
+          S.document().schemaType('seoSettings').documentId('seoSettings'),
+        ),
+      S.listItem()
+        .title('Head code')
+        .id('headCodeSettings')
+        .child(
+          S.document()
+            .schemaType('headCodeSettings')
+            .documentId('headCodeSettings'),
+        ),
+      S.listItem()
         .title('Contact')
         .id('contact')
         .child(S.document().schemaType('contact').documentId('contact')),

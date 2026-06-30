@@ -76,21 +76,62 @@ const benefits = [
   },
 ];
 
-export default function LifeBenefits() {
+const iconMap = {
+  "trending-up": TrendingUp,
+  scale: Scale,
+  building: Building2,
+  trophy: Trophy,
+  celebration: PartyPopper,
+  location: MapPinned,
+  health: HeartPulse,
+  network: Network,
+  award: Award,
+  discussion: MessageSquareText,
+};
+
+const defaultBenefits = {
+  eyebrow: "Benefits",
+  title: "Benefits at ARK",
+  items: benefits,
+  ctaEyebrow: "Join ARK",
+  ctaTitle: "Build your next role with us.",
+  ctaDescription:
+    "Explore our current openings and apply for a role where thoughtful work, ownership, and growth are part of the day.",
+  ctaLabel: "View open jobs",
+  ctaHref: "#open-jobs",
+};
+
+function normalizeBenefit(benefit, index) {
+  return {
+    ...benefit,
+    icon:
+      typeof benefit.icon === "string"
+        ? iconMap[benefit.icon] ?? TrendingUp
+        : benefit.icon ?? benefits[index]?.icon ?? TrendingUp,
+  };
+}
+
+export default function LifeBenefits({ data }) {
+  const section = data ?? defaultBenefits;
+  const benefitItems = (section.items?.length
+    ? section.items
+    : defaultBenefits.items
+  ).map(normalizeBenefit);
+
   return (
     <section className="bg-brand-surface px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
       <div className="mx-auto max-w-7xl space-y-8 lg:space-y-10">
         <div className="max-w-4xl space-y-4">
           <p className="text-sm font-semibold tracking-[0.16em] text-brand-primary uppercase">
-            Benefits
+            {section.eyebrow ?? defaultBenefits.eyebrow}
           </p>
           <h2 className="text-4xl font-semibold text-brand-secondary lg:text-5xl">
-            Benefits at ARK
+            {section.title ?? defaultBenefits.title}
           </h2>
         </div>
 
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {benefits.map((benefit) => {
+          {benefitItems.map((benefit) => {
             const Icon = benefit.icon;
 
             return (
@@ -118,22 +159,21 @@ export default function LifeBenefits() {
             <div className="flex h-full flex-col justify-between gap-8">
               <div className="space-y-4">
                 <p className="text-sm font-semibold tracking-[0.16em] text-brand-primary uppercase">
-                  Join ARK
+                  {section.ctaEyebrow ?? defaultBenefits.ctaEyebrow}
                 </p>
                 <h3 className="text-3xl font-semibold text-white">
-                  Build your next role with us.
+                  {section.ctaTitle ?? defaultBenefits.ctaTitle}
                 </h3>
                 <p className="max-w-xl text-base leading-8 text-white/72">
-                  Explore our current openings and apply for a role where
-                  thoughtful work, ownership, and growth are part of the day.
+                  {section.ctaDescription ?? defaultBenefits.ctaDescription}
                 </p>
               </div>
 
               <Link
-                href="#open-jobs"
+                href={section.ctaHref ?? defaultBenefits.ctaHref}
                 className="inline-flex min-h-11 w-fit items-center gap-2 rounded-lg bg-brand-primary px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-primary/90"
               >
-                View open jobs
+                {section.ctaLabel ?? defaultBenefits.ctaLabel}
                 <ArrowDownRight className="h-4 w-4" />
               </Link>
             </div>

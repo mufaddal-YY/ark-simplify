@@ -2,11 +2,13 @@ import {aboutPage} from './documents/aboutPage'
 import {contact} from './documents/contact'
 import {constructionPage} from './documents/constructionPage'
 import {financePage} from './documents/financePage'
+import {headCodeSettings} from './documents/headCodeSettings'
 import {homepage} from './documents/homepage'
 import {jobOpenings} from './documents/jobOpenings'
 import {lifeAtArkPage} from './documents/lifeAtArkPage'
 import {linkedinArticles} from './documents/linkedinArticles'
 import {proestimatePage} from './documents/proestimatePage'
+import {seoSettings} from './documents/seoSettings'
 import {testimonials} from './documents/testimonials'
 import {aboutPageSectionTypes} from './objects/aboutPageSections'
 import {clienteleSection} from './objects/clienteleSection'
@@ -33,11 +35,13 @@ export const schema = {
     contact,
     constructionPage,
     financePage,
+    headCodeSettings,
     homepage,
     jobOpenings,
     lifeAtArkPage,
     linkedinArticles,
     proestimatePage,
+    seoSettings,
     testimonials,
     ...aboutPageSectionTypes,
     clienteleSection,

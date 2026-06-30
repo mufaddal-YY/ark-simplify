@@ -59,7 +59,37 @@ const estimatingTabs = [
   },
 ];
 
-function EstimatingPanelContent({ tab, compact = false }) {
+const tabImageFallbacks = {
+  subcontractors: "/construction/subconstractor.jpg",
+  "general-contractors": "/construction/general%20contractor.jpg",
+  manufacturers: "/construction/manufacturer.jpg",
+};
+
+const defaultEstimating = {
+  title: "Estimating services",
+  description:
+    "Estimating sits at the center of every successful project. Ark supports clients with structured quantity analysis, cost evaluation, and bid verification to ensure decisions are based on accurate and comparable information.",
+  panelTitle: "Estimating services for",
+  workflowLabel: "Estimating Workflow",
+  tabs: estimatingTabs,
+};
+
+function getTabValue(tab, index) {
+  return tab.value?.current ?? tab.value ?? tab._key ?? `tab-${index + 1}`;
+}
+
+function normalizeTab(tab, index) {
+  const value = getTabValue(tab, index);
+
+  return {
+    ...tab,
+    value,
+    image: tab.imageUrl ?? tab.image ?? tabImageFallbacks[value] ?? estimatingTabs[index]?.image,
+    imageAlt: tab.imageAlt ?? tab.title,
+  };
+}
+
+function EstimatingPanelContent({ tab, workflowLabel, compact = false }) {
   return (
     <div
       className={`grid gap-6 ${
@@ -70,7 +100,7 @@ function EstimatingPanelContent({ tab, compact = false }) {
         <div className="min-h-[13rem] w-full overflow-hidden rounded-lg border border-white/10 bg-[#0b0f1a] xl:h-full xl:min-h-[24rem]">
           <Image
             src={tab.image}
-            alt={tab.title}
+            alt={tab.imageAlt ?? tab.title}
             width={1200}
             height={900}
             className="h-full w-full object-cover"
@@ -81,7 +111,7 @@ function EstimatingPanelContent({ tab, compact = false }) {
       <div className={`space-y-4 ${compact ? "" : "xl:order-1"}`}>
         <div className="space-y-2">
           <p className="text-[0.7rem] font-semibold tracking-[0.18em] text-white/52 uppercase">
-            Estimating Workflow
+            {workflowLabel}
           </p>
           <h4 className="text-xl font-semibold tracking-[-0.03em] text-white sm:text-3xl">
             {tab.title}
@@ -108,20 +138,23 @@ function EstimatingPanelContent({ tab, compact = false }) {
   );
 }
 
-export default function EstimatingServices() {
+export default function EstimatingServices({ data }) {
+  const section = data ?? defaultEstimating;
+  const tabs = (section.tabs?.length ? section.tabs : defaultEstimating.tabs).map(
+    normalizeTab,
+  );
+  const defaultTab = tabs[0]?.value ?? "subcontractors";
+
   return (
     <section className="bg-brand-surface px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
       <div className="mx-auto max-w-7xl space-y-10">
         <div className="space-y-5 text-center">
           
           <h2 className="text-4xl font-semibold leading-tight tracking-[-0.04em] text-brand-secondary lg:text-5xl">
-            Estimating services
+            {section.title ?? defaultEstimating.title}
           </h2>
           <p className="mx-auto max-w-3xl text-base leading-8 text-brand-secondary/72 sm:text-lg">
-            Estimating sits at the center of every successful project. Ark
-            supports clients with structured quantity analysis, cost
-            evaluation, and bid verification to ensure decisions are based on
-            accurate and comparable information.
+            {section.description ?? defaultEstimating.description}
           </p>
         </div>
 
@@ -129,15 +162,15 @@ export default function EstimatingServices() {
           <div className="sm:hidden">
             <div className="space-y-4 rounded-lg border border-brand-secondary/10 bg-[#151827] p-3 shadow-[0_28px_90px_rgba(21,24,39,0.16)]">
               <h3 className="px-1 text-2xl font-semibold tracking-[-0.03em] text-white">
-                Estimating services for
+                {section.panelTitle ?? defaultEstimating.panelTitle}
               </h3>
 
               <Accordion
-                defaultValue={["subcontractors"]}
+                defaultValue={[defaultTab]}
                 type="multiple"
                 className="gap-2"
               >
-                {estimatingTabs.map((tab) => (
+                {tabs.map((tab) => (
                   <AccordionItem
                     key={tab.value}
                     value={tab.value}
@@ -147,7 +180,11 @@ export default function EstimatingServices() {
                       {tab.trigger}
                     </AccordionTrigger>
                     <AccordionContent className="px-3 pb-3">
-                      <EstimatingPanelContent tab={tab} compact />
+                      <EstimatingPanelContent
+                        tab={tab}
+                        workflowLabel={section.workflowLabel ?? defaultEstimating.workflowLabel}
+                        compact
+                      />
                     </AccordionContent>
                   </AccordionItem>
                 ))}
@@ -156,20 +193,20 @@ export default function EstimatingServices() {
           </div>
 
           <Tabs
-            defaultValue="subcontractors"
+            defaultValue={defaultTab}
             orientation="vertical"
             className="hidden rounded-lg border border-brand-secondary/10 bg-[#151827] shadow-[0_28px_90px_rgba(21,24,39,0.16)] sm:flex sm:flex-col lg:grid lg:grid-cols-[17rem_minmax(0,1.2fr)] lg:gap-0 lg:p-0"
           >
             <div className="space-y-4 border-b border-white/10 p-4 sm:p-6 lg:self-stretch lg:border-r lg:border-b-0 lg:px-0 lg:py-6">
               <h3 className="px-4 text-3xl font-semibold tracking-[-0.03em] text-white sm:px-6 sm:text-4xl">
-                Estimating services for
+                {section.panelTitle ?? defaultEstimating.panelTitle}
               </h3>
 
               <TabsList
                 variant="line"
                 className="h-auto w-full gap-0 rounded-none bg-transparent p-0"
               >
-                {estimatingTabs.map((tab) => (
+                {tabs.map((tab) => (
                   <TabsTrigger
                     key={tab.value}
                     value={tab.value}
@@ -183,13 +220,16 @@ export default function EstimatingServices() {
             </div>
 
             <div className="space-y-4 p-4 sm:p-6 lg:p-6">
-              {estimatingTabs.map((tab) => (
+              {tabs.map((tab) => (
                 <TabsContent
                   key={tab.value}
                   value={tab.value}
                   className="mt-0 rounded-lg border border-white/10 bg-[radial-gradient(circle_at_top_left,rgba(54,59,79,0.52),transparent_34%),linear-gradient(135deg,rgba(54,59,79,0.48),rgba(10,12,20,0.94)_62%)] p-5 text-white sm:p-6 lg:p-7"
                 >
-                  <EstimatingPanelContent tab={tab} />
+                  <EstimatingPanelContent
+                    tab={tab}
+                    workflowLabel={section.workflowLabel ?? defaultEstimating.workflowLabel}
+                  />
                 </TabsContent>
               ))}
             </div>

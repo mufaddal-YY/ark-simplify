@@ -10,6 +10,7 @@ const defaultItems = [
 ];
 
 export default function CTA_common({
+  data,
   eyebrow = "Let’s Talk",
   title = "Let’s simplify the work behind your operations.",
   description = "Connect with our team to discuss your requirements, understand where support is needed, and explore how Ark Simplify can work alongside your business.",
@@ -18,6 +19,9 @@ export default function CTA_common({
   items = defaultItems,
   className,
 }) {
+  const section = data ?? {};
+  const sectionItems = section.items?.length ? section.items : items;
+
   return (
     <section
       className={cn(
@@ -34,22 +38,22 @@ export default function CTA_common({
           <div className="space-y-7">
             <p className="inline-flex items-center gap-2 rounded-lg border border-white/18 bg-transparent px-4 py-2 text-xs font-semibold tracking-[0.16em] text-white uppercase">
               <Phone className="h-4 w-4" />
-              {eyebrow}
+              {section.eyebrow ?? eyebrow}
             </p>
 
             <div className="space-y-5">
               <h2 className="max-w-3xl text-5xl leading-[1.06] font-semibold tracking-[-0.05em] text-white lg:text-6xl">
-                {title}
+                {section.title ?? title}
               </h2>
               <p className="max-w-2xl text-base leading-8 text-white/62 sm:text-lg">
-                {description}
+                {section.description ?? description}
               </p>
             </div>
           </div>
 
           <div className="rounded-lg border border-brand-secondary/76 bg-brand-secondary/48 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] sm:p-6 lg:p-7">
             <div className="space-y-4">
-              {items.map((item) => (
+              {sectionItems.map((item) => (
                 <div
                   key={item}
                   className="flex min-h-16 items-center gap-4 rounded-lg border border-white/10 bg-[#121624]/72 px-5 py-4 text-base font-medium text-white/78 sm:text-lg"
@@ -63,10 +67,10 @@ export default function CTA_common({
             </div>
 
             <Link
-              href={ctaHref}
+              href={section.ctaHref ?? ctaHref}
               className="mt-6 inline-flex min-h-14 w-full items-center justify-center rounded-lg bg-brand-primary px-6 py-4 text-base font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-primary/90 hover:shadow-[0_18px_36px_rgba(255,73,0,0.24)]"
             >
-              {ctaLabel}
+              {section.ctaLabel ?? ctaLabel}
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </div>

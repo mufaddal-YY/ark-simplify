@@ -58,7 +58,46 @@ const audiences = [
   },
 ];
 
-export default function WhoWeWorkWith() {
+const iconMap = {
+  building: LuBuilding2,
+  wrench: LuWrench,
+  factory: LuFactory,
+};
+
+const imageFallbacks = {
+  "General Contractors": "/construction/general%20contractor.jpg",
+  Subcontractors: "/construction/subconstractor.jpg",
+  Manufacturers: "/construction/manufacturer.jpg",
+};
+
+const defaultAudiencesSection = {
+  eyebrow: "Who We Work With",
+  title: "Who we work with",
+  audiences,
+};
+
+function normalizeAudience(audience, index) {
+  return {
+    ...audience,
+    icon:
+      typeof audience.icon === "string"
+        ? iconMap[audience.icon] ?? LuBuilding2
+        : audience.icon ?? LuBuilding2,
+    image:
+      audience.imageUrl ??
+      audience.image ??
+      imageFallbacks[audience.title] ??
+      audiences[index]?.image,
+    imageAlt: audience.imageAlt ?? audience.title,
+  };
+}
+
+export default function WhoWeWorkWith({ data }) {
+  const section = data ?? defaultAudiencesSection;
+  const normalizedAudiences = (section.audiences?.length
+    ? section.audiences
+    : defaultAudiencesSection.audiences
+  ).map(normalizeAudience);
   const [api, setApi] = useState(null);
   const [current, setCurrent] = useState(0);
 
@@ -117,10 +156,10 @@ export default function WhoWeWorkWith() {
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div className="space-y-4">
               <p className="text-sm font-semibold tracking-[0.16em] text-brand-primary uppercase">
-                Who We Work With
+                {section.eyebrow ?? defaultAudiencesSection.eyebrow}
               </p>
               <h2 className="text-4xl font-semibold tracking-[-0.04em] text-white lg:text-5xl">
-                Who we work with
+                {section.title ?? defaultAudiencesSection.title}
               </h2>
             </div>
 
@@ -133,7 +172,7 @@ export default function WhoWeWorkWith() {
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <CarouselContent className="-ml-0">
-            {audiences.map((audience, index) => {
+            {normalizedAudiences.map((audience, index) => {
               const Icon = audience.icon;
               const isActive = index === current;
 
@@ -154,7 +193,7 @@ export default function WhoWeWorkWith() {
                       <div className="relative min-h-64 lg:min-h-full">
                         <Image
                           src={audience.image}
-                          alt={audience.title}
+                          alt={audience.imageAlt}
                           fill
                           className="object-cover"
                         />
@@ -213,7 +252,7 @@ export default function WhoWeWorkWith() {
         </div>
 
         <div className="container-fluid flex items-center justify-center gap-2">
-          {audiences.map((audience, index) => (
+          {normalizedAudiences.map((audience, index) => (
             <button
               key={audience.title}
               type="button"

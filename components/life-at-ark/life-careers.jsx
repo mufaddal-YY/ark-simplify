@@ -16,7 +16,35 @@ const openRoles = [
   },
 ];
 
-export default function LifeCareers() {
+const defaultCareers = {
+  eyebrow: "Careers at ARK",
+  title: "Open positions",
+  paragraphs: [
+    "We’re interested in people who care about doing thoughtful work, staying accountable, and growing inside environments where structure and adaptability both matter.",
+    "We are currently hiring for two openings. Open roles can be updated here as the team grows.",
+  ],
+  applyLabel: "Apply",
+  applyHref: "/contact-us",
+};
+
+function normalizeJob(job, index) {
+  return {
+    id: job._key ?? job.title ?? index,
+    title: job.title,
+    meta:
+      job.meta ??
+      [job.employmentType, job.location].filter(Boolean).join(" · "),
+    description: job.description,
+  };
+}
+
+export default function LifeCareers({ data, jobs }) {
+  const section = data ?? defaultCareers;
+  const paragraphs = section.paragraphs?.length
+    ? section.paragraphs
+    : defaultCareers.paragraphs;
+  const roles = (jobs?.length ? jobs : openRoles).map(normalizeJob);
+
   return (
     <section
       id="open-jobs"
@@ -27,26 +55,29 @@ export default function LifeCareers() {
           <div className="grid gap-8 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:items-start lg:gap-14">
             <div className="space-y-5">
               <p className="text-sm font-semibold tracking-[0.16em] text-brand-primary uppercase">
-                Careers at ARK
+                {section.eyebrow ?? defaultCareers.eyebrow}
               </p>
               <h2 className="text-4xl font-semibold tracking-[-0.04em] text-brand-secondary lg:text-5xl">
-                Open positions
+                {section.title ?? defaultCareers.title}
               </h2>
-              <p className="text-base leading-8 text-brand-secondary/72 sm:text-lg">
-                We’re interested in people who care about doing thoughtful
-                work, staying accountable, and growing inside environments
-                where structure and adaptability both matter.
-              </p>
-              <p className="border-t border-brand-secondary/10 pt-5 text-base leading-8 text-brand-secondary/72 sm:text-lg">
-                We are currently hiring for two openings. Open roles can be
-                updated here as the team grows.
-              </p>
+              {paragraphs.map((paragraph, index) => (
+                <p
+                  key={paragraph}
+                  className={`text-base leading-8 text-brand-secondary/72 sm:text-lg ${
+                    index === paragraphs.length - 1
+                      ? "border-t border-brand-secondary/10 pt-5"
+                      : ""
+                  }`}
+                >
+                  {paragraph}
+                </p>
+              ))}
             </div>
 
             <div className="space-y-4">
-              {openRoles.map((role) => (
+              {roles.map((role) => (
                 <article
-                  key={role.title}
+                  key={role.id}
                   className="rounded-lg border border-brand-secondary/10 bg-white p-5 shadow-[0_12px_30px_rgba(15,23,42,0.04)] sm:p-6"
                 >
                   <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
@@ -65,10 +96,10 @@ export default function LifeCareers() {
                     </div>
 
                     <Link
-                      href="/contact-us"
+                      href={section.applyHref ?? defaultCareers.applyHref}
                       className="btn-brand-primary inline-flex min-h-11 items-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold"
                     >
-                      Apply
+                      {section.applyLabel ?? defaultCareers.applyLabel}
                       <ArrowUpRight className="h-4 w-4" />
                     </Link>
                   </div>

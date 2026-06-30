@@ -5,12 +5,25 @@ import IndustriesWeServe from "@/components/homepage/industries-weserve";
 import StatsSection from "@/components/homepage/stats-section";
 import Testimonials from "@/components/homepage/testimonials";
 import LinkedinArticles from "@/components/homepage/linkedin-articles";
-import { getHomepage } from "@/sanity/fetch/homepage";
+import {
+  generateSeoMetadata,
+  getHomepage,
+  getLinkedinArticles,
+  getTestimonials,
+} from "@/sanity/fetch";
 
 export const revalidate = 60;
 
+export function generateMetadata() {
+  return generateSeoMetadata("home", { path: "/", revalidate });
+}
+
 export default async function Home() {
-  const homepageData = await getHomepage({ revalidate });
+  const [homepageData, testimonials, linkedinArticles] = await Promise.all([
+    getHomepage({ revalidate }),
+    getTestimonials({ revalidate }),
+    getLinkedinArticles({ revalidate }),
+  ]);
 
   return (
     <main className="flex-1">
@@ -19,9 +32,9 @@ export default async function Home() {
       <StatsSection data={homepageData?.statsSection} />
 
       <Clientele data={homepageData?.clienteleSection} />
-      <Testimonials />
-      <LinkedinArticles />
-      <CTA_common />
+      <Testimonials data={testimonials} />
+      <LinkedinArticles data={linkedinArticles} />
+      <CTA_common data={homepageData?.ctaSection} />
     </main>
   );
 }

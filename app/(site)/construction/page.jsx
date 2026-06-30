@@ -11,44 +11,50 @@ import PartnersClients from "@/components/construction/partners-clients";
 import SoftwareTools from "@/components/construction/software-tools";
 import Testimonials from "@/components/homepage/testimonials";
 import CTA_common from "@/components/common/CTA_common";
+import { generateSeoMetadata, getConstructionPage } from "@/sanity/fetch";
 
-export const metadata = {
-  title: "Construction",
-  description:
-    "Construction support across estimating, detailing, and project management workflows for manufacturers, general contractors, and subcontractors.",
-};
+export const revalidate = 60;
 
-export default function ConstructionPage() {
+export function generateMetadata() {
+  return generateSeoMetadata("construction", {
+    path: "/construction",
+    revalidate,
+  });
+}
+
+export default async function ConstructionPage() {
+  const constructionPage = await getConstructionPage({ revalidate });
+
   return (
     <main className="flex-1">
-      <ConstructionBanner />
+      <ConstructionBanner data={constructionPage?.banner} />
       <ConstructionSubnav />
       <section id="overview" className="scroll-mt-36 md:scroll-mt-44">
-        <ConstructionOverview />
+        <ConstructionOverview data={constructionPage?.overview} />
       </section>
       <section id="estimating" className="scroll-mt-36 md:scroll-mt-44">
-        <EstimatingServices />
+        <EstimatingServices data={constructionPage?.estimating} />
       </section>
       <section id="detailing" className="scroll-mt-36 md:scroll-mt-44">
-        <DetailingServices />
+        <DetailingServices data={constructionPage?.detailing} />
       </section>
       <section id="project-support" className="scroll-mt-36 md:scroll-mt-44">
-        <ProjectManagementSupport />
+        <ProjectManagementSupport data={constructionPage?.projectSupport} />
       </section>
       <section id="who-we-work-with" className="scroll-mt-36 md:scroll-mt-44">
-        <WhoWeWorkWith />
+        <WhoWeWorkWith data={constructionPage?.audiences} />
       </section>
       <section id="workflow-fit" className="scroll-mt-36 md:scroll-mt-44">
-        <WorkflowFit />
+        <WorkflowFit data={constructionPage?.workflowFit} />
       </section>
       <section id="case-studies" className="scroll-mt-36 md:scroll-mt-44">
-        <CaseStudies />
+        <CaseStudies data={constructionPage?.caseStudies} />
       </section>
       <section id="partners" className="scroll-mt-36 md:scroll-mt-44">
-        <PartnersClients />
+        <PartnersClients data={constructionPage?.partners} />
       </section>
       <section id="software-tools" className="scroll-mt-36 md:scroll-mt-44">
-        <SoftwareTools />
+        <SoftwareTools data={constructionPage?.softwareTools} />
       </section>
       <section id="testimonials" className="scroll-mt-36 md:scroll-mt-44">
         <Testimonials variant="construction" />

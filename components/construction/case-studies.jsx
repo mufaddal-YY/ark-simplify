@@ -39,7 +39,29 @@ const caseStudies = [
   },
 ];
 
-export default function CaseStudies() {
+const defaultCaseStudies = {
+  title: "Case Studies",
+  description:
+    "Case studies from construction support delivered around real team workflows.",
+  ctaLabel: "View Full Case Study",
+  items: caseStudies.map((study) => ({
+    ...study,
+    imageUrl: "/construction_industry.jpg",
+    imageAlt: study.title,
+  })),
+};
+
+export default function CaseStudies({ data }) {
+  const section = data ?? defaultCaseStudies;
+  const studies = (section.items?.length
+    ? section.items
+    : defaultCaseStudies.items
+  ).map((study) => ({
+    ...study,
+    imageUrl: study.imageUrl ?? "/construction_industry.jpg",
+    imageAlt: study.imageAlt ?? study.title,
+  }));
+
   return (
     <section className="bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
       <Carousel
@@ -52,10 +74,10 @@ export default function CaseStudies() {
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-4">
             <h2 className="text-4xl font-semibold tracking-[-0.04em] text-brand-secondary lg:text-5xl">
-              Case Studies
+              {section.title ?? defaultCaseStudies.title}
             </h2>
             <p className="max-w-3xl text-base leading-8 text-brand-secondary/72 sm:text-lg">
-              Case studies from construction support delivered around real team workflows.
+              {section.description ?? defaultCaseStudies.description}
             </p>
           </div>
 
@@ -66,15 +88,15 @@ export default function CaseStudies() {
         </div>
 
         <CarouselContent className="-ml-4">
-          {caseStudies.map((study) => (
+          {studies.map((study) => (
             <CarouselItem
               key={study.title}
               className="pl-4 sm:basis-1/2 lg:basis-1/3"
             >
               <article className="group relative min-h-[32rem] overflow-hidden rounded-lg">
                 <Image
-                  src="/construction_industry.jpg"
-                  alt={study.title}
+                  src={study.imageUrl}
+                  alt={study.imageAlt}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
@@ -95,7 +117,7 @@ export default function CaseStudies() {
                       type="button"
                       className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/18 bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-primary/40 hover:text-brand-primary"
                     >
-                      View Full Case Study
+                      {section.ctaLabel ?? defaultCaseStudies.ctaLabel}
                       <ArrowRight className="h-4 w-4" />
                     </button>
                   </div>

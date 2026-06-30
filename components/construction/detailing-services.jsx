@@ -7,22 +7,52 @@ const detailingPoints = [
   "Accuracy checks prior to site execution",
 ];
 
-export default function DetailingServices() {
+const defaultDetailing = {
+  eyebrow: "Detailing Services",
+  title: "Detailing services",
+  description:
+    "Detailing is provided exclusively for subcontractors as a post-award mitigation and accuracy assurance service.",
+  infoBlocks: [
+    {
+      label: "When it starts",
+      text: "Once a project is awarded, Ark supports subcontractors in preparing construction-ready documentation for the next phase of execution.",
+    },
+    {
+      label: "Why it matters",
+      text: "The focus is to ensure fabrication, installation, and shipment proceed with 99.9%-100% accuracy before work reaches the field.",
+    },
+  ],
+  scopeLabel: "Our detailing scope includes",
+  scopePoints: detailingPoints,
+  summary:
+    "The objective is to achieve near-perfect accuracy before work reaches the field, reducing rework, delays, and cost escalation.",
+  imageUrl: "/construction/detailing.jpg",
+  imageAlt: "Construction detailing services",
+};
+
+export default function DetailingServices({ data }) {
+  const section = data ?? defaultDetailing;
+  const infoBlocks = section.infoBlocks?.length
+    ? section.infoBlocks
+    : defaultDetailing.infoBlocks;
+  const scopePoints = section.scopePoints?.length
+    ? section.scopePoints
+    : defaultDetailing.scopePoints;
+
   return (
     <section className="bg-[#151827] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
       <div className="mx-auto max-w-7xl">
         <div className="space-y-10">
           <div className="space-y-5">
             <p className="text-sm font-semibold tracking-[0.16em] text-brand-primary uppercase">
-              Detailing Services
+              {section.eyebrow ?? defaultDetailing.eyebrow}
             </p>
             <h2 className="max-w-xl text-4xl font-semibold leading-tight tracking-[-0.04em] text-white lg:text-5xl">
-              Detailing services
+              {section.title ?? defaultDetailing.title}
             </h2>
             <div className="h-px w-16 bg-brand-primary" />
             <p className="max-w-3xl text-lg leading-8 text-white/72 sm:text-xl">
-              Detailing is provided exclusively for subcontractors as a
-              post-award mitigation and accuracy assurance service.
+              {section.description ?? defaultDetailing.description}
             </p>
           </div>
 
@@ -30,29 +60,21 @@ export default function DetailingServices() {
             <div className="rounded-lg border border-white/10 bg-[radial-gradient(circle_at_top_left,rgba(54,59,79,0.52),transparent_34%),linear-gradient(135deg,rgba(54,59,79,0.48),rgba(10,12,20,0.94)_62%)] px-5 py-5 text-white sm:px-6 sm:py-6 lg:px-7 lg:py-6">
               <div className="grid gap-6 lg:min-h-[28rem] lg:grid-cols-[minmax(0,0.72fr)_1px_minmax(0,1fr)] lg:items-center">
                 <div className="space-y-5 self-center">
-                  <div className="space-y-3">
-                    <p className="text-sm font-semibold tracking-[0.08em] text-white uppercase">
-                      When it starts
-                    </p>
-                    <p className="text-base leading-7 text-white/74 sm:text-lg">
-                      Once a project is awarded, Ark supports subcontractors in
-                      preparing construction-ready documentation for the next
-                      phase of execution.
-                    </p>
-                  </div>
-
-                  <div className="h-px w-full bg-brand-construction lg:hidden" />
-
-                  <div className="space-y-3">
-                    <p className="text-sm font-semibold tracking-[0.08em] text-white uppercase">
-                      Why it matters
-                    </p>
-                    <p className="text-base leading-7 text-white/74 sm:text-lg">
-                      The focus is to ensure fabrication, installation, and
-                      shipment proceed with 99.9%–100% accuracy before work
-                      reaches the field.
-                    </p>
-                  </div>
+                  {infoBlocks.map((block, index) => (
+                    <div key={block.label} className="space-y-5">
+                      {index > 0 ? (
+                        <div className="h-px w-full bg-brand-construction lg:hidden" />
+                      ) : null}
+                      <div className="space-y-3">
+                        <p className="text-sm font-semibold tracking-[0.08em] text-white uppercase">
+                          {block.label}
+                        </p>
+                        <p className="text-base leading-7 text-white/74 sm:text-lg">
+                          {block.text}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
 
                 <div className="hidden h-full w-px bg-white lg:block" />
@@ -60,13 +82,13 @@ export default function DetailingServices() {
                 <div className="space-y-5 self-center">
                   <div className="space-y-3">
                     <p className="text-xs font-semibold tracking-[0.18em] text-white/54 uppercase">
-                      Our detailing scope includes
+                      {section.scopeLabel ?? defaultDetailing.scopeLabel}
                     </p>
                     <div className="h-px w-16 bg-brand-primary" />
                   </div>
 
                   <ul className="space-y-3">
-                    {detailingPoints.map((point) => (
+                    {scopePoints.map((point) => (
                       <li
                         key={point}
                         className="grid grid-cols-[0.5rem_minmax(0,1fr)] gap-3 text-base leading-7 text-white/84 sm:text-lg"
@@ -78,9 +100,7 @@ export default function DetailingServices() {
                   </ul>
 
                   <p className="text-base leading-8 text-white/84 sm:text-lg">
-                    The objective is to achieve near-perfect accuracy before
-                    work reaches the field, reducing rework, delays, and cost
-                    escalation.
+                    {section.summary ?? defaultDetailing.summary}
                   </p>
                 </div>
               </div>
@@ -88,8 +108,8 @@ export default function DetailingServices() {
 
             <div className="overflow-hidden rounded-lg border border-brand-construction bg-[#0b0f1a] shadow-[0_22px_60px_rgba(54,59,79,0.08)]">
               <Image
-                src="/construction/detailing.jpg"
-                alt="Construction detailing services"
+                src={section.imageUrl ?? defaultDetailing.imageUrl}
+                alt={section.imageAlt ?? defaultDetailing.imageAlt}
                 width={1200}
                 height={900}
                 className="aspect-video w-full object-cover lg:min-h-[28rem]"

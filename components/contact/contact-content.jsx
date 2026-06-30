@@ -75,7 +75,84 @@ const socialLinks = [
   },
 ];
 
-export default function ContactContent() {
+const contactIconMap = {
+  phone: FiPhone,
+  whatsapp: FiPhone,
+  email: FiMail,
+};
+
+const socialIconMap = {
+  LinkedIn: FaLinkedinIn,
+  Instagram: FaInstagram,
+  Facebook: FaFacebookF,
+};
+
+const defaultContactContent = {
+  eyebrow: "Let's Talk",
+  title: "Reach the team that keeps complex work moving.",
+  description:
+    "Tell us what support you're looking for and we'll route your enquiry to the right team across construction, finance, or ProEstimate services.",
+  directContactLabel: "Direct Contact",
+  contactMethods,
+  offices: officeLocations.map((office) => ({
+    title: office.title,
+    address: office.value,
+  })),
+  responseWindowLabel: "Response Window",
+  responseWindowText: "We usually respond within one working day.",
+  socialLinks,
+  enquiryForm: {
+    eyebrow: "Send an Enquiry",
+    title: "Tell us what you need",
+    description:
+      "Share a few details and our team will follow up with the right next step.",
+    serviceOptions,
+    submitLabel: "Submit Enquiry",
+  },
+};
+
+function normalizeContactMethod(method, index) {
+  const Icon = method.icon ?? contactIconMap[method.type] ?? FiPhone;
+
+  return {
+    id: method._key ?? method.label ?? index,
+    label: method.label,
+    value: method.value,
+    href: method.href,
+    icon: Icon,
+    target: method.href?.startsWith("http") ? "_blank" : method.target,
+    rel: method.href?.startsWith("http") ? "noreferrer" : method.rel,
+  };
+}
+
+function normalizeSocialLink(link, index) {
+  const label = link.platform ?? link.label;
+
+  return {
+    id: link._key ?? label ?? index,
+    label,
+    href: link.href,
+    icon: link.icon ?? socialIconMap[label] ?? FaLinkedinIn,
+  };
+}
+
+export default function ContactContent({ data }) {
+  const content = data ?? defaultContactContent;
+  const methods = (content.contactMethods?.length
+    ? content.contactMethods
+    : defaultContactContent.contactMethods
+  ).map(normalizeContactMethod);
+  const offices = content.offices?.length
+    ? content.offices
+    : defaultContactContent.offices;
+  const socials = (content.socialLinks?.length
+    ? content.socialLinks
+    : defaultContactContent.socialLinks
+  ).map(normalizeSocialLink);
+  const form = content.enquiryForm ?? defaultContactContent.enquiryForm;
+  const options = form.serviceOptions?.length
+    ? form.serviceOptions
+    : defaultContactContent.enquiryForm.serviceOptions;
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
 
   function handleSubmit(event) {
@@ -102,27 +179,26 @@ export default function ContactContent() {
           <div className="space-y-6">
             <div className="space-y-4">
               <p className="text-sm font-semibold tracking-[0.16em] text-brand-primary uppercase">
-                Let&apos;s Talk
+                {content.eyebrow ?? "Let's Talk"}
               </p>
               <h2 className="max-w-lg text-4xl font-semibold tracking-[-0.04em] text-brand-secondary lg:text-5xl">
-                Reach the team that keeps complex work moving.
+                {content.title ?? defaultContactContent.title}
               </h2>
               <p className="max-w-xl text-base leading-8 text-brand-secondary/72 sm:text-lg">
-                Tell us what support you&apos;re looking for and we&apos;ll route
-                your enquiry to the right team across construction, finance, or
-                ProEstimate services.
+                {content.description ?? defaultContactContent.description}
               </p>
             </div>
 
             <div className="rounded-lg border border-white/8 bg-[#151827] p-6 text-white shadow-[0_28px_80px_rgba(8,12,20,0.18)] sm:p-8">
               <div className="space-y-4">
                 <p className="text-xs font-semibold tracking-[0.16em] text-white/62 uppercase">
-                  Direct Contact
+                  {content.directContactLabel ??
+                    defaultContactContent.directContactLabel}
                 </p>
                 <div className="space-y-3">
-                  {contactMethods.map(({ label, value, href, icon: Icon, target, rel }) => (
+                  {methods.map(({ id, label, value, href, icon: Icon, target, rel }) => (
                     <Link
-                      key={label}
+                      key={id}
                       href={href}
                       target={target}
                       rel={rel}
@@ -146,9 +222,9 @@ export default function ContactContent() {
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
-              {officeLocations.map((office) => (
+              {offices.map((office) => (
                 <article
-                  key={office.title}
+                  key={office._key ?? office.title}
                   className="rounded-lg border border-brand-secondary/10 bg-brand-surface p-5 shadow-[0_18px_46px_rgba(54,59,79,0.06)]"
                 >
                   <div className="flex items-start gap-3">
@@ -160,7 +236,7 @@ export default function ContactContent() {
                         {office.title}
                       </h3>
                       <p className="text-sm leading-7 text-brand-secondary/72">
-                        {office.value}
+                        {office.address ?? office.value}
                       </p>
                     </div>
                   </div>
@@ -175,18 +251,20 @@ export default function ContactContent() {
                 </span>
                 <div className="space-y-1">
                   <p className="text-sm font-semibold tracking-[0.14em] text-brand-secondary/52 uppercase">
-                    Response Window
+                    {content.responseWindowLabel ??
+                      defaultContactContent.responseWindowLabel}
                   </p>
                   <p className="text-base font-semibold text-brand-secondary">
-                    We usually respond within one working day.
+                    {content.responseWindowText ??
+                      defaultContactContent.responseWindowText}
                   </p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
-                {socialLinks.map(({ label, href, icon: Icon }) => (
+                {socials.map(({ id, label, href, icon: Icon }) => (
                   <Link
-                    key={label}
+                    key={id}
                     href={href}
                     target="_blank"
                     rel="noreferrer"
@@ -204,14 +282,14 @@ export default function ContactContent() {
             <div className="rounded-lg border border-white/80 bg-white p-5 sm:p-6 lg:p-7">
               <div className="space-y-4">
                 <p className="text-sm font-semibold tracking-[0.16em] text-brand-primary uppercase">
-                  Send an Enquiry
+                  {form.eyebrow ?? defaultContactContent.enquiryForm.eyebrow}
                 </p>
                 <h3 className="text-3xl font-semibold tracking-[-0.04em] text-brand-secondary">
-                  Tell us what you need
+                  {form.title ?? defaultContactContent.enquiryForm.title}
                 </h3>
                 <p className="text-base leading-8 text-brand-secondary/72">
-                  Share a few details and our team will follow up with the
-                  right next step.
+                  {form.description ??
+                    defaultContactContent.enquiryForm.description}
                 </p>
               </div>
 
@@ -306,7 +384,7 @@ export default function ContactContent() {
                       <option value="" disabled>
                         Select a service
                       </option>
-                      {serviceOptions.map((option) => (
+                      {options.map((option) => (
                         <option key={option} value={option}>
                           {option}
                         </option>
@@ -339,7 +417,7 @@ export default function ContactContent() {
                   type="submit"
                   className="btn-brand-primary inline-flex min-h-12 items-center justify-center rounded-lg px-6 py-3 text-base font-semibold"
                 >
-                  Submit Enquiry
+                  {form.submitLabel ?? defaultContactContent.enquiryForm.submitLabel}
                 </button>
               </form>
             </div>

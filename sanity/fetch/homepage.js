@@ -1,4 +1,4 @@
-import { client } from "@/sanity/lib/client";
+import { fetchSanityDocument } from "./utils";
 
 export const homepageQuery = `*[_id == "homepage"][0]{
   _id,
@@ -63,23 +63,22 @@ export const homepageQuery = `*[_id == "homepage"][0]{
       url,
       "logoUrl": logo.asset->url
     }
+  },
+  ctaSection{
+    eyebrow,
+    title,
+    description,
+    ctaLabel,
+    ctaHref,
+    items
   }
 }`;
 
 export async function getHomepage({ revalidate = 60 } = {}) {
-  try {
-    return await client.fetch(
-      homepageQuery,
-      {},
-      {
-        next: {
-          revalidate,
-          tags: ["homepage"],
-        },
-      },
-    );
-  } catch (error) {
-    console.error("Failed to fetch homepage from Sanity", error);
-    return null;
-  }
+  return fetchSanityDocument({
+    query: homepageQuery,
+    revalidate,
+    tag: "homepage",
+    label: "homepage",
+  });
 }

@@ -1,17 +1,20 @@
 import ContactBanner from "@/components/contact/contact-banner";
 import ContactContent from "@/components/contact/contact-content";
+import { generateSeoMetadata, getContact } from "@/sanity/fetch";
 
-export const metadata = {
-  title: "Contact Us",
-  description:
-    "Get in touch with Ark Simplify for construction support, finance operations, ProEstimate services, and general business enquiries.",
-};
+export const revalidate = 60;
 
-export default function ContactUsPage() {
+export function generateMetadata() {
+  return generateSeoMetadata("contact", { path: "/contact-us", revalidate });
+}
+
+export default async function ContactUsPage() {
+  const contact = await getContact({ revalidate });
+
   return (
     <main className="flex-1">
-      <ContactBanner />
-      <ContactContent />
+      <ContactBanner data={contact} />
+      <ContactContent data={contact} />
     </main>
   );
 }

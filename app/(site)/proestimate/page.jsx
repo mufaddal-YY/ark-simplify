@@ -1,17 +1,23 @@
 import ProEstimateBanner from "@/components/proestimate/proestimate-banner";
 import ProEstimateDivisions from "@/components/proestimate/proestimate-divisions";
+import { generateSeoMetadata, getProestimatePage } from "@/sanity/fetch";
 
-export const metadata = {
-  title: "ProEstimate",
-  description:
-    "Professional ProEstimates designed to eliminate guesswork, control costs, and give projects a competitive edge across key construction divisions.",
-};
+export const revalidate = 60;
 
-export default function ProEstimatePage() {
+export function generateMetadata() {
+  return generateSeoMetadata("proestimate", {
+    path: "/proestimate",
+    revalidate,
+  });
+}
+
+export default async function ProEstimatePage() {
+  const proestimatePage = await getProestimatePage({ revalidate });
+
   return (
     <main className="flex-1">
-      <ProEstimateBanner />
-      <ProEstimateDivisions />
+      <ProEstimateBanner data={proestimatePage?.banner} />
+      <ProEstimateDivisions data={proestimatePage?.divisionsSection} />
     </main>
   );
 }

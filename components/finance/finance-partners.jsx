@@ -22,7 +22,33 @@ const partners = [
   "/client/logo smart shield.png",
 ];
 
-export default function FinancePartners() {
+const defaultPartnersSection = {
+  eyebrow: "Partners",
+  title: "Partners",
+  description:
+    "Organizations we’ve worked with across finance and operational support engagements.",
+  partners: partners.map((src, index) => ({
+    _key: `finance-partner-${index + 1}`,
+    name: `Finance partner ${index + 1}`,
+    alt: `Finance partner ${index + 1}`,
+    logoUrl: src,
+  })),
+};
+
+export default function FinancePartners({ data }) {
+  const section = data ?? defaultPartnersSection;
+  const partnerItems = (section.partners?.length
+    ? section.partners
+    : defaultPartnersSection.partners
+  )
+    .filter((partner) => partner.logoUrl)
+    .map((partner, index) => ({
+      id: partner._key ?? partner.name ?? index,
+      name: partner.name ?? `Finance partner ${index + 1}`,
+      alt: partner.alt ?? partner.name ?? `Finance partner ${index + 1}`,
+      logoUrl: partner.logoUrl,
+    }));
+
   return (
     <section className="bg-brand-surface px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
       <Carousel
@@ -31,13 +57,13 @@ export default function FinancePartners() {
       >
         <div className="space-y-4">
           <p className="text-sm font-semibold tracking-[0.16em] text-brand-finance uppercase">
-            Partners
+            {section.eyebrow ?? defaultPartnersSection.eyebrow}
           </p>
           <h2 className="text-4xl font-semibold tracking-[-0.04em] text-brand-secondary lg:text-5xl">
-            Partners
+            {section.title ?? defaultPartnersSection.title}
           </h2>
           <p className="max-w-3xl text-base leading-8 text-brand-secondary/72 sm:text-lg">
-            Organizations we’ve worked with across finance and operational support engagements.
+            {section.description ?? defaultPartnersSection.description}
           </p>
         </div>
 
@@ -47,15 +73,15 @@ export default function FinancePartners() {
         </div>
 
         <CarouselContent className="-ml-4">
-          {partners.map((partner, index) => (
+          {partnerItems.map((partner) => (
             <CarouselItem
-              key={partner}
+              key={partner.id}
               className="basis-1/2 pl-4 sm:basis-1/3 lg:basis-1/4 xl:basis-1/5"
             >
               <div className="flex min-h-40 items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-6 shadow-[0_12px_30px_rgba(15,23,42,0.04)]">
                 <Image
-                  src={partner}
-                  alt={`Finance partner ${index + 1}`}
+                  src={partner.logoUrl}
+                  alt={partner.alt}
                   width={180}
                   height={96}
                   className="h-auto max-h-20 w-auto object-contain"
