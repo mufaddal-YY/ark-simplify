@@ -10,6 +10,7 @@ const linkGroups = [
     title: "Company",
     links: [
       { label: "About", href: "/about-us" },
+      { label: "Blog", href: "/blog" },
       { label: "Life at ARK", href: "/life-at-ark" },
       { label: "Contact", href: "/contact-us" },
     ],

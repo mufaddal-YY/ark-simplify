@@ -1,4 +1,5 @@
 import {aboutPage} from './documents/aboutPage'
+import {blog} from './documents/blog'
 import {contact} from './documents/contact'
 import {constructionPage} from './documents/constructionPage'
 import {financePage} from './documents/financePage'
@@ -32,6 +33,7 @@ import {testimonial} from './objects/testimonial'
 export const schema = {
   types: [
     aboutPage,
+    blog,
     contact,
     constructionPage,
     financePage,

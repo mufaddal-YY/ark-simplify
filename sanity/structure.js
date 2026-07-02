@@ -64,6 +64,10 @@ export const structure = (S) =>
           S.document().schemaType('jobOpenings').documentId('jobOpenings'),
         ),
       S.listItem()
+        .title('Blogs')
+        .id('blogs')
+        .child(S.documentTypeList('blog').title('Blogs')),
+      S.listItem()
         .title('Testimonials')
         .id('testimonials')
         .child(

@@ -18,6 +18,7 @@ const navigationItems = [
   { label: "Construction", href: "/construction" },
   { label: "Finance", href: "/finance" },
   { label: "ProEstimate", href: "/proestimate" },
+  { label: "Blog", href: "/blog" },
   { label: "About Us", href: "/about-us" },
   { label: "Life at ARK", href: "/life-at-ark" },
   { label: "Contact Us", href: "/contact-us" },

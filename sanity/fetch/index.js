@@ -1,4 +1,12 @@
 export { getAboutPage, aboutPageQuery } from "./about-page";
+export {
+  blogBySlugQuery,
+  blogSlugsQuery,
+  blogsQuery,
+  getBlogBySlug,
+  getBlogSlugs,
+  getBlogs,
+} from "./blogs";
 export { getConstructionPage, constructionPageQuery } from "./construction-page";
 export { getContact, contactQuery } from "./contact";
 export { getFinancePage, financePageQuery } from "./finance-page";
