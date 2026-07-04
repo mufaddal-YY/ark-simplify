@@ -3,6 +3,15 @@ import { Resend } from "resend";
 import { z } from "zod";
 import ContactEnquiryEmail from "@/emails/contact-enquiry";
 
+const defaultFromEmail = "ARK Simplify <onboarding@resend.dev>";
+const defaultContactEmail = "info@arksimplify.com";
+
+function envValue(key) {
+  const value = process.env[key]?.trim();
+
+  return value || undefined;
+}
+
 const enquirySchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(120),
   company: z.string().trim().min(1, "Company is required").max(160),
@@ -15,18 +24,18 @@ const enquirySchema = z.object({
 
 function getResendConfig() {
   return {
-    apiKey: process.env.RESEND_API_KEY,
-    from: process.env.RESEND_FROM_EMAIL,
-    to: process.env.RESEND_CONTACT_TO,
+    apiKey: envValue("RESEND_API_KEY"),
+    from: envValue("RESEND_FROM_EMAIL") ?? defaultFromEmail,
+    to: envValue("RESEND_CONTACT_TO") ?? defaultContactEmail,
   };
 }
 
 export async function POST(request) {
   const config = getResendConfig();
 
-  if (!config.apiKey || !config.from || !config.to) {
+  if (!config.apiKey) {
     return NextResponse.json(
-      { error: "Email delivery is not configured." },
+      { error: "Resend API key is missing on the server." },
       { status: 500 },
     );
   }

@@ -12,7 +12,7 @@ export const metadata = {
 export default function ContactThankYouPage() {
   return (
     <main className="flex-1 bg-white">
-      <section className="px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+      <section className="px-4 pt-24 pb-16 sm:px-6 sm:pt-28 sm:pb-20 lg:px-8 lg:pt-32 lg:pb-24">
         <div className="mx-auto grid max-w-5xl gap-8 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-center">
           <div className="space-y-6">
             <span className="inline-flex h-14 w-14 items-center justify-center rounded-lg bg-brand-primary/10 text-brand-primary">
