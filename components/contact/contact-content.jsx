@@ -1,15 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   FiArrowUpRight,
-  FiCheckCircle,
   FiClock,
   FiMail,
   FiMapPin,
   FiPhone,
-  FiX,
 } from "react-icons/fi";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 
@@ -137,6 +136,7 @@ function normalizeSocialLink(link, index) {
 }
 
 export default function ContactContent({ data }) {
+  const router = useRouter();
   const content = data ?? defaultContactContent;
   const methods = (content.contactMethods?.length
     ? content.contactMethods
@@ -153,23 +153,50 @@ export default function ContactContent({ data }) {
   const options = form.serviceOptions?.length
     ? form.serviceOptions
     : defaultContactContent.enquiryForm.serviceOptions;
-  const [isSuccessOpen, setIsSuccessOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    if (!event.currentTarget.checkValidity()) {
-      event.currentTarget.reportValidity();
+    const formElement = event.currentTarget;
+
+    if (!formElement.checkValidity()) {
+      formElement.reportValidity();
       return;
     }
 
-    event.currentTarget.reset();
-    window.history.pushState(null, "", "/contact-us/#thankyou");
-    setIsSuccessOpen(true);
-  }
+    setIsSubmitting(true);
+    setSubmitError("");
 
-  function closeSuccessPopup() {
-    window.history.pushState(null, "", "/contact-us");
-    setIsSuccessOpen(false);
+    const formData = new FormData(formElement);
+    const payload = Object.fromEntries(formData.entries());
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const result = await response.json().catch(() => ({}));
+        throw new Error(
+          result.error ?? "We could not submit your enquiry right now.",
+        );
+      }
+
+      formElement.reset();
+      router.push("/contact-us/thank-you");
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "We could not submit your enquiry right now.",
+      );
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -294,6 +321,14 @@ export default function ContactContent({ data }) {
               </div>
 
               <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  className="hidden"
+                  aria-hidden="true"
+                />
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div className="space-y-2">
                     <label
@@ -415,61 +450,25 @@ export default function ContactContent({ data }) {
 
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   className="btn-brand-primary inline-flex min-h-12 items-center justify-center rounded-lg px-6 py-3 text-base font-semibold"
                 >
-                  {form.submitLabel ?? defaultContactContent.enquiryForm.submitLabel}
+                  {isSubmitting
+                    ? "Submitting..."
+                    : form.submitLabel ??
+                      defaultContactContent.enquiryForm.submitLabel}
                 </button>
+
+                {submitError ? (
+                  <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+                    {submitError}
+                  </p>
+                ) : null}
               </form>
             </div>
           </div>
         </div>
       </div>
-
-      {isSuccessOpen ? (
-        <div
-          className="fixed inset-0 z-[80] flex items-center justify-center bg-brand-secondary/60 px-4 py-6 backdrop-blur-sm"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="enquiry-success-title"
-        >
-          <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-[0_30px_100px_rgba(8,12,20,0.28)] sm:p-7">
-            <div className="flex items-start justify-between gap-4">
-              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-brand-primary/10 text-brand-primary">
-                <FiCheckCircle className="h-6 w-6" />
-              </span>
-              <button
-                type="button"
-                aria-label="Close thank you message"
-                onClick={closeSuccessPopup}
-                className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-brand-secondary/12 text-brand-secondary/62 transition-colors hover:border-brand-primary hover:text-brand-primary"
-              >
-                <FiX className="h-5 w-5" />
-              </button>
-            </div>
-
-            <div className="mt-5 space-y-3">
-              <h3
-                id="enquiry-success-title"
-                className="text-2xl font-semibold tracking-[-0.03em] text-brand-secondary"
-              >
-                Thank you for your enquiry.
-              </h3>
-              <p className="text-base leading-7 text-brand-secondary/72">
-                Your form has been submitted successfully. Our team will get in
-                touch with you soon.
-              </p>
-            </div>
-
-            <button
-              type="button"
-              onClick={closeSuccessPopup}
-              className="btn-brand-primary mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold"
-            >
-              Continue
-            </button>
-          </div>
-        </div>
-      ) : null}
     </section>
   );
 }
