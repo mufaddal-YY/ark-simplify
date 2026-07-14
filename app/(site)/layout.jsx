@@ -3,8 +3,9 @@ import Script from "next/script";
 import SiteHeader from "@/components/nav/header";
 import SiteFooter from "@/components/nav/footer";
 import SiteOfferFloat from "@/components/common/site-offer-float";
+import FloatingWhatsapp from "@/components/common/floating-whatsapp";
 import HeadCode from "@/components/common/head-code";
-import { generateSeoMetadata } from "@/sanity/fetch";
+import { generateSeoMetadata, getContact } from "@/sanity/fetch";
 
 export async function generateMetadata() {
   const metadata = await generateSeoMetadata("root", { path: "/" });
@@ -26,7 +27,9 @@ export async function generateMetadata() {
   };
 }
 // 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const contact = await getContact({ revalidate: 60 });
+
   return (
     <html lang="en" className="h-full antialiased">
       <head>
@@ -66,6 +69,7 @@ export default function RootLayout({ children }) {
         {children}
         <SiteFooter />
         <SiteOfferFloat />
+        <FloatingWhatsapp contact={contact} />
       </body>
     </html>
   );

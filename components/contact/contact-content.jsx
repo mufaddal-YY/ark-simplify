@@ -203,7 +203,7 @@ export default function ContactContent({ data }) {
     <section className="bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(360px,1.1fr)] lg:items-start lg:gap-10">
-          <div className="space-y-6">
+          <div className="order-2 space-y-6 lg:order-1">
             <div className="space-y-4">
               <p className="text-sm font-semibold tracking-[0.16em] text-brand-primary uppercase">
                 {content.eyebrow ?? "Let's Talk"}
@@ -305,7 +305,7 @@ export default function ContactContent({ data }) {
             </div>
           </div>
 
-          <div className="rounded-lg border border-brand-secondary/10 bg-brand-surface p-4 shadow-[0_26px_70px_rgba(54,59,79,0.08)] sm:p-6 lg:p-7">
+          <div className="order-1 rounded-lg border border-brand-secondary/10 bg-brand-surface p-4 shadow-[0_26px_70px_rgba(54,59,79,0.08)] sm:p-6 lg:order-2 lg:p-7">
             <div className="rounded-lg border border-white/80 bg-white p-5 sm:p-6 lg:p-7">
               <div className="space-y-4">
                 <p className="text-sm font-semibold tracking-[0.16em] text-brand-primary uppercase">

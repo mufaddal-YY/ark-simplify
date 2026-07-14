@@ -1,5 +1,7 @@
 import AboutBanner from "@/components/about/about-banner";
 import AboutIntro from "@/components/about/about-intro";
+import AboutLeadership from "@/components/about/about-leadership";
+import AboutProjectManagementTeam from "@/components/about/about-project-management-team";
 import AboutWhoWeAre from "@/components/about/about-who-we-are";
 import AboutValues from "@/components/about/about-values";
 import { generateSeoMetadata, getAboutPage } from "@/sanity/fetch";
@@ -19,6 +21,8 @@ export default async function AboutUsPage() {
       <AboutIntro data={aboutPage?.intro} />
       <AboutWhoWeAre data={aboutPage?.whoWeAre} />
       <AboutValues data={aboutPage?.values} />
+      <AboutLeadership data={aboutPage?.leadership} />
+      <AboutProjectManagementTeam data={aboutPage?.projectManagementTeam} />
     </main>
   );
 }

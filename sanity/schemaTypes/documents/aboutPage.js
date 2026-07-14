@@ -29,6 +29,18 @@ export const aboutPage = defineType({
       type: 'aboutValues',
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      name: 'leadership',
+      title: 'Leadership team',
+      type: 'aboutLeadership',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'projectManagementTeam',
+      title: 'Project management team',
+      type: 'aboutProjectManagementTeam',
+      validation: (Rule) => Rule.required(),
+    }),
   ],
   initialValue: {
     banner: {
@@ -120,6 +132,55 @@ export const aboutPage = defineType({
             'We take our work seriously, while creating an environment that is positive and human.',
           icon: 'smile',
         },
+      ],
+    },
+    leadership: {
+      eyebrow: 'Leadership',
+      title: 'Leadership team',
+      description:
+        'The people leading Ark Simplify across delivery, finance, growth, and client relationships.',
+      members: [
+        {
+          _key: 'rohit-purohit',
+          name: 'Rohit Purohit',
+          role: 'MD Ark Simplify',
+        },
+        {
+          _key: 'aditya-purohit',
+          name: 'Aditya Purohit',
+          role: 'CIO Ark Simplify',
+        },
+        {
+          _key: 'amandeep-kaur',
+          name: 'Amandeep Kaur',
+          role: 'Head Ark Finance',
+        },
+        {
+          _key: 'keshav',
+          name: 'Keshav',
+          role: 'Business Development Manager, Ark Simplify',
+        },
+        {
+          _key: 'gagandeep-kaur',
+          name: 'Gagandeep Kaur',
+          role: 'Head of Growth & Strategy, Ark Simplify',
+        },
+      ],
+    },
+    projectManagementTeam: {
+      eyebrow: 'Delivery team',
+      title: 'Project management team',
+      description:
+        'The team supporting day-to-day project coordination, follow-through, and delivery rhythm across Ark Simplify engagements.',
+      members: [
+        {_key: 'pawan', name: 'Pawan', role: 'Project Management'},
+        {_key: 'abhishek', name: 'Abhishek', role: 'Project Management'},
+        {_key: 'sanika', name: 'Sanika', role: 'Project Management'},
+        {_key: 'mamta', name: 'Mamta', role: 'Project Management'},
+        {_key: 'harsh', name: 'Harsh', role: 'Project Management'},
+        {_key: 'vinny', name: 'Vinny', role: 'Project Management'},
+        {_key: 'isha', name: 'Isha', role: 'Project Management'},
+        {_key: 'rutuja', name: 'Rutuja', role: 'Project Management'},
       ],
     },
   },

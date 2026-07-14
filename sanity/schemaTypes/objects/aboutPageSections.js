@@ -173,10 +173,162 @@ export const aboutValues = defineType({
   ],
 })
 
+export const aboutLeader = defineType({
+  name: 'aboutLeader',
+  title: 'Leadership member',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'name',
+      title: 'Name',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'role',
+      title: 'Role',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'image',
+      title: 'Photo',
+      type: 'image',
+      options: {hotspot: true},
+    }),
+    defineField({
+      name: 'imageAlt',
+      title: 'Photo alternative text',
+      type: 'string',
+    }),
+    defineField({
+      name: 'linkedinUrl',
+      title: 'LinkedIn profile URL',
+      type: 'url',
+      validation: (Rule) =>
+        Rule.uri({scheme: ['https']}).custom((url) => {
+          if (!url || /^https:\/\/(www\.)?linkedin\.com\//.test(url)) {
+            return true
+          }
+
+          return 'Enter a LinkedIn URL.'
+        }),
+    }),
+    defineField({
+      name: 'showLinkedin',
+      title: 'Show LinkedIn button',
+      type: 'boolean',
+      initialValue: true,
+    }),
+    defineField({
+      name: 'whatsappNumber',
+      title: 'WhatsApp number',
+      type: 'string',
+      description: 'Displayed number, such as +91 8668473798.',
+    }),
+    defineField({
+      name: 'whatsappUrl',
+      title: 'WhatsApp link',
+      type: 'url',
+      description: 'Use a wa.me link, such as https://wa.me/918668473798.',
+      validation: (Rule) =>
+        Rule.uri({scheme: ['https']}).custom((url) => {
+          if (!url || /^https:\/\/wa\.me\//.test(url)) {
+            return true
+          }
+
+          return 'Enter a WhatsApp wa.me URL.'
+        }),
+    }),
+    defineField({
+      name: 'showWhatsapp',
+      title: 'Show WhatsApp button',
+      type: 'boolean',
+      initialValue: true,
+    }),
+  ],
+  preview: {
+    select: {
+      title: 'name',
+      subtitle: 'role',
+      media: 'image',
+    },
+  },
+})
+
+export const aboutLeadership = defineType({
+  name: 'aboutLeadership',
+  title: 'Leadership team',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'eyebrow',
+      title: 'Eyebrow',
+      type: 'string',
+    }),
+    defineField({
+      name: 'title',
+      title: 'Title',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'description',
+      title: 'Description',
+      type: 'text',
+      rows: 3,
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'members',
+      title: 'Team members',
+      type: 'array',
+      of: [defineArrayMember({type: 'aboutLeader'})],
+      validation: (Rule) => Rule.required().min(1),
+    }),
+  ],
+})
+
+export const aboutProjectManagementTeam = defineType({
+  name: 'aboutProjectManagementTeam',
+  title: 'Project management team',
+  type: 'object',
+  fields: [
+    defineField({
+      name: 'eyebrow',
+      title: 'Eyebrow',
+      type: 'string',
+    }),
+    defineField({
+      name: 'title',
+      title: 'Title',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'description',
+      title: 'Description',
+      type: 'text',
+      rows: 3,
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'members',
+      title: 'Team members',
+      type: 'array',
+      of: [defineArrayMember({type: 'aboutLeader'})],
+      validation: (Rule) => Rule.required().min(1),
+    }),
+  ],
+})
+
 export const aboutPageSectionTypes = [
   aboutBanner,
   aboutIntro,
   aboutWhoWeAre,
   aboutValues,
   aboutValueCard,
+  aboutLeader,
+  aboutLeadership,
+  aboutProjectManagementTeam,
 ]
