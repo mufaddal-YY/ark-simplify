@@ -20,8 +20,11 @@ export async function generateMetadata() {
       google: "NOGngijBnI1yiu5tnyiCdl7FFNA0dK9qMDIAlZFGpAk",
     },
     icons: {
-      icon: "/logo_icon.png",
-      shortcut: "/logo_icon.png",
+      icon: [
+        { url: "/favicon.ico", sizes: "32x32" },
+        { url: "/logo_icon.png", type: "image/png" },
+      ],
+      shortcut: "/favicon.ico",
       apple: "/logo_icon.png",
     },
   };

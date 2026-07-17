@@ -76,7 +76,7 @@ export const defaultSeo = {
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://arksimplify.com";
 const siteName = "ARK Simplify";
 
-export async function getSeoSettings({ revalidate = 60 } = {}) {
+export async function getSeoSettings({ revalidate = 1 } = {}) {
   return fetchSanityDocument({
     query: seoSettingsQuery,
     revalidate,
@@ -85,7 +85,7 @@ export async function getSeoSettings({ revalidate = 60 } = {}) {
   });
 }
 
-export async function getSeoGroup(pageKey, { revalidate = 60 } = {}) {
+export async function getSeoGroup(pageKey, { revalidate = 1 } = {}) {
   const settings = await getSeoSettings({ revalidate });
 
   if (pageKey === "root") {
@@ -139,7 +139,10 @@ export function buildSeoMetadata(seo, { path = "/" } = {}) {
 }
 
 export async function generateSeoMetadata(pageKey, options = {}) {
-  const seo = await getSeoGroup(pageKey, options);
+  const seo = await getSeoGroup(pageKey, {
+    ...options,
+    revalidate: 1,
+  });
 
   return buildSeoMetadata(seo, options);
 }
