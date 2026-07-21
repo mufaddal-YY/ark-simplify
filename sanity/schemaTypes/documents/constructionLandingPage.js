@@ -210,6 +210,7 @@ export const constructionLandingPage = defineType({
           validation: (Rule) => Rule.required().email(),
         }),
         requiredText('phone', 'Phone'),
+        requiredText('disclaimer', 'Footer disclaimer'),
       ],
       validation: (Rule) => Rule.required(),
     }),
@@ -401,6 +402,7 @@ export const constructionLandingPage = defineType({
         'Construction estimating, detailing, and project support built around your workflow.',
       email: 'info@arksimplify.com',
       phone: '+1 (312) 380-0712',
+      disclaimer: 'Independent construction campaign page.',
     },
     seo: {
       metaTitle: 'Free Construction Takeoff in 48 Hours | ARK Simplify',

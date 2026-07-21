@@ -14,6 +14,7 @@ export {
 } from "./construction-landing";
 export { getContact, contactQuery } from "./contact";
 export { getFinancePage, financePageQuery } from "./finance-page";
+export {financeLandingQuery, getFinanceLandingPage} from "./finance-landing";
 export { getHeadCodeSettings, headCodeSettingsQuery } from "./head-code";
 export { getHomepage, homepageQuery } from "./homepage";
 export { getJobOpenings, jobOpeningsQuery } from "./job-openings";

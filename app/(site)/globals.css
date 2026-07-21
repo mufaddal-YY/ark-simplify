@@ -343,11 +343,15 @@
 @keyframes construction-cta-pulse {
   0%,
   100% {
-    box-shadow: 0 12px 28px rgb(255 73 0 / 22%), 0 0 0 0 rgb(255 73 0 / 30%);
+    box-shadow:
+      0 12px 28px var(--campaign-shadow, rgb(8 12 20 / 18%)),
+      0 0 0 0 color-mix(in srgb, var(--campaign-accent, #ff4900) 30%, transparent);
   }
 
   50% {
-    box-shadow: 0 16px 34px rgb(255 73 0 / 28%), 0 0 0 10px rgb(255 73 0 / 0%);
+    box-shadow:
+      0 16px 34px var(--campaign-shadow, rgb(8 12 20 / 22%)),
+      0 0 0 10px color-mix(in srgb, var(--campaign-accent, #ff4900) 0%, transparent);
   }
 }
 

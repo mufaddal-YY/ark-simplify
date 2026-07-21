@@ -1,15 +1,34 @@
 "use client";
 
 import {Check, LoaderCircle, LockKeyhole} from "lucide-react";
-import {useState} from "react";
+import {useId, useState} from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const fieldClass =
-  "min-h-12 min-w-0 max-w-full w-full rounded-xl border border-[#d8d4cc] bg-white px-4 text-[0.95rem] text-[#1b2433] outline-none transition placeholder:text-[#7a808b] focus:border-[#ff4900] focus:ring-4 focus:ring-[#ff4900]/10";
+  "min-h-12 min-w-0 max-w-full w-full rounded-xl border border-[#d8d4cc] bg-white px-4 text-[0.95rem] text-[#1b2433] outline-none transition placeholder:text-[#7a808b] focus:border-[var(--campaign-accent)] focus:ring-4 focus:ring-[color-mix(in_srgb,var(--campaign-accent)_12%,transparent)]";
 
 export default function LeadForm({content, onSuccess}) {
+  const selectLabelId = useId();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const selectOptions = content.selectOptions?.length
+    ? content.selectOptions
+    : [
+        "Subcontractor",
+        "General Contractor",
+        "Manufacturer",
+        "Other construction professional",
+      ];
+  const selectCampaign = content.serviceValue === "Free Books Health Check"
+    ? "finance"
+    : "construction";
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -65,8 +84,8 @@ export default function LeadForm({content, onSuccess}) {
           Your bid is on our radar.
         </h3>
         <p className="mt-3 max-w-sm text-sm leading-6 text-[#596170]">
-          Thanks for the details. An ARK construction specialist will reply
-          within one business day to confirm the next step.
+          {content.successText ??
+            "Thanks for the details. An ARK specialist will reply within one business day to confirm the next step."}
         </p>
       </div>
     );
@@ -110,36 +129,56 @@ export default function LeadForm({content, onSuccess}) {
             required
           />
         </label>
-        <label className="block min-w-0 text-sm font-semibold text-[#1b2433]">
-          You are a…
-          <select
-            className={`${fieldClass} mt-2 appearance-none`}
-            name="designation"
-            defaultValue=""
-            required
-          >
-            <option value="" disabled>
-              Select your role
-            </option>
-            <option>Subcontractor</option>
-            <option>General Contractor</option>
-            <option>Manufacturer</option>
-            <option>Other construction professional</option>
-          </select>
-        </label>
+        <div className="block min-w-0 text-sm font-semibold text-[#1b2433]">
+          <span id={selectLabelId}>
+            {content.selectLabel ?? "You are a…"}
+          </span>
+          <Select name="designation" required>
+            <SelectTrigger
+              className="mt-2"
+              aria-labelledby={selectLabelId}
+            >
+              <SelectValue
+                placeholder={content.selectPlaceholder ?? "Select your role"}
+              />
+            </SelectTrigger>
+            <SelectContent campaign={selectCampaign}>
+              {selectOptions.map((option) => (
+                <SelectItem key={option} value={option}>
+                  {option}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
-      <input name="service" type="hidden" value="Free Sample Takeoff" />
-      <label className="block min-w-0 text-sm font-semibold text-[#1b2433]">
-        Active bid details
-        <textarea
-          className={`${fieldClass} mt-2 min-h-24 resize-y py-3`}
+      <input
+        name="service"
+        type="hidden"
+        value={content.serviceValue ?? "Free Sample Takeoff"}
+      />
+      {content.hideMessage ? (
+        <input
           name="message"
-          placeholder="Trade, scope, due date, or a short note about your backlog"
-          maxLength={4000}
-          required
+          type="hidden"
+          value={content.messageValue ?? "Requesting a consultation."}
         />
-      </label>
+      ) : (
+        <label className="block min-w-0 text-sm font-semibold text-[#1b2433]">
+          {content.messageLabel ?? "Active bid details"}
+          <textarea
+            className={`${fieldClass} mt-2 min-h-24 resize-y py-3`}
+            name="message"
+            placeholder={
+              content.messagePlaceholder ??
+              "Trade, scope, due date, or a short note about your backlog"
+            }
+            maxLength={4000}
+            required
+          />
+        </label>
+      )}
 
       <label className="absolute -left-[9999px]" aria-hidden="true">
         Website
@@ -153,7 +192,7 @@ export default function LeadForm({content, onSuccess}) {
       ) : null}
 
       <button
-        className="group flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#ff4900] px-5 text-sm font-bold text-white shadow-[0_12px_28px_rgba(255,73,0,0.2)] transition hover:bg-[#e94300] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff4900] disabled:cursor-wait disabled:opacity-70"
+        className="group flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[var(--campaign-accent)] px-5 text-sm font-bold text-white shadow-[0_12px_28px_var(--campaign-shadow)] transition hover:bg-[var(--campaign-accent-dark)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--campaign-accent)] disabled:cursor-wait disabled:opacity-70"
         type="submit"
         disabled={isSubmitting}
       >

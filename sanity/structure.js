@@ -50,6 +50,14 @@ export const structure = (S) =>
         .id('financePage')
         .child(S.document().schemaType('financePage').documentId('financePage')),
       S.listItem()
+        .title('ARK Simplify finance landing')
+        .id('financeLandingPage')
+        .child(
+          S.document()
+            .schemaType('financeLandingPage')
+            .documentId('financeLandingPage'),
+        ),
+      S.listItem()
         .title('ProEstimate page')
         .id('proestimatePage')
         .child(
