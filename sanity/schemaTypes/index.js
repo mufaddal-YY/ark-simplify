@@ -2,6 +2,7 @@ import {aboutPage} from './documents/aboutPage'
 import {blog} from './documents/blog'
 import {contact} from './documents/contact'
 import {constructionPage} from './documents/constructionPage'
+import {constructionLandingPage} from './documents/constructionLandingPage'
 import {financePage} from './documents/financePage'
 import {headCodeSettings} from './documents/headCodeSettings'
 import {homepage} from './documents/homepage'
@@ -36,6 +37,7 @@ export const schema = {
     blog,
     contact,
     constructionPage,
+    constructionLandingPage,
     financePage,
     headCodeSettings,
     homepage,

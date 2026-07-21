@@ -6,6 +6,7 @@ const routes = [
   "/",
   "/about-us",
   "/construction",
+  "/ark-simplify-construction-landing",
   "/finance",
   "/proestimate",
   "/life-at-ark",

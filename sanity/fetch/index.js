@@ -8,6 +8,10 @@ export {
   getBlogs,
 } from "./blogs";
 export { getConstructionPage, constructionPageQuery } from "./construction-page";
+export {
+  constructionLandingQuery,
+  getConstructionLandingPage,
+} from "./construction-landing";
 export { getContact, contactQuery } from "./contact";
 export { getFinancePage, financePageQuery } from "./finance-page";
 export { getHeadCodeSettings, headCodeSettingsQuery } from "./head-code";

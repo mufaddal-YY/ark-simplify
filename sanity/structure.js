@@ -38,6 +38,14 @@ export const structure = (S) =>
             .documentId('constructionPage'),
         ),
       S.listItem()
+        .title('ARK Simplify construction landing')
+        .id('constructionLandingPage')
+        .child(
+          S.document()
+            .schemaType('constructionLandingPage')
+            .documentId('constructionLandingPage'),
+        ),
+      S.listItem()
         .title('Finance page')
         .id('financePage')
         .child(S.document().schemaType('financePage').documentId('financePage')),
