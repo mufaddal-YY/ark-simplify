@@ -2,11 +2,21 @@ import { notFound } from "next/navigation";
 
 import { BlogArticle } from "@/components/blog";
 import { getBlogBySlug, getBlogSlugs } from "@/sanity/fetch";
+import {canonicalUrl as getCanonicalUrl, siteUrl} from "@/lib/site-url";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://arksimplify.com";
 const siteName = "ARK Simplify";
 
 export const revalidate = 60;
+
+function normalizeMetaTitle(value) {
+  return value
+    .replace(/(?:\s*\|\s*(?:ark\s*simplify|arksimplify))+\s*$/i, "")
+    .trim();
+}
+
+function serializeStructuredData(value) {
+  return JSON.stringify(value).replace(/</g, "\\u003c");
+}
 
 export async function generateStaticParams() {
   const slugs = await getBlogSlugs({ revalidate });
@@ -24,9 +34,12 @@ export async function generateMetadata({ params }) {
     };
   }
 
-  const title = blog.metaTitle ?? blog.title;
+  const title = normalizeMetaTitle(blog.metaTitle ?? blog.title);
+  const socialTitle = `${title} | ${siteName}`;
   const description = blog.metaDescription ?? blog.excerpt;
-  const canonicalUrl = blog.canonicalUrl ?? new URL(`/blog/${slug}`, siteUrl).toString();
+  const canonicalUrl = getCanonicalUrl(
+    blog.canonicalUrl ?? `/blog/${slug}`,
+  );
   const imageUrl = blog.ogImage?.url ?? blog.coverImage?.url ?? "/logo_main.png";
   const imageAlt = blog.ogImage?.alt ?? blog.coverImage?.alt ?? blog.title;
 
@@ -46,13 +59,13 @@ export async function generateMetadata({ params }) {
       follow: !blog.noFollow,
     },
     openGraph: {
-      title,
+      title: socialTitle,
       description,
       url: canonicalUrl,
       siteName,
       type: "article",
       publishedTime: blog.publishedAt,
-      modifiedTime: blog.updatedAt,
+      modifiedTime: blog.lastModified,
       authors: blog.author ? [blog.author] : undefined,
       section: blog.category,
       images: [
@@ -64,7 +77,7 @@ export async function generateMetadata({ params }) {
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: socialTitle,
       description,
       images: [imageUrl],
     },
@@ -79,9 +92,84 @@ export default async function BlogDetailPage({ params }) {
     notFound();
   }
 
+  const canonicalUrl = getCanonicalUrl(
+    blog.canonicalUrl ?? `/blog/${slug}`,
+  );
+  const description = blog.metaDescription ?? blog.excerpt;
+  const imageUrl = new URL(
+    blog.ogImage?.url ?? blog.coverImage?.url ?? "/logo_main.png",
+    siteUrl,
+  ).toString();
+  const keywords = [blog.focusKeyword, ...(blog.keywords ?? [])].filter(Boolean);
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        "@id": `${canonicalUrl}#article`,
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": canonicalUrl,
+        },
+        headline: blog.title,
+        description,
+        image: [imageUrl],
+        datePublished: blog.publishedAt,
+        dateModified: blog.lastModified,
+        author: {
+          "@type": blog.author === siteName ? "Organization" : "Person",
+          name: blog.author || siteName,
+        },
+        publisher: {
+          "@type": "Organization",
+          name: siteName,
+          url: siteUrl,
+          logo: {
+            "@type": "ImageObject",
+            url: getCanonicalUrl("/logo_main.png"),
+          },
+        },
+        articleSection: blog.category,
+        keywords: keywords.join(", "),
+        isAccessibleForFree: true,
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: getCanonicalUrl("/"),
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Blog",
+            item: getCanonicalUrl("/blog"),
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: blog.title,
+            item: canonicalUrl,
+          },
+        ],
+      },
+    ],
+  };
+
   return (
-    <main className="flex-1">
-      <BlogArticle blog={blog} />
-    </main>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: serializeStructuredData(structuredData),
+        }}
+      />
+      <main className="flex-1">
+        <BlogArticle blog={blog} />
+      </main>
+    </>
   );
 }

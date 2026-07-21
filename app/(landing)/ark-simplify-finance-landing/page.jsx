@@ -5,6 +5,7 @@ import {
 } from "@/lib/finance-landing-content";
 import {getFinanceLandingPage} from "@/sanity/fetch";
 import {buildSeoMetadata} from "@/sanity/fetch/seo";
+import {canonicalUrl, siteUrl} from "@/lib/site-url";
 
 export const revalidate = 60;
 
@@ -34,8 +35,7 @@ export async function generateMetadata() {
 export default async function ArkSimplifyFinanceLandingPage() {
   const data = await getFinanceLandingPage({revalidate});
   const content = mergeFinanceLandingContent(data);
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://arksimplify.com";
-  const url = new URL("/ark-simplify-finance-landing", siteUrl).toString();
+  const url = canonicalUrl("/ark-simplify-finance-landing");
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Service",

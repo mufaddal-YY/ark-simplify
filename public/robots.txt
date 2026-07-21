@@ -3,4 +3,4 @@ Allow: /
 
 Disallow: /studio/
 
-Sitemap: https://arksimplify.com/sitemap.xml
+Sitemap: https://www.arksimplify.com/sitemap.xml

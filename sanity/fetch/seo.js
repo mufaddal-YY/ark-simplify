@@ -1,4 +1,5 @@
 import { fetchSanityDocument } from "./utils";
+import {canonicalUrl, siteUrl} from "@/lib/site-url";
 
 export const seoSettingsQuery = `*[_id == "seoSettings"][0]{
   root,
@@ -73,7 +74,6 @@ export const defaultSeo = {
   },
 };
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://arksimplify.com";
 const siteName = "ARK Simplify";
 
 export async function getSeoSettings({ revalidate = 1 } = {}) {
@@ -104,7 +104,7 @@ export function buildSeoMetadata(seo, { path = "/" } = {}) {
   const title = seo?.metaTitle ?? defaultSeo.root.metaTitle;
   const description = seo?.metaDescription ?? defaultSeo.root.metaDescription;
   const keywords = seo?.keywords?.length ? seo.keywords : defaultSeo.root.keywords;
-  const url = new URL(path, siteUrl);
+  const url = new URL(canonicalUrl(path));
 
   return {
     title,

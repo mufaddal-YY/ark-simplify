@@ -8,6 +8,8 @@ const blogCardFields = `
   category,
   publishedAt,
   updatedAt,
+  _updatedAt,
+  "lastModified": coalesce(updatedAt, _updatedAt, publishedAt),
   readingTime,
   isFeatured,
   coverImage{
@@ -63,6 +65,8 @@ export const blogBySlugQuery = `*[
   category,
   publishedAt,
   updatedAt,
+  _updatedAt,
+  "lastModified": coalesce(updatedAt, _updatedAt, publishedAt),
   readingTime,
   isFeatured
 }`;

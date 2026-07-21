@@ -16,6 +16,21 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Sanity publish revalidation
+
+Set `SANITY_REVALIDATE_SECRET` to the same long random value in the app environment and in a signed Sanity webhook.
+
+Configure the webhook as follows:
+
+- URL: `https://www.arksimplify.com/api/revalidate-sanity`
+- Dataset: `production`
+- Trigger on: create, update, and delete
+- Filter: `_type in ["blog", "seoSettings", "constructionLandingPage", "financeLandingPage"]`
+- Projection: `{_id, _type, "slug": slug.current}`
+- Enable webhook signatures and use `SANITY_REVALIDATE_SECRET`
+
+The webhook invalidates the relevant Next.js cache tag after Sanity confirms the mutation, so published SEO and blog changes are available on the next request. The existing time-based revalidation remains as a fallback.
+
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

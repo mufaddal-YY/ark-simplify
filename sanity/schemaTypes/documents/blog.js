@@ -1,8 +1,8 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://arksimplify.com'
+import {siteUrl} from '../../../lib/site-url'
 
 const isAbsoluteUrl = (value) => /^https?:\/\//.test(value)
+const hasBrandSuffix = (value) => /\|\s*(?:ark\s*simplify|arksimplify)\s*$/i.test(value)
 
 export const blog = defineType({
   name: 'blog',
@@ -141,8 +141,16 @@ export const blog = defineType({
       title: 'Meta title',
       type: 'string',
       group: 'seo',
-      description: 'Aim for 50-60 characters. Falls back to the blog title.',
-      validation: (Rule) => Rule.max(70),
+      description:
+        'Enter only the article-specific title. The site adds “| ARK Simplify” automatically.',
+      validation: (Rule) => [
+        Rule.max(60).warning('Keep the article-specific title at 60 characters or fewer.'),
+        Rule.custom((value) =>
+          !value || !hasBrandSuffix(value)
+            ? true
+            : 'Remove the ARK Simplify suffix; the website adds it automatically.',
+        ).warning(),
+      ],
     }),
     defineField({
       name: 'metaDescription',
@@ -151,7 +159,14 @@ export const blog = defineType({
       rows: 3,
       group: 'seo',
       description: 'Aim for 140-160 characters. Falls back to the excerpt.',
-      validation: (Rule) => Rule.max(170),
+      validation: (Rule) => [
+        Rule.max(170),
+        Rule.custom((value) =>
+          !value || (value.length >= 140 && value.length <= 160)
+            ? true
+            : 'For stronger search snippets, aim for 140–160 characters.',
+        ).warning(),
+      ],
     }),
     defineField({
       name: 'focusKeyword',
@@ -178,11 +193,21 @@ export const blog = defineType({
       description: 'Optional override. Leave blank to use the generated blog URL.',
       validation: (Rule) =>
         Rule.custom((url) => {
-          if (!url || isAbsoluteUrl(url)) {
+          if (!url) {
             return true
           }
 
-          return 'Enter a full http(s) URL.'
+          if (!isAbsoluteUrl(url)) {
+            return 'Enter a full http(s) URL.'
+          }
+
+          try {
+            return new URL(url).hostname === new URL(siteUrl).hostname
+              ? true
+              : `Canonical URLs must use ${new URL(siteUrl).hostname}.`
+          } catch {
+            return 'Enter a valid canonical URL.'
+          }
         }),
     }),
     defineField({
@@ -190,7 +215,8 @@ export const blog = defineType({
       title: 'Social sharing image',
       type: 'image',
       group: 'seo',
-      description: 'Optional Open Graph image. Falls back to the cover image.',
+      description:
+        'Optional Open Graph image. Use a 1200×630 image; otherwise the cover image is used.',
       options: {
         hotspot: true,
       },
@@ -199,7 +225,7 @@ export const blog = defineType({
           name: 'alt',
           title: 'Alt text',
           type: 'string',
-          validation: (Rule) => Rule.max(140),
+          validation: (Rule) => Rule.required().max(140),
         }),
       ],
     }),
