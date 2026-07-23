@@ -1,18 +1,15 @@
 import Link from "next/link";
 import { FaWhatsapp } from "react-icons/fa6";
+import {fallbackWhatsapp, getWhatsappHref} from "@/lib/whatsapp";
 
-const fallbackWhatsapp = {
-  value: "+91 8668473798",
-  href: "https://wa.me/918668473798",
-};
-
-export default function FloatingWhatsapp({ contact }) {
+export default function FloatingWhatsapp({contact, phone}) {
   const method =
     contact?.contactMethods?.find((item) => item.type === "whatsapp") ??
     fallbackWhatsapp;
-  const href = method.href ?? fallbackWhatsapp.href;
-  const label = method.value
-    ? `Chat on WhatsApp at ${method.value}`
+  const number = phone ?? method.value ?? fallbackWhatsapp.value;
+  const href = phone ? getWhatsappHref(phone) : method.href ?? getWhatsappHref(number);
+  const label = number
+    ? `Chat on WhatsApp at ${number}`
     : "Chat on WhatsApp";
 
   return (

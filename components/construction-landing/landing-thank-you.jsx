@@ -5,9 +5,11 @@ import {
   ArrowRight,
   CheckCircle2,
   Mail,
-  Phone,
   ShieldCheck,
 } from "lucide-react";
+import {FaWhatsapp} from "react-icons/fa6";
+import FloatingWhatsapp from "@/components/common/floating-whatsapp";
+import {getWhatsappHref} from "@/lib/whatsapp";
 
 export default function LandingThankYou({
   campaign,
@@ -22,7 +24,7 @@ export default function LandingThankYou({
   title,
   description,
   phone,
-  email = "info@arksimplify.com",
+  email = "enquiry@arksimplify.com",
 }) {
   return (
     <main
@@ -135,10 +137,13 @@ export default function LandingThankYou({
               </p>
               <div className="mt-4 space-y-3">
                 <a
-                  href={`tel:${phone.replace(/[^+\d]/g, "")}`}
+                  href={getWhatsappHref(phone)}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Chat on WhatsApp at ${phone}`}
                   className="flex items-center gap-3 rounded-xl bg-[var(--campaign-accent-soft)] px-4 py-3 text-sm font-semibold transition hover:text-[var(--campaign-accent-dark)]"
                 >
-                  <Phone className="size-4 text-[var(--campaign-accent-dark)]" />
+                  <FaWhatsapp className="size-4 text-[var(--campaign-accent-dark)]" />
                   {phone}
                 </a>
                 <a
@@ -153,6 +158,7 @@ export default function LandingThankYou({
           </aside>
         </section>
       </div>
+      <FloatingWhatsapp phone={phone} />
     </main>
   );
 }

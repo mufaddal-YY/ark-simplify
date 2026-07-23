@@ -20,7 +20,6 @@ import {
   HardHat,
   Landmark,
   Mail,
-  Phone,
   Quote,
   Ruler,
   ShieldCheck,
@@ -29,9 +28,12 @@ import {
   UsersRound,
   X,
 } from "lucide-react";
+import {FaWhatsapp} from "react-icons/fa6";
 import {useEffect, useRef, useState} from "react";
 import {gsap} from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
+import FloatingWhatsapp from "@/components/common/floating-whatsapp";
+import {getWhatsappHref} from "@/lib/whatsapp";
 import LeadForm from "./lead-form";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -204,6 +206,7 @@ export default function ConstructionLanding({
   thankYouPath,
   stats,
   clientele,
+  email = "enquiry@arksimplify.com",
 }) {
   const rootRef = useRef(null);
   const dialogRef = useRef(null);
@@ -813,15 +816,21 @@ export default function ConstructionLanding({
             <p className="mt-4 max-w-md text-sm leading-6 text-[#626977]">{content.footer.statement}</p>
           </div>
           <div className="space-y-3 text-sm font-semibold">
-            {content.footer.email ? (
-              <a className="flex items-center gap-2 hover:text-[var(--campaign-accent-dark)]" href={`mailto:${content.footer.email}`}>
+            {email ? (
+              <a className="flex items-center gap-2 hover:text-[var(--campaign-accent-dark)]" href={`mailto:${email}`}>
                 <Mail className="size-4" aria-hidden="true" />
-                {content.footer.email}
+                {email}
               </a>
             ) : null}
             {content.footer.phone ? (
-              <a className="flex items-center gap-2 hover:text-[var(--campaign-accent-dark)]" href={`tel:${content.footer.phone.replace(/[^+\d]/g, "")}`}>
-                <Phone className="size-4" aria-hidden="true" />
+              <a
+                className="flex items-center gap-2 hover:text-[var(--campaign-accent-dark)]"
+                href={getWhatsappHref(content.footer.phone)}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Chat on WhatsApp at ${content.footer.phone}`}
+              >
+                <FaWhatsapp className="size-4" aria-hidden="true" />
                 {content.footer.phone}
               </a>
             ) : null}
@@ -832,6 +841,8 @@ export default function ConstructionLanding({
           {content.footer.disclaimer ? <p>{content.footer.disclaimer}</p> : null}
         </div>
       </footer>
+
+      <FloatingWhatsapp phone={content.footer.phone} />
 
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-brand-secondary/10 bg-white/95 px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-12px_36px_var(--campaign-shadow-soft)] backdrop-blur-xl sm:hidden">
         <button

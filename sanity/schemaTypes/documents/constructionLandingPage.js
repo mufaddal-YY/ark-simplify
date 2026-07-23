@@ -400,7 +400,7 @@ export const constructionLandingPage = defineType({
     footer: {
       statement:
         'Construction estimating, detailing, and project support built around your workflow.',
-      email: 'info@arksimplify.com',
+      email: 'enquiry@arksimplify.com',
       phone: '+1 (312) 380-0712',
       disclaimer: 'Independent construction campaign page.',
     },
@@ -424,4 +424,3 @@ export const constructionLandingPage = defineType({
     },
   },
 })
-// 
