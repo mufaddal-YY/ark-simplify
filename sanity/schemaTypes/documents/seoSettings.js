@@ -22,6 +22,8 @@ const seoField = (name, title, initialValue, group) =>
         name: 'metaTitle',
         title: 'Meta title',
         type: 'string',
+        description:
+          'Used exactly as entered in the browser title and social metadata.',
         validation: (Rule) => Rule.required().max(70),
       }),
       defineField({
@@ -29,6 +31,8 @@ const seoField = (name, title, initialValue, group) =>
         title: 'Meta description',
         type: 'text',
         rows: 3,
+        description:
+          'Used as the page meta description and supporting social metadata.',
         validation: (Rule) => Rule.required().max(170),
       }),
       keywordsField(),

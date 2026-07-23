@@ -3,7 +3,7 @@ import {
   financeLandingFallback,
   mergeFinanceLandingContent,
 } from "@/lib/finance-landing-content";
-import {getFinanceLandingPage} from "@/sanity/fetch";
+import {getFinanceLandingPage, getHomepage} from "@/sanity/fetch";
 import {buildSeoMetadata} from "@/sanity/fetch/seo";
 import {canonicalUrl, siteUrl} from "@/lib/site-url";
 
@@ -33,7 +33,10 @@ export async function generateMetadata() {
 }
 
 export default async function ArkSimplifyFinanceLandingPage() {
-  const data = await getFinanceLandingPage({revalidate});
+  const [data, homepage] = await Promise.all([
+    getFinanceLandingPage({revalidate}),
+    getHomepage({revalidate}),
+  ]);
   const content = mergeFinanceLandingContent(data);
   const url = canonicalUrl("/ark-simplify-finance-landing");
   const structuredData = {
@@ -66,6 +69,9 @@ export default async function ArkSimplifyFinanceLandingPage() {
       />
       <ConstructionLanding
         content={content}
+        stats={homepage?.statsSection}
+        clientele={homepage?.clienteleSection}
+        thankYouPath="/ark-simplify-finance-landing/thank-you"
         theme={{
           accent: "#00b920",
           accentDark: "#007f16",

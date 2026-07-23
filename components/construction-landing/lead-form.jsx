@@ -1,6 +1,7 @@
 "use client";
 
-import {Check, LoaderCircle, LockKeyhole} from "lucide-react";
+import {LoaderCircle, LockKeyhole} from "lucide-react";
+import {useRouter} from "next/navigation";
 import {useId, useState} from "react";
 import {
   Select,
@@ -13,11 +14,11 @@ import {
 const fieldClass =
   "min-h-12 min-w-0 max-w-full w-full rounded-xl border border-[#d8d4cc] bg-white px-4 text-[0.95rem] text-[#1b2433] outline-none transition placeholder:text-[#7a808b] focus:border-[var(--campaign-accent)] focus:ring-4 focus:ring-[color-mix(in_srgb,var(--campaign-accent)_12%,transparent)]";
 
-export default function LeadForm({content, onSuccess}) {
+export default function LeadForm({content, onSuccess, thankYouPath}) {
+  const router = useRouter();
   const selectLabelId = useId();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
-  const [submitted, setSubmitted] = useState(false);
   const selectOptions = content.selectOptions?.length
     ? content.selectOptions
     : [
@@ -29,6 +30,9 @@ export default function LeadForm({content, onSuccess}) {
   const selectCampaign = content.serviceValue === "Free Books Health Check"
     ? "finance"
     : "construction";
+  const resolvedThankYouPath =
+    thankYouPath ??
+    `/ark-simplify-${selectCampaign}-landing/thank-you`;
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -58,8 +62,8 @@ export default function LeadForm({content, onSuccess}) {
       }
 
       formElement.reset();
-      setSubmitted(true);
       onSuccess?.();
+      router.push(resolvedThankYouPath);
     } catch (error) {
       setSubmitError(
         error instanceof Error
@@ -69,26 +73,6 @@ export default function LeadForm({content, onSuccess}) {
     } finally {
       setIsSubmitting(false);
     }
-  }
-
-  if (submitted) {
-    return (
-      <div
-        className="flex min-h-72 flex-col items-center justify-center rounded-2xl bg-brand-surface px-6 py-10 text-center"
-        role="status"
-      >
-        <span className="mb-5 inline-flex size-14 items-center justify-center rounded-full bg-[#1b2433] text-white">
-          <Check className="size-6" aria-hidden="true" />
-        </span>
-        <h3 className="text-2xl font-semibold tracking-[-0.035em] text-[#1b2433]">
-          Your bid is on our radar.
-        </h3>
-        <p className="mt-3 max-w-sm text-sm leading-6 text-[#596170]">
-          {content.successText ??
-            "Thanks for the details. An ARK specialist will reply within one business day to confirm the next step."}
-        </p>
-      </div>
-    );
   }
 
   return (

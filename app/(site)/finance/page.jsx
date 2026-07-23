@@ -4,7 +4,11 @@ import FinanceServices from "@/components/finance/finance-services";
 import FinancePartners from "@/components/finance/finance-partners";
 import FinanceSoftwareTools from "@/components/finance/finance-software-tools";
 import CTA_common from "@/components/common/CTA_common";
-import { generateSeoMetadata, getFinancePage } from "@/sanity/fetch";
+import {
+  generateSeoMetadata,
+  getFinancePage,
+  getSeoGroup,
+} from "@/sanity/fetch";
 
 export const revalidate = 60;
 
@@ -13,11 +17,23 @@ export function generateMetadata() {
 }
 
 export default async function FinancePage() {
-  const financePage = await getFinancePage({ revalidate });
+  const [financePage, seo] = await Promise.all([
+    getFinancePage({ revalidate }),
+    getSeoGroup("finance", { revalidate }),
+  ]);
+  const seoTitle = seo?.metaTitle?.trim();
+  const titleAccent = financePage?.banner?.titleAccent;
+  const banner = {
+    ...financePage?.banner,
+    title: seoTitle || financePage?.banner?.title,
+    titleAccent: seoTitle ? "" : titleAccent,
+    description:
+      seo?.metaDescription?.trim() || financePage?.banner?.description,
+  };
 
   return (
     <main className="flex-1">
-      <FinanceBanner data={financePage?.banner} />
+      <FinanceBanner data={banner} />
       <FinanceOverview data={financePage?.overview} />
       <FinanceServices data={financePage?.services} />
       <FinancePartners data={financePage?.partners} />

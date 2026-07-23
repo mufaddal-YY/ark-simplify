@@ -75,7 +75,136 @@ function PrimaryButton({children, onClick, inverse = false, pulse = false}) {
   );
 }
 
-export default function ConstructionLanding({content, theme = {}}) {
+function LandingStats({data}) {
+  const stats = data?.stats?.filter((stat) => Number.isFinite(stat.value)) ?? [];
+
+  if (!stats.length) return null;
+
+  return (
+    <section
+      id="results"
+      className="relative scroll-mt-20 overflow-hidden bg-[var(--campaign-accent-soft)] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-28"
+    >
+      <div className="pointer-events-none absolute -top-40 -right-40 size-[30rem] rounded-full border border-[var(--campaign-accent)]/10" />
+      <div className="relative mx-auto max-w-7xl">
+        <div data-reveal className="grid gap-7 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:items-end lg:gap-12">
+          <div>
+            <Eyebrow>{data.eyebrow ?? "Delivery results"}</Eyebrow>
+            <h2 className="max-w-2xl text-4xl leading-[1.03] font-black tracking-[-0.055em] text-[#1b2433] text-balance sm:text-5xl">
+              {data.title ?? "Consistent support, measured across real delivery."}
+            </h2>
+          </div>
+          <p className="max-w-2xl text-base leading-8 text-[#596170] sm:text-lg lg:justify-self-end">
+            {data.description}
+          </p>
+        </div>
+
+        <div className="mt-10 grid overflow-hidden rounded-[1.75rem] border border-[#1b2433]/10 bg-[#1b2433] shadow-[0_26px_70px_var(--campaign-shadow-soft)] sm:grid-cols-2 lg:mt-14 lg:grid-cols-4">
+          {stats.map((stat, index) => (
+            <article
+              key={stat._key ?? stat.label}
+              data-reveal
+              className={`min-h-52 p-6 text-white sm:p-7 ${
+                index > 0 ? "border-t border-white/10 sm:border-t-0 sm:border-l" : ""
+              } ${index === 2 ? "sm:border-l-0 lg:border-l" : ""}`}
+            >
+              <p className="text-4xl leading-none font-black tracking-[-0.055em] sm:text-5xl">
+                {stat.prefix}
+                {stat.value.toLocaleString("en-US")}
+                {stat.suffix}
+              </p>
+              <div className="mt-7 h-1 w-10 rounded-full bg-[var(--campaign-accent)]" />
+              <p className="mt-5 text-base font-bold">{stat.label}</p>
+              <p className="mt-2 text-sm leading-6 text-white/56">
+                {stat.microLabel}
+              </p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function LandingClientele({data}) {
+  const logos =
+    data?.logos
+      ?.filter((logo) => logo.logoUrl)
+      .map((logo, index) => ({
+        id: logo._key ?? logo.name ?? index,
+        src: logo.logoUrl,
+        alt: logo.alt ?? logo.name ?? `Client logo ${index + 1}`,
+      })) ?? [];
+
+  if (!logos.length) return null;
+
+  return (
+    <section
+      id="clientele"
+      className="scroll-mt-20 bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-28"
+    >
+      <div className="mx-auto grid max-w-7xl overflow-hidden rounded-[1.75rem] border border-[#1b2433]/10 shadow-[0_24px_70px_var(--campaign-shadow-soft)] lg:grid-cols-[minmax(280px,0.36fr)_minmax(0,0.64fr)]">
+        <div className="relative overflow-hidden bg-[#151827] p-7 text-white sm:p-10 lg:p-12">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,var(--campaign-shadow),transparent_42%)]" />
+          <div data-reveal className="relative">
+            <Eyebrow light>{data.eyebrow ?? "Clientele"}</Eyebrow>
+            <h2 className="text-4xl leading-none font-black tracking-[-0.06em] sm:text-5xl">
+              <span className="block">{data.titleStart ?? "Our"}</span>
+              <span className="mt-2 block text-[var(--campaign-accent-light)]">
+                {data.highlightedTitle ?? "Clientele"}
+              </span>
+            </h2>
+            <p className="mt-7 max-w-md text-base leading-8 text-white/68">
+              {data.description}
+            </p>
+            {data.supportingText ? (
+              <p className="mt-8 border-t border-white/14 pt-6 text-sm leading-7 text-white/56">
+                {data.supportingText}
+              </p>
+            ) : null}
+          </div>
+        </div>
+
+        <div>
+          <div className="flex min-h-14 items-center border-b border-[#1b2433]/10 px-6 sm:px-8">
+            <p className="text-xs font-bold tracking-[0.18em] text-[#1b2433]/48 uppercase">
+              {data.networkLabel ?? "Client network"}
+            </p>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3">
+            {logos.map((logo, index) => (
+              <div
+                key={logo.id}
+                data-reveal
+                className={`flex min-h-36 items-center justify-center p-6 sm:min-h-40 ${
+                  index % 2 !== 1 ? "border-r border-[#1b2433]/10" : ""
+                } ${index % 3 !== 2 ? "sm:border-r sm:border-[#1b2433]/10" : "sm:border-r-0"} ${
+                  index < logos.length - 2 ? "border-b border-[#1b2433]/10" : ""
+                }`}
+              >
+                <Image
+                  src={logo.src}
+                  alt={logo.alt}
+                  width={180}
+                  height={96}
+                  className="h-auto max-h-16 w-auto max-w-full object-contain opacity-75 grayscale transition duration-300 hover:scale-105 hover:opacity-100 hover:grayscale-0 sm:max-h-20"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default function ConstructionLanding({
+  content,
+  theme = {},
+  thankYouPath,
+  stats,
+  clientele,
+}) {
   const rootRef = useRef(null);
   const dialogRef = useRef(null);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -453,7 +582,10 @@ export default function ConstructionLanding({content, theme = {}}) {
                 </span>
               </div>
               <p className="mb-5 text-sm leading-6 text-[#646b77]">{content.form.description}</p>
-              <LeadForm content={content.form} />
+              <LeadForm
+                content={content.form}
+                thankYouPath={thankYouPath}
+              />
             </aside>
           </div>
         </section>
@@ -647,6 +779,9 @@ export default function ConstructionLanding({content, theme = {}}) {
         </section>
         ) : null}
 
+        <LandingStats data={stats} />
+        <LandingClientele data={clientele} />
+
         <section className="bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-28">
           <div data-reveal className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] bg-[#1b2433] p-6 text-center text-white sm:p-10 lg:p-14">
             <div className="mx-auto flex max-w-4xl flex-col items-center">
@@ -734,7 +869,10 @@ export default function ConstructionLanding({content, theme = {}}) {
             <h2 id="dialog-form-title" className="mt-2 text-3xl font-black tracking-[-0.045em]">{content.form.title}</h2>
             <p className="mt-3 text-sm leading-6 text-[#646b77]">{content.form.description}</p>
           </div>
-          <LeadForm content={content.form} />
+          <LeadForm
+            content={content.form}
+            thankYouPath={thankYouPath}
+          />
         </div>
       </dialog>
     </div>

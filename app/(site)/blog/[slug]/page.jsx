@@ -8,12 +8,6 @@ const siteName = "ARK Simplify";
 
 export const revalidate = 60;
 
-function normalizeMetaTitle(value) {
-  return value
-    .replace(/(?:\s*\|\s*(?:ark\s*simplify|arksimplify))+\s*$/i, "")
-    .trim();
-}
-
 function serializeStructuredData(value) {
   return JSON.stringify(value).replace(/</g, "\\u003c");
 }
@@ -34,9 +28,8 @@ export async function generateMetadata({ params }) {
     };
   }
 
-  const title = normalizeMetaTitle(blog.metaTitle ?? blog.title);
-  const socialTitle = `${title} | ${siteName}`;
-  const description = blog.metaDescription ?? blog.excerpt;
+  const title = (blog.metaTitle ?? blog.title).trim();
+  const description = (blog.metaDescription ?? blog.excerpt).trim();
   const canonicalUrl = getCanonicalUrl(
     blog.canonicalUrl ?? `/blog/${slug}`,
   );
@@ -59,7 +52,7 @@ export async function generateMetadata({ params }) {
       follow: !blog.noFollow,
     },
     openGraph: {
-      title: socialTitle,
+      title,
       description,
       url: canonicalUrl,
       siteName,
@@ -77,7 +70,7 @@ export async function generateMetadata({ params }) {
     },
     twitter: {
       card: "summary_large_image",
-      title: socialTitle,
+      title,
       description,
       images: [imageUrl],
     },

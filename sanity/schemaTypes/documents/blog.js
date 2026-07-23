@@ -2,7 +2,6 @@ import {defineArrayMember, defineField, defineType} from 'sanity'
 import {siteUrl} from '../../../lib/site-url'
 
 const isAbsoluteUrl = (value) => /^https?:\/\//.test(value)
-const hasBrandSuffix = (value) => /\|\s*(?:ark\s*simplify|arksimplify)\s*$/i.test(value)
 
 export const blog = defineType({
   name: 'blog',
@@ -142,15 +141,9 @@ export const blog = defineType({
       type: 'string',
       group: 'seo',
       description:
-        'Enter only the article-specific title. The site adds “| ARK Simplify” automatically.',
-      validation: (Rule) => [
-        Rule.max(60).warning('Keep the article-specific title at 60 characters or fewer.'),
-        Rule.custom((value) =>
-          !value || !hasBrandSuffix(value)
-            ? true
-            : 'Remove the ARK Simplify suffix; the website adds it automatically.',
-        ).warning(),
-      ],
+        'Used exactly as entered in the browser title and social metadata. Include the brand only if you want it shown.',
+      validation: (Rule) =>
+        Rule.max(60).warning('Keep the complete title at 60 characters or fewer.'),
     }),
     defineField({
       name: 'metaDescription',

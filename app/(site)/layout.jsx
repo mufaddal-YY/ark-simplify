@@ -12,10 +12,6 @@ export async function generateMetadata() {
 
   return {
     ...metadata,
-    title: {
-      default: metadata.title,
-      template: "%s | ARK Simplify",
-    },
     verification: {
       google: "NOGngijBnI1yiu5tnyiCdl7FFNA0dK9qMDIAlZFGpAk",
     },

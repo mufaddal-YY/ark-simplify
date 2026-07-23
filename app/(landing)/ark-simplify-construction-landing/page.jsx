@@ -3,7 +3,7 @@ import {
   constructionLandingFallback,
   mergeConstructionLandingContent,
 } from "@/lib/construction-landing-content";
-import {getConstructionLandingPage} from "@/sanity/fetch";
+import {getConstructionLandingPage, getHomepage} from "@/sanity/fetch";
 import {buildSeoMetadata} from "@/sanity/fetch/seo";
 import {canonicalUrl, siteUrl} from "@/lib/site-url";
 
@@ -33,7 +33,10 @@ export async function generateMetadata() {
 }
 
 export default async function ArkSimplifyConstructionLandingPage() {
-  const data = await getConstructionLandingPage({revalidate});
+  const [data, homepage] = await Promise.all([
+    getConstructionLandingPage({revalidate}),
+    getHomepage({revalidate}),
+  ]);
   const content = mergeConstructionLandingContent(data);
   const url = canonicalUrl("/ark-simplify-construction-landing");
   const structuredData = {
@@ -63,7 +66,12 @@ export default async function ArkSimplifyConstructionLandingPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{__html: JSON.stringify(structuredData)}}
       />
-      <ConstructionLanding content={content} />
+      <ConstructionLanding
+        content={content}
+        stats={homepage?.statsSection}
+        clientele={homepage?.clienteleSection}
+        thankYouPath="/ark-simplify-construction-landing/thank-you"
+      />
     </>
   );
 }

@@ -76,6 +76,12 @@ export const defaultSeo = {
 
 const siteName = "ARK Simplify";
 
+function normalizeSeoText(value, fallback) {
+  const normalizedValue = typeof value === "string" ? value.trim() : "";
+
+  return normalizedValue || fallback;
+}
+
 export async function getSeoSettings({ revalidate = 1 } = {}) {
   return fetchSanityDocument({
     query: seoSettingsQuery,
@@ -101,10 +107,18 @@ export async function getSeoGroup(pageKey, { revalidate = 1 } = {}) {
 }
 
 export function buildSeoMetadata(seo, { path = "/" } = {}) {
-  const title = seo?.metaTitle ?? defaultSeo.root.metaTitle;
-  const description = seo?.metaDescription ?? defaultSeo.root.metaDescription;
-  const keywords = seo?.keywords?.length ? seo.keywords : defaultSeo.root.keywords;
-  const url = new URL(canonicalUrl(path));
+  const title = normalizeSeoText(seo?.metaTitle, defaultSeo.root.metaTitle);
+  const description = normalizeSeoText(
+    seo?.metaDescription,
+    defaultSeo.root.metaDescription,
+  );
+  const keywords = (seo?.keywords?.length
+    ? seo.keywords
+    : defaultSeo.root.keywords
+  )
+    .map((keyword) => normalizeSeoText(keyword, ""))
+    .filter(Boolean);
+  const url = canonicalUrl(path);
 
   return {
     title,
@@ -114,7 +128,18 @@ export function buildSeoMetadata(seo, { path = "/" } = {}) {
     applicationName: siteName,
     category: "business",
     alternates: {
-      canonical: url.pathname,
+      canonical: url,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
     },
     openGraph: {
       title,
