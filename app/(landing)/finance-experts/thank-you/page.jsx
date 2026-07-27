@@ -12,7 +12,7 @@ export default function FinanceLandingThankYouPage() {
   return (
     <LandingThankYou
       campaign="finance"
-      landingPath="/ark-simplify-finance-landing"
+      landingPath="/finance-experts"
       logoSrc="/logo_finance.png"
       logoAlt="ARK Simplify Finance"
       accent="#00b920"

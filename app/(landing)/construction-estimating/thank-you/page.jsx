@@ -12,7 +12,7 @@ export default function ConstructionLandingThankYouPage() {
   return (
     <LandingThankYou
       campaign="construction"
-      landingPath="/ark-simplify-construction-landing"
+      landingPath="/construction-estimating"
       logoSrc="/const_logo.png"
       logoAlt="ARK Simplify Construction"
       accent="#ff4900"

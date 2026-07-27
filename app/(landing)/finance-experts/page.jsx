@@ -14,7 +14,7 @@ export async function generateMetadata() {
   const data = await getFinanceLandingPage({revalidate});
   const seo = {...data?.seo, ...financeLandingFallback.seo};
   const metadata = buildSeoMetadata(seo, {
-    path: "/ark-simplify-finance-landing",
+    path: "/finance-experts",
   });
 
   return {
@@ -39,7 +39,7 @@ export default async function ArkSimplifyFinanceLandingPage() {
     getHomepage({revalidate}),
   ]);
   const content = mergeFinanceLandingContent(data);
-  const url = canonicalUrl("/ark-simplify-finance-landing");
+  const url = canonicalUrl("/finance-experts");
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -70,9 +70,10 @@ export default async function ArkSimplifyFinanceLandingPage() {
       />
       <ConstructionLanding
         content={content}
+        topbarText="Get 2 Weeks of Free Service"
         stats={financeLandingStats}
         clientele={homepage?.clienteleSection}
-        thankYouPath="/ark-simplify-finance-landing/thank-you"
+        thankYouPath="/finance-experts/thank-you"
         theme={{
           accent: "#00b920",
           accentDark: "#007f16",

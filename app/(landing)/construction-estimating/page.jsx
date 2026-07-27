@@ -13,7 +13,7 @@ export async function generateMetadata() {
   const data = await getConstructionLandingPage({revalidate});
   const seo = {...constructionLandingFallback.seo, ...data?.seo};
   const metadata = buildSeoMetadata(seo, {
-    path: "/ark-simplify-construction-landing",
+    path: "/construction-estimating",
   });
 
   return {
@@ -38,7 +38,7 @@ export default async function ArkSimplifyConstructionLandingPage() {
     getHomepage({revalidate}),
   ]);
   const content = mergeConstructionLandingContent(data);
-  const url = canonicalUrl("/ark-simplify-construction-landing");
+  const url = canonicalUrl("/construction-estimating");
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -68,9 +68,10 @@ export default async function ArkSimplifyConstructionLandingPage() {
       />
       <ConstructionLanding
         content={content}
+        topbarText="Get 2 Weeks of Free Service – Up to 10 Takeoffs, On Us!"
         stats={homepage?.statsSection}
         clientele={homepage?.clienteleSection}
-        thankYouPath="/ark-simplify-construction-landing/thank-you"
+        thankYouPath="/construction-estimating/thank-you"
       />
     </>
   );

@@ -204,11 +204,13 @@ export default function ConstructionLanding({
   content,
   theme = {},
   thankYouPath,
+  topbarText,
   stats,
   clientele,
   email = "enquiry@arksimplify.com",
 }) {
   const rootRef = useRef(null);
+  const topbarTrackRef = useRef(null);
   const dialogRef = useRef(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -262,6 +264,26 @@ export default function ConstructionLanding({
     dialogRef.current?.close();
     document.body.style.overflow = "";
   }
+
+  useEffect(() => {
+    const track = topbarTrackRef.current;
+    if (!track) return;
+
+    const mm = gsap.matchMedia();
+
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const tween = gsap.to(track, {
+        xPercent: -50,
+        duration: 22,
+        ease: "none",
+        repeat: -1,
+      });
+
+      return () => tween.kill();
+    });
+
+    return () => mm.revert();
+  }, []);
 
   useEffect(() => {
     const updateHeader = () => setIsScrolled(window.scrollY > 20);
@@ -466,7 +488,7 @@ export default function ConstructionLanding({
   return (
     <div
       ref={rootRef}
-      className="overflow-x-clip bg-white pb-24 text-[#1b2433] sm:pb-0"
+      className="overflow-x-clip bg-white pt-10 pb-24 text-[#1b2433] sm:pb-0"
       style={{
         "--campaign-accent": campaignTheme.accent,
         "--campaign-accent-dark": campaignTheme.accentDark,
@@ -477,8 +499,32 @@ export default function ConstructionLanding({
         "--campaign-shadow-strong": campaignTheme.shadowStrong,
       }}
     >
+      {topbarText ? (
+        <div
+          className="fixed inset-x-0 top-0 z-[70] flex h-10 items-center overflow-hidden bg-[var(--campaign-accent-dark)] text-white"
+          role="region"
+          aria-label={topbarText}
+        >
+          <div ref={topbarTrackRef} className="flex w-max shrink-0" aria-hidden="true">
+            {[0, 1].map((group) => (
+              <div key={group} className="flex shrink-0 items-center">
+                {[0, 1, 2, 3].map((item) => (
+                  <div
+                    key={item}
+                    className="flex shrink-0 items-center gap-6 px-6 text-xs font-black tracking-[0.08em] whitespace-nowrap uppercase sm:gap-8 sm:px-8 sm:text-sm"
+                  >
+                    <span>{topbarText}</span>
+                    <span className="size-1.5 rounded-full bg-white/70" />
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
       <header
-        className={`fixed inset-x-0 top-0 z-50 hidden transition-all duration-300 sm:block ${
+        className={`fixed inset-x-0 top-10 z-50 hidden transition-all duration-300 sm:block ${
           isScrolled
             ? "translate-y-0 border-b border-brand-secondary/10 bg-white/85 opacity-100 shadow-[0_12px_40px_var(--campaign-shadow-soft)] backdrop-blur-xl"
             : "pointer-events-none -translate-y-full border-b border-transparent bg-transparent opacity-0"
@@ -651,6 +697,43 @@ export default function ConstructionLanding({
           </div>
         </section>
 
+        {content.softwareTools?.items?.length ? (
+          <section className="bg-[#151827] px-4 py-16 text-white sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+            <div className="mx-auto max-w-7xl">
+              <div data-reveal>
+                <Eyebrow light>{content.softwareTools.eyebrow}</Eyebrow>
+                <h2 className="text-4xl leading-[1.02] font-black tracking-[-0.055em] text-balance sm:text-5xl lg:text-6xl">
+                  {content.softwareTools.title}
+                </h2>
+              </div>
+
+              <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:mt-14 lg:grid-cols-6">
+                {content.softwareTools.items.map((tool) => (
+                  <article
+                    key={tool._key ?? tool.name}
+                    data-reveal
+                    className="flex aspect-[5/3] min-h-32 items-center justify-center rounded-2xl border border-white/10 bg-white p-5 text-center shadow-[0_18px_48px_rgba(0,0,0,0.2)] sm:min-h-36"
+                  >
+                    {tool.textOnly ? (
+                      <p className="text-lg leading-tight font-black tracking-[-0.03em] text-[#1b2433] sm:text-xl">
+                        {tool.name}
+                      </p>
+                    ) : (
+                      <Image
+                        src={tool.src}
+                        alt={`${tool.name} logo`}
+                        width={180}
+                        height={80}
+                        className="max-h-16 w-auto max-w-full object-contain"
+                      />
+                    )}
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+        ) : null}
+
         <section id="how-it-works" className="relative bg-brand-surface px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-28">
           <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
             <div data-reveal className="lg:sticky lg:top-10 lg:self-start">
@@ -700,6 +783,47 @@ export default function ConstructionLanding({
             </ol>
           </div>
         </section>
+
+        {content.additionalServices?.items?.length ? (
+          <section className="bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-28">
+            <div className="mx-auto max-w-7xl">
+              <div data-reveal className="max-w-4xl">
+                <h2 className="text-4xl leading-[1.02] font-black tracking-[-0.055em] text-balance sm:text-5xl lg:text-6xl">
+                  {content.additionalServices.title}
+                </h2>
+                <p className="mt-5 max-w-3xl text-base leading-7 text-[#5a6270] sm:text-lg">
+                  {content.additionalServices.description}
+                </p>
+              </div>
+
+              <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:mt-14 lg:grid-cols-4">
+                {content.additionalServices.items.map((service, index) => {
+                  const Icon = iconMap[service.icon] ?? Boxes;
+
+                  return (
+                    <article
+                      key={service._key ?? service.title}
+                      data-reveal
+                      className="group flex min-h-64 flex-col justify-between overflow-hidden rounded-[1.5rem] border border-[#1b2433]/10 bg-brand-surface p-6 transition duration-300 hover:-translate-y-1 hover:border-[var(--campaign-accent)]/30 hover:bg-brand-surface-strong hover:shadow-[0_20px_50px_var(--campaign-shadow-soft)] sm:p-7"
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <span className="inline-flex size-16 items-center justify-center rounded-2xl bg-[#1b2433] text-white shadow-[0_12px_28px_var(--campaign-shadow)] transition-transform duration-300 group-hover:rotate-6 group-hover:scale-105">
+                          <Icon className="size-8" strokeWidth={1.7} aria-hidden="true" />
+                        </span>
+                        <span className="text-xs font-black tracking-[0.14em] text-[var(--campaign-accent-dark)]">
+                          0{index + 1}
+                        </span>
+                      </div>
+                      <h3 className="mt-8 text-2xl leading-tight font-bold tracking-[-0.04em]">
+                        {service.title}
+                      </h3>
+                    </article>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        ) : null}
 
         {content.audience?.items?.length ? (
         <section className="bg-[#1b2433] px-4 py-16 text-white sm:px-6 sm:py-20 lg:px-8 lg:py-28">

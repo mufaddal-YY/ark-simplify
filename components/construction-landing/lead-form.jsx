@@ -35,7 +35,9 @@ export default function LeadForm({content, onSuccess, thankYouPath}) {
       : "construction";
   const resolvedThankYouPath =
     thankYouPath ??
-    `/ark-simplify-${selectCampaign}-landing/thank-you`;
+    (selectCampaign === "finance"
+      ? "/finance-experts/thank-you"
+      : "/construction-estimating/thank-you");
 
   async function handleSubmit(event) {
     event.preventDefault();
