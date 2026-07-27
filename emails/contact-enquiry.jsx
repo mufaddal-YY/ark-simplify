@@ -14,7 +14,9 @@ const fieldLabel = {
   name: "Name",
   company: "Company",
   email: "Email",
+  phone: "Phone Number",
   designation: "Designation",
+  inventoryChallenge: "Biggest Inventory Challenge",
   service: "Service Required",
   message: "Message",
 };
@@ -23,11 +25,21 @@ export default function ContactEnquiryEmail({
   name,
   company,
   email,
+  phone,
   designation,
+  inventoryChallenge,
   service,
   message,
 }) {
-  const fields = { name, company, email, designation, service };
+  const fields = {
+    name,
+    company,
+    email,
+    phone,
+    designation,
+    inventoryChallenge,
+    service,
+  };
 
   return (
     <Html>
@@ -41,7 +53,7 @@ export default function ContactEnquiryEmail({
           </Text>
 
           <Section style={styles.details}>
-            {Object.entries(fields).map(([key, value]) => (
+            {Object.entries(fields).filter(([, value]) => value).map(([key, value]) => (
               <Section key={key} style={styles.row}>
                 <Text style={styles.label}>{fieldLabel[key]}</Text>
                 <Text style={styles.value}>{value}</Text>

@@ -17,6 +17,7 @@ const fieldClass =
 export default function LeadForm({content, onSuccess, thankYouPath}) {
   const router = useRouter();
   const selectLabelId = useId();
+  const challengeLabelId = useId();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const selectOptions = content.selectOptions?.length
@@ -27,9 +28,11 @@ export default function LeadForm({content, onSuccess, thankYouPath}) {
         "Manufacturer",
         "Other construction professional",
       ];
-  const selectCampaign = content.serviceValue === "Free Books Health Check"
-    ? "finance"
-    : "construction";
+  const selectCampaign =
+    content.campaign === "finance" ||
+    content.serviceValue === "Free Books Health Check"
+      ? "finance"
+      : "construction";
   const resolvedThankYouPath =
     thankYouPath ??
     `/ark-simplify-${selectCampaign}-landing/thank-you`;
@@ -113,7 +116,26 @@ export default function LeadForm({content, onSuccess, thankYouPath}) {
             required
           />
         </label>
-        <div className="block min-w-0 text-sm font-semibold text-[#1b2433]">
+        {content.showPhone ? (
+          <label className="block min-w-0 text-sm font-semibold text-[#1b2433]">
+            {content.phoneLabel ?? "Phone Number"}
+            <input
+              className={`${fieldClass} mt-2`}
+              name="phone"
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel"
+              placeholder="Your phone number"
+              maxLength={40}
+              required
+            />
+          </label>
+        ) : null}
+        <div
+          className={`block min-w-0 text-sm font-semibold text-[#1b2433] ${
+            content.selectFullWidth ? "sm:col-span-2" : ""
+          }`}
+        >
           <span id={selectLabelId}>
             {content.selectLabel ?? "You are a…"}
           </span>
@@ -135,6 +157,26 @@ export default function LeadForm({content, onSuccess, thankYouPath}) {
             </SelectContent>
           </Select>
         </div>
+        {content.challengeOptions?.length ? (
+          <div className="block min-w-0 text-sm font-semibold text-[#1b2433] sm:col-span-2">
+            <span id={challengeLabelId}>{content.challengeLabel}</span>
+            <Select name="inventoryChallenge">
+              <SelectTrigger
+                className="mt-2"
+                aria-labelledby={challengeLabelId}
+              >
+                <SelectValue placeholder={content.challengePlaceholder} />
+              </SelectTrigger>
+              <SelectContent campaign={selectCampaign}>
+                {content.challengeOptions.map((option) => (
+                  <SelectItem key={option} value={option}>
+                    {option}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        ) : null}
       </div>
 
       <input

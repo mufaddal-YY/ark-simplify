@@ -642,7 +642,11 @@ export default function ConstructionLanding({
                       <Icon className="size-10" strokeWidth={1.7} aria-hidden="true" />
                     </span>
                     <h3 className="mt-5 text-2xl font-bold tracking-[-0.04em]">{service.title}</h3>
-                    <p className="mt-4 text-sm leading-7 text-[#596170]">{service.description}</p>
+                    {service.description ? (
+                      <p className="mt-4 text-sm leading-7 text-[#596170]">
+                        {service.description}
+                      </p>
+                    ) : null}
                   </article>
                 );
               })}
@@ -659,7 +663,9 @@ export default function ConstructionLanding({
               </h2>
               <p className="mt-5 text-base leading-7 text-[#596170]">{content.process.description}</p>
               <div className="mt-7">
-                <PrimaryButton onClick={openDialog}>Start with my active bid</PrimaryButton>
+                <PrimaryButton onClick={openDialog}>
+                  {content.process.buttonLabel ?? "Start with my active bid"}
+                </PrimaryButton>
               </div>
             </div>
 

@@ -1,6 +1,7 @@
 import ConstructionLanding from "@/components/construction-landing/construction-landing";
 import {
   financeLandingFallback,
+  financeLandingStats,
   mergeFinanceLandingContent,
 } from "@/lib/finance-landing-content";
 import {getFinanceLandingPage, getHomepage} from "@/sanity/fetch";
@@ -11,7 +12,7 @@ export const revalidate = 60;
 
 export async function generateMetadata() {
   const data = await getFinanceLandingPage({revalidate});
-  const seo = {...financeLandingFallback.seo, ...data?.seo};
+  const seo = {...data?.seo, ...financeLandingFallback.seo};
   const metadata = buildSeoMetadata(seo, {
     path: "/ark-simplify-finance-landing",
   });
@@ -42,7 +43,7 @@ export default async function ArkSimplifyFinanceLandingPage() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: "Free bookkeeping health check",
+    name: "Free inventory stock report",
     description: content.seo.metaDescription,
     provider: {
       "@type": "Organization",
@@ -50,14 +51,14 @@ export default async function ArkSimplifyFinanceLandingPage() {
       url: siteUrl,
     },
     areaServed: "United States",
-    serviceType: "Bookkeeping and financial operations support",
+    serviceType: "Inventory management and operational support",
     offers: {
       "@type": "Offer",
       price: "0",
       priceCurrency: "USD",
       url,
       description:
-        "A free books health check with a findings report in three business days.",
+        "A complimentary inventory review with a stock report delivered within three business days.",
     },
   };
 
@@ -69,7 +70,7 @@ export default async function ArkSimplifyFinanceLandingPage() {
       />
       <ConstructionLanding
         content={content}
-        stats={homepage?.statsSection}
+        stats={financeLandingStats}
         clientele={homepage?.clienteleSection}
         thankYouPath="/ark-simplify-finance-landing/thank-you"
         theme={{
