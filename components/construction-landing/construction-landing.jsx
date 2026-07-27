@@ -211,6 +211,7 @@ export default function ConstructionLanding({
 }) {
   const rootRef = useRef(null);
   const topbarTrackRef = useRef(null);
+  const softwareTrackRef = useRef(null);
   const dialogRef = useRef(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -275,6 +276,26 @@ export default function ConstructionLanding({
       const tween = gsap.to(track, {
         xPercent: -50,
         duration: 22,
+        ease: "none",
+        repeat: -1,
+      });
+
+      return () => tween.kill();
+    });
+
+    return () => mm.revert();
+  }, []);
+
+  useEffect(() => {
+    const track = softwareTrackRef.current;
+    if (!track) return;
+
+    const mm = gsap.matchMedia();
+
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const tween = gsap.to(track, {
+        xPercent: -50,
+        duration: 26,
         ease: "none",
         repeat: -1,
       });
@@ -707,28 +728,40 @@ export default function ConstructionLanding({
                 </h2>
               </div>
 
-              <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:mt-14 lg:grid-cols-6">
-                {content.softwareTools.items.map((tool) => (
-                  <article
-                    key={tool._key ?? tool.name}
-                    data-reveal
-                    className="flex aspect-[5/3] min-h-32 items-center justify-center rounded-2xl border border-white/10 bg-white p-5 text-center shadow-[0_18px_48px_rgba(0,0,0,0.2)] sm:min-h-36"
-                  >
-                    {tool.textOnly ? (
-                      <p className="text-lg leading-tight font-black tracking-[-0.03em] text-[#1b2433] sm:text-xl">
-                        {tool.name}
-                      </p>
-                    ) : (
-                      <Image
-                        src={tool.src}
-                        alt={`${tool.name} logo`}
-                        width={180}
-                        height={80}
-                        className="max-h-16 w-auto max-w-full object-contain"
-                      />
-                    )}
-                  </article>
-                ))}
+              <div className="mt-10 overflow-x-auto lg:mt-14 motion-safe:overflow-hidden [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                <div
+                  ref={softwareTrackRef}
+                  className="flex w-max shrink-0 will-change-transform"
+                >
+                  {[0, 1].map((group) => (
+                    <div
+                      key={group}
+                      className="flex shrink-0 gap-4 pr-4"
+                      aria-hidden={group === 1 ? "true" : undefined}
+                    >
+                      {content.softwareTools.items.map((tool) => (
+                        <article
+                          key={tool._key ?? tool.name}
+                          className="flex aspect-[5/3] min-h-32 w-[clamp(11rem,22vw,15rem)] shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white p-5 text-center shadow-[0_18px_48px_rgba(0,0,0,0.2)] sm:min-h-36"
+                        >
+                          {tool.textOnly ? (
+                            <p className="text-lg leading-tight font-black tracking-[-0.03em] text-[#1b2433] sm:text-xl">
+                              {tool.name}
+                            </p>
+                          ) : (
+                            <Image
+                              src={tool.src}
+                              alt={`${tool.name} logo`}
+                              width={180}
+                              height={80}
+                              className="max-h-16 w-auto max-w-full object-contain"
+                            />
+                          )}
+                        </article>
+                      ))}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </section>
