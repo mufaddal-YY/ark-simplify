@@ -550,10 +550,7 @@ export default function ConstructionLanding({
                     <TimerReset className="size-5 shrink-0 text-[var(--campaign-accent-light)]" aria-hidden="true" />
                     {content.hero.turnaround}
                   </p>
-                  <p className="flex items-center gap-2 text-sm font-black text-white">
-                    <ShieldCheck className="size-5 shrink-0 text-[var(--campaign-accent-light)]" aria-hidden="true" />
-                    {certificationLine}
-                  </p>
+                  
                 </div>
                 <p className="mt-3 text-xs leading-5 text-white/58">
                   {trustedByLine}
