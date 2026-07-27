@@ -70,7 +70,7 @@ export default async function ArkSimplifyFinanceLandingPage() {
       />
       <ConstructionLanding
         content={content}
-        topbarText="Get 2 Weeks of Free Service"
+        topbarText="Get 2 Weeks of Free Support"
         stats={financeLandingStats}
         clientele={homepage?.clienteleSection}
         thankYouPath="/finance-experts/thank-you"
