@@ -3,11 +3,8 @@ import Script from "next/script";
 
 export const metadata = {
   icons: {
-    icon: [
-      {url: "/favicon.ico", sizes: "32x32"},
-      {url: "/logo_icon.png", type: "image/png"},
-    ],
-    apple: "/logo_icon.png",
+    icon: [{url: "/favicon.ico", sizes: "32x32"}],
+    shortcut: "/favicon.ico",
   },
 };
 

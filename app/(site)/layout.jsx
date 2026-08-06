@@ -16,13 +16,8 @@ export async function generateMetadata() {
       google: "NOGngijBnI1yiu5tnyiCdl7FFNA0dK9qMDIAlZFGpAk",
     },
     icons: {
-      icon: [
-        { url: "/icon.svg", type: "image/svg+xml", sizes: "any" },
-        { url: "/favicon.ico", sizes: "32x32" },
-        { url: "/logo_icon.png", type: "image/png" },
-      ],
+      icon: [{ url: "/favicon.ico", sizes: "32x32" }],
       shortcut: "/favicon.ico",
-      apple: "/logo_icon.png",
     },
   };
 }
