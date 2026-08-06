@@ -64,6 +64,16 @@ export const homepageQuery = `*[_id == "homepage"][0]{
       "logoUrl": logo.asset->url
     }
   },
+  faqSection{
+    eyebrow,
+    title,
+    description,
+    items[]{
+      _key,
+      question,
+      answer
+    }
+  },
   ctaSection{
     eyebrow,
     title,

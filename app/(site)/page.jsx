@@ -5,6 +5,7 @@ import IndustriesWeServe from "@/components/homepage/industries-weserve";
 import StatsSection from "@/components/homepage/stats-section";
 import Testimonials from "@/components/homepage/testimonials";
 import LinkedinArticles from "@/components/homepage/linkedin-articles";
+import FaqSection from "@/components/homepage/faq-section";
 import {
   generateSeoMetadata,
   getHomepage,
@@ -34,6 +35,7 @@ export default async function Home() {
       <Clientele data={homepageData?.clienteleSection} />
       <Testimonials data={testimonials} />
       <LinkedinArticles data={linkedinArticles} />
+      <FaqSection data={homepageData?.faqSection} />
       <CTA_common data={homepageData?.ctaSection} />
     </main>
   );

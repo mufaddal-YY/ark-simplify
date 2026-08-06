@@ -50,6 +50,13 @@ export async function generateMetadata({ params }) {
     robots: {
       index: !blog.noIndex,
       follow: !blog.noFollow,
+      googleBot: {
+        index: !blog.noIndex,
+        follow: !blog.noFollow,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
     },
     openGraph: {
       title,

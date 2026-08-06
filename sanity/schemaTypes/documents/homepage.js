@@ -30,6 +30,43 @@ export const homepage = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'faqSection',
+      title: 'FAQ section',
+      type: 'object',
+      fields: [
+        defineField({name: 'eyebrow', title: 'Eyebrow', type: 'string'}),
+        defineField({name: 'title', title: 'Title', type: 'string'}),
+        defineField({name: 'description', title: 'Description', type: 'text', rows: 3}),
+        defineField({
+          name: 'items',
+          title: 'Questions and answers',
+          type: 'array',
+          of: [
+            defineArrayMember({
+              type: 'object',
+              fields: [
+                defineField({
+                  name: 'question',
+                  title: 'Question',
+                  type: 'string',
+                  validation: (Rule) => Rule.required(),
+                }),
+                defineField({
+                  name: 'answer',
+                  title: 'Answer',
+                  type: 'text',
+                  rows: 4,
+                  validation: (Rule) => Rule.required(),
+                }),
+              ],
+              preview: {select: {title: 'question'}},
+            }),
+          ],
+          validation: (Rule) => Rule.min(1),
+        }),
+      ],
+    }),
+    defineField({
       name: 'ctaSection',
       title: 'CTA section',
       type: 'object',
@@ -200,6 +237,50 @@ export const homepage = defineType({
         'Partnering with growth-focused teams across construction, operations, finance, and delivery support.',
       networkLabel: 'Client Network',
       logos: [],
+    },
+    faqSection: {
+      eyebrow: 'Frequently Asked Questions',
+      title: 'What teams ask before working with ARK.',
+      description:
+        'Clear answers about our construction, finance, and operational support.',
+      items: [
+        {
+          _key: 'services',
+          question: 'What services does ARK Simplify provide?',
+          answer:
+            'ARK Simplify supports construction and finance operations. Our work includes estimating, takeoffs, detailing, project management support, inventory management, purchase orders, bookkeeping, and accounts payable and receivable workflows.',
+        },
+        {
+          _key: 'construction-clients',
+          question: 'Who do your construction services support?',
+          answer:
+            'We work with general contractors, subcontractors, and manufacturers. The scope, deliverables, and workflow are tailored to the role your team plays in each project.',
+        },
+        {
+          _key: 'existing-systems',
+          question: 'Can ARK work within our existing systems and processes?',
+          answer:
+            'Yes. Our team is designed to work alongside your existing staff and within the software, approval paths, and reporting processes you already use.',
+        },
+        {
+          _key: 'limited-scope',
+          question: 'Can we start with a limited scope before expanding?',
+          answer:
+            'Yes. We can begin with a defined project, workflow, or service area so your team can evaluate the delivery model before expanding the engagement.',
+        },
+        {
+          _key: 'security',
+          question: 'How does ARK protect client information?',
+          answer:
+            'ARK follows documented quality and information-security processes supported by ISO 9001 and ISO 27001 certifications. Access and responsibilities are defined around the agreed scope of work.',
+        },
+        {
+          _key: 'getting-started',
+          question: 'How do we get started?',
+          answer:
+            'Contact our team with a brief overview of your current workflow and the support you need. We will review the requirements, clarify the scope, and recommend an appropriate delivery model.',
+        },
+      ],
     },
     ctaSection: {
       eyebrow: 'Let’s Talk',
