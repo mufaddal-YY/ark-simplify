@@ -11,6 +11,7 @@ import {jobOpenings} from './documents/jobOpenings'
 import {lifeAtArkPage} from './documents/lifeAtArkPage'
 import {linkedinArticles} from './documents/linkedinArticles'
 import {proestimatePage} from './documents/proestimatePage'
+import {privacyPolicyPage} from './documents/privacyPolicyPage'
 import {seoSettings} from './documents/seoSettings'
 import {testimonials} from './documents/testimonials'
 import {aboutPageSectionTypes} from './objects/aboutPageSections'
@@ -47,6 +48,7 @@ export const schema = {
     lifeAtArkPage,
     linkedinArticles,
     proestimatePage,
+    privacyPolicyPage,
     seoSettings,
     testimonials,
     ...aboutPageSectionTypes,

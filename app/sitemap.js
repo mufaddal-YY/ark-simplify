@@ -12,6 +12,7 @@ const routes = [
   "/life-at-ark",
   "/contact-us",
   "/blog",
+  "/privacy-policy",
 ];
 
 export default async function sitemap() {

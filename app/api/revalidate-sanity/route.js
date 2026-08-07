@@ -7,6 +7,7 @@ const tagsByDocumentType = {
   seoSettings: ["seoSettings"],
   constructionLandingPage: ["constructionLandingPage"],
   financeLandingPage: ["financeLandingPage"],
+  privacyPolicyPage: ["privacyPolicyPage"],
 };
 
 export async function POST(request) {

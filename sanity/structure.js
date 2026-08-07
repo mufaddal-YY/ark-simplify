@@ -71,6 +71,10 @@ export const structure = (S) =>
                 title: 'Contact',
                 schemaType: 'contact',
               }),
+              singletonItem(S, {
+                title: 'Privacy policy',
+                schemaType: 'privacyPolicyPage',
+              }),
             ]),
         ),
 

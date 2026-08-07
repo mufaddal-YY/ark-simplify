@@ -22,6 +22,10 @@ export { getLifeAtArkPage, lifeAtArkPageQuery } from "./life-at-ark-page";
 export { getLinkedinArticles, linkedinArticlesQuery } from "./linkedin-articles";
 export { getProestimatePage, proestimatePageQuery } from "./proestimate-page";
 export {
+  getPrivacyPolicyPage,
+  privacyPolicyPageQuery,
+} from "./privacy-policy-page";
+export {
   buildSeoMetadata,
   defaultSeo,
   generateSeoMetadata,

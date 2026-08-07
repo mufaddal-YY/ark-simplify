@@ -119,6 +119,10 @@ export function buildSeoMetadata(seo, { path = "/" } = {}) {
     .map((keyword) => normalizeSeoText(keyword, ""))
     .filter(Boolean);
   const url = canonicalUrl(path);
+  const ogTitle = normalizeSeoText(seo?.ogTitle, title);
+  const ogDescription = normalizeSeoText(seo?.ogDescription, description);
+  const ogImage = normalizeSeoText(seo?.ogImageUrl, "/logo_main.png");
+  const ogImageAlt = normalizeSeoText(seo?.ogImageAlt, siteName);
 
   return {
     title,
@@ -142,23 +146,23 @@ export function buildSeoMetadata(seo, { path = "/" } = {}) {
       },
     },
     openGraph: {
-      title,
-      description,
+      title: ogTitle,
+      description: ogDescription,
       url,
       siteName,
       type: "website",
       images: [
         {
-          url: "/logo_main.png",
-          alt: siteName,
+          url: ogImage,
+          alt: ogImageAlt,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title,
-      description,
-      images: ["/logo_main.png"],
+      title: ogTitle,
+      description: ogDescription,
+      images: [ogImage],
     },
   };
 }
