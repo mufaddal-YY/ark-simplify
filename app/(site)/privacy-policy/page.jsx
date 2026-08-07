@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import PageBanner from '@/components/common/pageBanner'
 import {defaultPrivacyPolicy} from '@/lib/privacy-policy-content'
 import {buildSeoMetadata, getPrivacyPolicyPage} from '@/sanity/fetch'
 
@@ -142,25 +143,15 @@ export default async function PrivacyPolicyPage() {
         }}
       />
 
-      <header className="relative overflow-hidden border-b border-brand-secondary/10 bg-brand-surface px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
-        <div
-          aria-hidden="true"
-          className="absolute -top-24 right-[-8rem] h-80 w-80 rounded-full bg-brand-primary/8 blur-3xl"
-        />
-        <div className="relative mx-auto max-w-4xl">
-          <p className="mb-4 text-sm font-bold tracking-[0.18em] text-brand-primary uppercase">
-            Legal &amp; privacy
-          </p>
-          <h1 className="text-4xl font-bold tracking-tight text-brand-secondary sm:text-5xl lg:text-6xl">
-            {policy.title}
-          </h1>
-          <p className="mt-5 inline-flex rounded-full border border-brand-secondary/10 bg-white px-4 py-2 text-sm font-semibold text-brand-secondary/65 shadow-sm">
-            Last Updated: {formatUpdatedDate(policy.lastUpdated)}
-          </p>
-        </div>
-      </header>
+      <PageBanner
+        eyebrow="Privacy Policy"
+        title={policy.title}
+        titleAccent=""
+        description={`Last Updated: ${formatUpdatedDate(policy.lastUpdated)}`}
+        compact
+      />
 
-      <div className="px-4 py-14 sm:px-6 sm:py-18 lg:px-8 lg:py-20">
+      <div className="px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
         <article className="mx-auto max-w-4xl">
           <div className="mb-12 space-y-5 rounded-2xl border border-brand-secondary/10 bg-brand-surface p-6 sm:p-8">
             {policy.introduction.map((paragraph) => (
