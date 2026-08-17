@@ -213,6 +213,7 @@ export default function ConstructionLanding({
   const topbarTrackRef = useRef(null);
   const softwareTrackRef = useRef(null);
   const dialogRef = useRef(null);
+  const dialogPointerDownOnBackdropRef = useRef(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const testimonials = content.testimonials?.length
@@ -1022,8 +1023,20 @@ export default function ConstructionLanding({
         onClose={() => {
           document.body.style.overflow = "";
         }}
+        onPointerDown={(event) => {
+          dialogPointerDownOnBackdropRef.current =
+            event.target === event.currentTarget;
+        }}
+        onPointerCancel={() => {
+          dialogPointerDownOnBackdropRef.current = false;
+        }}
         onClick={(event) => {
-          if (event.target === event.currentTarget) closeDialog();
+          const clickedBackdrop =
+            dialogPointerDownOnBackdropRef.current &&
+            event.target === event.currentTarget;
+
+          dialogPointerDownOnBackdropRef.current = false;
+          if (clickedBackdrop) closeDialog();
         }}
       >
         <div className="relative p-5 sm:p-8">

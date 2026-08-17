@@ -6,7 +6,21 @@ import {Check, ChevronDown, ChevronUp} from "lucide-react"
 
 import {cn} from "@/lib/utils"
 
-const Select = SelectPrimitive.Root
+const SelectPortalContainerContext = React.createContext(null)
+
+function Select({children, ...props}) {
+  const [portalContainer, setPortalContainer] = React.useState(null)
+  const contextValue = React.useMemo(
+    () => ({portalContainer, setPortalContainer}),
+    [portalContainer],
+  )
+
+  return (
+    <SelectPortalContainerContext.Provider value={contextValue}>
+      <SelectPrimitive.Root {...props}>{children}</SelectPrimitive.Root>
+    </SelectPortalContainerContext.Provider>
+  )
+}
 
 function SelectValue({className, ...props}) {
   return (
@@ -18,9 +32,32 @@ function SelectValue({className, ...props}) {
   )
 }
 
-function SelectTrigger({className, children, ...props}) {
+function SelectTrigger({className, children, ref, ...props}) {
+  const portalContext = React.useContext(SelectPortalContainerContext)
+  const setPortalContainer = portalContext?.setPortalContainer
+  const setTriggerRef = React.useCallback(
+    (node) => {
+      // A body-level portal sits behind native top-layer dialogs and outside
+      // library dialog focus traps, so keep the menu inside its owning popup.
+      const ownerDialog =
+        node?.closest("dialog, [role='dialog'], [aria-modal='true']") ?? null
+
+      setPortalContainer?.((current) =>
+        current === ownerDialog ? current : ownerDialog,
+      )
+
+      if (typeof ref === "function") {
+        ref(node)
+      } else if (ref) {
+        ref.current = node
+      }
+    },
+    [ref, setPortalContainer],
+  )
+
   return (
     <SelectPrimitive.Trigger
+      ref={setTriggerRef}
       data-slot="select-trigger"
       className={cn(
         "group flex min-h-12 w-full items-center justify-between gap-3 rounded-xl border border-[#d8d4cc] bg-white px-4 text-[0.95rem] text-[#1b2433] outline-none transition select-none data-placeholder:text-[#7a808b] hover:border-[var(--campaign-accent)] focus-visible:border-[var(--campaign-accent)] focus-visible:ring-4 focus-visible:ring-[color-mix(in_srgb,var(--campaign-accent)_12%,transparent)] disabled:cursor-not-allowed disabled:opacity-60 [&_svg]:pointer-events-none [&_svg]:shrink-0",
@@ -40,11 +77,13 @@ function SelectContent({
   className,
   children,
   campaign = "construction",
+  portalContainer,
   side = "bottom",
   sideOffset = 6,
   align = "start",
   ...props
 }) {
+  const selectPortalContext = React.useContext(SelectPortalContainerContext)
   const palette =
     campaign === "finance"
       ? {
@@ -59,7 +98,11 @@ function SelectContent({
         }
 
   return (
-    <SelectPrimitive.Portal>
+    <SelectPrimitive.Portal
+      container={
+        portalContainer ?? selectPortalContext?.portalContainer ?? undefined
+      }
+    >
       <SelectPrimitive.Positioner
         side={side}
         sideOffset={sideOffset}
