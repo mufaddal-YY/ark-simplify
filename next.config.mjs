@@ -18,6 +18,21 @@ const nextConfig = {
         destination: "/finance-experts/:path*",
         permanent: true,
       },
+      {
+        source: "/terms-of-service",
+        destination: "/terms",
+        permanent: true,
+      },
+      {
+        source: "/terms-and-conditions",
+        destination: "/terms",
+        permanent: true,
+      },
+      {
+        source: "/terms-of-use",
+        destination: "/terms",
+        permanent: true,
+      },
     ];
   },
   images: {

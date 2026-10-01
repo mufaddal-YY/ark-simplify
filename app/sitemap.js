@@ -13,6 +13,7 @@ const routes = [
   "/contact-us",
   "/blog",
   "/privacy-policy",
+  "/terms",
 ];
 
 export default async function sitemap() {

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   FiArrowUpRight,
   FiClock,
@@ -11,6 +11,9 @@ import {
   FiPhone,
 } from "react-icons/fi";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa6";
+import SmsConsent from "@/components/common/sms-consent";
+
+const smsPhoneRequiredMessage = "Enter a phone number to receive text messages.";
 
 const contactMethods = [
   {
@@ -155,10 +158,34 @@ export default function ContactContent({ data }) {
     : defaultContactContent.enquiryForm.serviceOptions;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [wantsSms, setWantsSms] = useState(false);
+  const phoneRef = useRef(null);
+
+  function syncPhoneValidity(smsRequested) {
+    const phoneInput = phoneRef.current;
+
+    phoneInput?.setCustomValidity(
+      smsRequested && !phoneInput.value.trim() ? smsPhoneRequiredMessage : "",
+    );
+  }
+
+  function handleSmsConsentChange(consent) {
+    const smsRequested = Object.values(consent).some(Boolean);
+
+    setWantsSms(smsRequested);
+    syncPhoneValidity(smsRequested);
+  }
+
+  function handleReset() {
+    setWantsSms(false);
+    phoneRef.current?.setCustomValidity("");
+  }
 
   async function handleSubmit(event) {
     event.preventDefault();
     const formElement = event.currentTarget;
+
+    syncPhoneValidity(wantsSms);
 
     if (!formElement.checkValidity()) {
       formElement.reportValidity();
@@ -320,7 +347,11 @@ export default function ContactContent({ data }) {
                 </p>
               </div>
 
-              <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
+              <form
+                className="mt-8 space-y-5"
+                onSubmit={handleSubmit}
+                onReset={handleReset}
+              >
                 <input
                   type="text"
                   name="website"
@@ -385,6 +416,33 @@ export default function ContactContent({ data }) {
 
                   <div className="space-y-2">
                     <label
+                      htmlFor="contact-phone"
+                      className="text-sm font-semibold text-brand-secondary"
+                    >
+                      Phone Number{" "}
+                      <span className="font-medium text-brand-secondary/60">
+                        {wantsSms ? "(required for text messages)" : "(optional)"}
+                      </span>
+                    </label>
+                    <input
+                      ref={phoneRef}
+                      id="contact-phone"
+                      name="phone"
+                      type="tel"
+                      inputMode="tel"
+                      autoComplete="tel"
+                      maxLength={40}
+                      required={wantsSms}
+                      onInput={() => syncPhoneValidity(wantsSms)}
+                      placeholder="+1 (555) 555-0123"
+                      className="h-12 w-full rounded-lg border border-brand-secondary/12 bg-white px-4 text-sm font-medium text-brand-secondary outline-none transition-colors focus:border-brand-primary"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid gap-5 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <label
                       htmlFor="contact-designation"
                       className="text-sm font-semibold text-brand-secondary"
                     >
@@ -399,35 +457,35 @@ export default function ContactContent({ data }) {
                       className="h-12 w-full rounded-lg border border-brand-secondary/12 bg-white px-4 text-sm font-medium text-brand-secondary outline-none transition-colors focus:border-brand-primary"
                     />
                   </div>
-                </div>
 
-                <div className="space-y-2">
-                  <label
-                    htmlFor="contact-service"
-                    className="text-sm font-semibold text-brand-secondary"
-                  >
-                    Service Required
-                  </label>
-                  <div className="relative">
-                    <select
-                      id="contact-service"
-                      name="service"
-                      defaultValue=""
-                      required
-                      className="h-12 w-full appearance-none rounded-lg border border-brand-secondary/12 bg-white px-4 pr-12 text-sm font-medium text-brand-secondary outline-none transition-colors focus:border-brand-primary"
+                  <div className="space-y-2">
+                    <label
+                      htmlFor="contact-service"
+                      className="text-sm font-semibold text-brand-secondary"
                     >
-                      <option value="" disabled>
-                        Select a service
-                      </option>
-                      {options.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
+                      Service Required
+                    </label>
+                    <div className="relative">
+                      <select
+                        id="contact-service"
+                        name="service"
+                        defaultValue=""
+                        required
+                        className="h-12 w-full appearance-none rounded-lg border border-brand-secondary/12 bg-white px-4 pr-12 text-sm font-medium text-brand-secondary outline-none transition-colors focus:border-brand-primary"
+                      >
+                        <option value="" disabled>
+                          Select a service
                         </option>
-                      ))}
-                    </select>
-                    <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-brand-secondary/52">
-                      <FiArrowUpRight className="h-4 w-4 rotate-45" />
-                    </span>
+                        {options.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                      <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-brand-secondary/52">
+                        <FiArrowUpRight className="h-4 w-4 rotate-45" />
+                      </span>
+                    </div>
                   </div>
                 </div>
 
@@ -447,6 +505,8 @@ export default function ContactContent({ data }) {
                     className="w-full rounded-lg border border-brand-secondary/12 bg-white px-4 py-3 text-sm font-medium leading-7 text-brand-secondary outline-none transition-colors focus:border-brand-primary"
                   />
                 </div>
+
+                <SmsConsent onConsentChange={handleSmsConsentChange} />
 
                 <button
                   type="submit"

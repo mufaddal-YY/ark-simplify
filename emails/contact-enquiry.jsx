@@ -9,6 +9,21 @@ import {
   Section,
   Text,
 } from "@react-email/components";
+import { getSmsConsentDisclosure, smsProgram } from "@/lib/sms-program";
+
+const smsConsentTypes = Object.keys(smsProgram.messageTypes);
+
+const smsConsentLabel = {
+  customerCare: "Customer care",
+  marketing: "Marketing",
+};
+
+const smsEvidenceLabel = {
+  consentedAt: "Consented At (UTC)",
+  consentVersion: "Consent Version",
+  pageUrl: "Page URL",
+  ipAddress: "IP Address",
+};
 
 const fieldLabel = {
   name: "Name",
@@ -30,6 +45,7 @@ export default function ContactEnquiryEmail({
   inventoryChallenge,
   service,
   message,
+  smsConsent,
 }) {
   const fields = {
     name,
@@ -40,6 +56,8 @@ export default function ContactEnquiryEmail({
     inventoryChallenge,
     service,
   };
+  const consentedTypes = smsConsentTypes.filter((key) => smsConsent?.[key]);
+  const hasSmsConsent = consentedTypes.length > 0;
 
   return (
     <Html>
@@ -65,6 +83,43 @@ export default function ContactEnquiryEmail({
 
           <Text style={styles.label}>{fieldLabel.message}</Text>
           <Text style={styles.message}>{message}</Text>
+
+          <Hr style={styles.divider} />
+
+          <Text style={styles.sectionHeading}>SMS Consent</Text>
+          <Section style={styles.details}>
+            {smsConsentTypes.map((key) => (
+              <Section key={key} style={styles.row}>
+                <Text style={styles.label}>
+                  {smsConsentLabel[key] ?? smsProgram.messageTypes[key].label}
+                </Text>
+                <Text style={styles.value}>
+                  {smsConsent?.[key] ? "Yes" : "No"}
+                </Text>
+              </Section>
+            ))}
+            {hasSmsConsent
+              ? Object.entries(smsEvidenceLabel).map(([key, label]) => (
+                  <Section key={key} style={styles.row}>
+                    <Text style={styles.label}>{label}</Text>
+                    <Text style={styles.value}>
+                      {smsConsent[key] ?? "Not available"}
+                    </Text>
+                  </Section>
+                ))
+              : null}
+          </Section>
+
+          {hasSmsConsent ? (
+            <Section style={styles.consentText}>
+              <Text style={styles.label}>Consent Language Shown</Text>
+              {consentedTypes.map((key) => (
+                <Text key={key} style={styles.disclosure}>
+                  {getSmsConsentDisclosure(key)}
+                </Text>
+              ))}
+            </Section>
+          ) : null}
         </Container>
       </Body>
     </Html>
@@ -129,5 +184,21 @@ const styles = {
     fontSize: "16px",
     lineHeight: "26px",
     whiteSpace: "pre-wrap",
+  },
+  sectionHeading: {
+    margin: "0 0 4px",
+    color: "#363b4f",
+    fontSize: "18px",
+    fontWeight: "700",
+    lineHeight: "26px",
+  },
+  consentText: {
+    marginTop: "16px",
+  },
+  disclosure: {
+    margin: "0 0 8px",
+    color: "#5f6678",
+    fontSize: "13px",
+    lineHeight: "20px",
   },
 };

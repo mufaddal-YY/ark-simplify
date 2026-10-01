@@ -3,6 +3,7 @@
 import {LoaderCircle, LockKeyhole} from "lucide-react";
 import {useRouter} from "next/navigation";
 import {useId, useState} from "react";
+import SmsConsent from "@/components/common/sms-consent";
 import {
   Select,
   SelectContent,
@@ -212,6 +213,8 @@ export default function LeadForm({content, onSuccess, thankYouPath}) {
         Website
         <input name="website" tabIndex={-1} autoComplete="off" />
       </label>
+
+      {content.showPhone ? <SmsConsent variant="campaign" /> : null}
 
       {submitError ? (
         <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700" role="alert">

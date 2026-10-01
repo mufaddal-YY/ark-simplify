@@ -196,7 +196,7 @@ export default function SiteFooter() {
               Privacy Policy
             </Link>
             <Link href="/terms" className="hover:text-brand-primary">
-              Terms
+              Terms of Service
             </Link>
           </div>
         </div>

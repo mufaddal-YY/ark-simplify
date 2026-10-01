@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
 import ContactEnquiryEmail from "@/emails/contact-enquiry";
+import { smsProgram } from "@/lib/sms-program";
 
 const defaultFromEmail = "ARK Simplify <onboarding@resend.dev>";
 const defaultContactEmail = "info@arksimplify.com";
@@ -10,6 +11,53 @@ function envValue(key) {
   const value = process.env[key]?.trim();
 
   return value || undefined;
+}
+
+const consentTruthyValues = ["yes", "on", "true"];
+
+// Optional SMS opt-in checkbox: "yes" / "on" / true -> true, missing -> false.
+const smsConsentFlag = z
+  .union([z.boolean(), z.string().max(10)])
+  .optional()
+  .transform(
+    (value) =>
+      value === true ||
+      (typeof value === "string" &&
+        consentTruthyValues.includes(value.trim().toLowerCase())),
+  );
+
+const smsConsentTypes = Object.entries(smsProgram.messageTypes);
+
+const smsConsentFields = Object.fromEntries(
+  smsConsentTypes.map(([, type]) => [type.field, smsConsentFlag]),
+);
+
+function getClientIp(request) {
+  const forwardedFor = request.headers.get("x-forwarded-for")?.split(",")[0];
+
+  return (
+    forwardedFor?.trim() ||
+    request.headers.get("x-real-ip")?.trim() ||
+    undefined
+  );
+}
+
+function getSmsConsent(enquiry, request) {
+  const consent = Object.fromEntries(
+    smsConsentTypes.map(([key, type]) => [key, enquiry[type.field]]),
+  );
+
+  if (!Object.values(consent).some(Boolean)) {
+    return consent;
+  }
+
+  return {
+    ...consent,
+    consentedAt: new Date().toISOString(),
+    consentVersion: smsProgram.consentVersion,
+    pageUrl: request.headers.get("referer")?.slice(0, 500) || undefined,
+    ipAddress: getClientIp(request),
+  };
 }
 
 const enquirySchema = z.object({
@@ -22,6 +70,7 @@ const enquirySchema = z.object({
   service: z.string().trim().min(1, "Service is required").max(120),
   message: z.string().trim().min(1, "Message is required").max(4000),
   website: z.string().optional(),
+  ...smsConsentFields,
 });
 
 function getResendConfig() {
@@ -68,8 +117,18 @@ export async function POST(request) {
     return NextResponse.json({ ok: true });
   }
 
+  const smsConsent = getSmsConsent(enquiry, request);
+  const hasSmsConsent = smsConsentTypes.some(([key]) => smsConsent[key]);
+
+  if (hasSmsConsent && !enquiry.phone) {
+    return NextResponse.json(
+      { error: "Please enter a phone number to receive text messages." },
+      { status: 400 },
+    );
+  }
+
   const resend = new Resend(config.apiKey);
-  const email = <ContactEnquiryEmail {...enquiry} />;
+  const email = <ContactEnquiryEmail {...enquiry} smsConsent={smsConsent} />;
 
   try {
     const { error } = await resend.emails.send({
